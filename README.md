@@ -1,7 +1,8 @@
 # Tubtrunk
 
 ### Description:
-
+Tubtrunk is a focus application for mobile devices that lets the user set their custom time then focus on their work, and afterward the user will be rewarded for completing their focus session that they can collect and share with other users.
+ 
 ### Objectives:
 
 ### Core Features:
