@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:giffy_dialog/giffy_dialog.dart';
+import 'package:tubtrunk/Views/Popup_Base.dart';
+
 
 void main() {
   runApp(MyApp());
@@ -61,6 +64,7 @@ class _MyHomePageState extends State<MyHomePage> {
       // called again, and so nothing would appear to happen.
       _counter++;
     });
+
   }
 
   @override
@@ -104,6 +108,14 @@ class _MyHomePageState extends State<MyHomePage> {
               '$_counter',
               style: Theme.of(context).textTheme.headline4,
             ),
+            ElevatedButton(
+              child: Text('Press to get reward!'),
+              onPressed: () {
+                showDialog(
+                context: context,builder: (_) => new Popup_Base().Reward_Popup());
+      }
+        ,
+            )
           ],
         ),
       ),
