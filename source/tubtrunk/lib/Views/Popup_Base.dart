@@ -1,16 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:giffy_dialog/giffy_dialog.dart';
-import 'package:tubtrunk/Models/Coupon.dart';
-import 'package:tubtrunk/Models/Pet.dart';
-import 'package:tubtrunk/Models/Reward.dart';
-import 'package:tubtrunk/Models/User.dart';
+
 
 class Popup_Base extends StatefulWidget{
 
   NetworkGiffyDialog Reward_Popup(){
     String gifURL = "https://media.giphy.com/media/5Y2bU7FqLOuzK/giphy.gif";
-
 
     return NetworkGiffyDialog(
       image: Image.network(gifURL),

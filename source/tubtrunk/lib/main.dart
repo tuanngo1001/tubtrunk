@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:giffy_dialog/giffy_dialog.dart';
 import 'package:tubtrunk/Views/Popup_Base.dart';
+import 'package:tubtrunk/Views/Sample_Timer_Page.dart';
 
 
 void main() {
@@ -109,13 +109,19 @@ class _MyHomePageState extends State<MyHomePage> {
               style: Theme.of(context).textTheme.headline4,
             ),
             ElevatedButton(
+
               child: Text('Press to get reward!'),
               onPressed: () {
-                showDialog(
-                context: context,builder: (_) => new Popup_Base().Reward_Popup());
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => Sample_Timer_Page()),
+                );
+                // showDialog(
+                // context: context,builder: (_) => new Popup_Base().Reward_Popup());
       }
         ,
             )
+
           ],
         ),
       ),

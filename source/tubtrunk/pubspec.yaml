@@ -25,6 +25,7 @@ dependencies:
     sdk: flutter
   http:
   giffy_dialog: 1.8.0
+  condition: ^0.0.8
 
 
   # The following adds the Cupertino Icons font to your application.
