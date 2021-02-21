@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'missionPage.dart';
 import 'accountPage.dart';
 import 'timerPage.dart';
+import 'statisticPage.dart';
 import 'rewardStorePage.dart';
 
 
@@ -34,6 +35,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
     TimerPage(),
     MissionPage(),
     RewardStorePage(),
+    StatisticPage(),
     AccountPage()
   ];
 
@@ -86,7 +88,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(Icons.timer, size: 35.0,),
-            label: 'Home',
+            label: 'Timer',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.military_tech_outlined, size: 35.0),
@@ -95,6 +97,10 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
           BottomNavigationBarItem(
             icon: Icon(Icons.shopping_bag_outlined, size: 35.0),
             label: 'Store',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.stacked_bar_chart, size: 35.0),
+            label: 'Statistic',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.account_circle_outlined, size: 35.0),
