@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:tubtrunk/Views/myCouponIcon.dart';
+
 class RewardStorePage extends StatefulWidget {
   @override
   _RewardStorePageState createState() => _RewardStorePageState();
@@ -17,7 +19,7 @@ class _RewardStorePageState extends State<RewardStorePage> {
             bottom: TabBar(
               tabs: [
                 Tab(
-                  icon: Icon(Icons.card_giftcard_outlined,size: 30.0,color: Colors.blueGrey.shade800,),
+                  icon: Icon(MyCouponIcon.coupon,size: 30.0,color: Colors.blueGrey.shade800),
                 ),
                 Tab(
                   icon: Icon(Icons.my_library_music_outlined ,size: 30.0,color: Colors.blueGrey.shade800,),

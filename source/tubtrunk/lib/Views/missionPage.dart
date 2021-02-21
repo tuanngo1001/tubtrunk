@@ -1,16 +1,5 @@
 
 import 'package:flutter/material.dart';
-//void main() {
-//  runApp(TabsView());
-//}
-//
-//class TabsView extends StatelessWidget {
-//  @override
-//  Widget build(BuildContext context) {
-//    return MissionPage();
-//  }
-//}
-
 
 class MissionPage extends StatefulWidget {
   @override
