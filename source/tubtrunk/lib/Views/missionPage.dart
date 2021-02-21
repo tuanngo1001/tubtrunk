@@ -1,62 +1,67 @@
 
 import 'package:flutter/material.dart';
-void main() {
-  runApp(TabsView());
+//void main() {
+//  runApp(TabsView());
+//}
+//
+//class TabsView extends StatelessWidget {
+//  @override
+//  Widget build(BuildContext context) {
+//    return MissionPage();
+//  }
+//}
+
+
+class MissionPage extends StatefulWidget {
+  @override
+  _MissionPageState createState() => _MissionPageState();
 }
 
-class TabsView extends StatelessWidget {
+class _MissionPageState extends State<MissionPage> {
   @override
   Widget build(BuildContext context) {
-    return rewardStore();
-  }
-}
-
-
-class rewardStore extends StatefulWidget {
-  @override
-  _rewardStoreState createState() => _rewardStoreState();
-}
-
-class _rewardStoreState extends State<rewardStore> {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      home: DefaultTabController(
+    return DefaultTabController(
         length: 3,
         child: Scaffold(
-          appBar: AppBar(
-            backgroundColor: Colors.teal,
-            bottom: TabBar(
-              tabs: [
-                Tab(
-                  child: Text(
-                    "All",
-                    style: TextStyle(
-                      fontSize: 18.0,
-                    )
-                  ),
-
-                ),
-                Tab(
-                  child: Text(
-                    "In-Progress",
-                    style: TextStyle(
-                        fontSize:18.0,
-
-                    )
-                  ),
-                ),
-                Tab(
-                  child: Text(
-                    "Achieved",
-                    style: TextStyle(
+          appBar: PreferredSize(
+            preferredSize: Size.fromHeight(50.0),
+            child: AppBar(
+              backgroundColor: Colors.orangeAccent,
+              bottom: TabBar(
+                tabs: [
+                  Tab(
+                    child: Text(
+                      "All",
+                      style: TextStyle(
                         fontSize: 18.0,
-                    )
+                          color: Colors.blueGrey.shade900
+                      )
+                    ),
+
                   ),
-                )
-              ],
+                  Tab(
+                    child: Text(
+                      "In-Progress",
+                      style: TextStyle(
+                          fontSize:18.0,
+                          color: Colors.blueGrey.shade900
+
+                      )
+                    ),
+                  ),
+                  Tab(
+                    child: Text(
+                      "Achieved",
+                      style: TextStyle(
+                          fontSize: 18.0,
+                          color: Colors.blueGrey.shade900
+                      )
+                    ),
+                  )
+                ],
+              ),
+//            title: Text('Rewards Store', style: TextStyle( fontSize: 25.0,),),
             ),
-            title: Text('Rewards Store', style: TextStyle( fontSize: 25.0,),),
           ),
           body: SafeArea(
             child: TabBarView(
@@ -99,7 +104,7 @@ class _rewardStoreState extends State<rewardStore> {
             ),
           ),
         ),
-      ),
-    );
+      );
+//    );
   }
 }
