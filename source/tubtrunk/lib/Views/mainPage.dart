@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'missionPage.dart';
 import 'accountPage.dart';
@@ -6,30 +5,29 @@ import 'timerPage.dart';
 import 'statisticPage.dart';
 import 'rewardStorePage.dart';
 
+// void main() => runApp(MyApp());
 
-void main() => runApp(MyApp());
+// /// This is the main application widget.
+// class MyApp extends StatelessWidget {
+// //  static const String _title = 'Flutter Code Sample';
 
-/// This is the main application widget.
-class MyApp extends StatelessWidget {
-//  static const String _title = 'Flutter Code Sample';
+//   @override
+//   Widget build(BuildContext context) {
+//     return MaterialApp(
+// //      title: _title,
+//       home: MyStatefulWidget(),
+//     );
+//   }
+// }
+
+class MainPage extends StatefulWidget {
+  MainPage({Key key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-//      title: _title,
-      home: MyStatefulWidget(),
-    );
-  }
+  _MainPageState createState() => _MainPageState();
 }
 
-class MyStatefulWidget extends StatefulWidget {
-  MyStatefulWidget({Key key}) : super(key: key);
-
-  @override
-  _MyStatefulWidgetState createState() => _MyStatefulWidgetState();
-}
-
-class _MyStatefulWidgetState extends State<MyStatefulWidget> {
+class _MainPageState extends State<MainPage> {
   int _selectedIndex = 0;
   final _pageOptions = [
     TimerPage(),
@@ -44,37 +42,31 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
       _selectedIndex = index;
     });
   }
-  double money=3000.0;
+
+  double money = 3000.0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        actions:[
+        actions: [
           IconButton(
-            icon: Icon(
-              Icons.euro,
-              color: Colors.black,
-              size: 24.0,
-            ),
-            onPressed: (){
-            }
-          ),
+              icon: Icon(
+                Icons.euro,
+                color: Colors.black,
+                size: 24.0,
+              ),
+              onPressed: () {}),
           Center(
             child: Text(
               "$money",
-              style: TextStyle(
-                color: Colors.blueGrey[900],
-                fontSize: 20.0
-              ),
+              style: TextStyle(color: Colors.blueGrey[900], fontSize: 20.0),
             ),
           )
         ],
         backgroundColor: Colors.red,
-        title:  Text(
+        title: Text(
           'Tubtrunk',
-          style: TextStyle(
-              color: Colors.blueGrey[900]
-          ),
+          style: TextStyle(color: Colors.blueGrey[900]),
         ),
       ),
       body: Center(
@@ -87,7 +79,10 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
         type: BottomNavigationBarType.fixed,
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-            icon: Icon(Icons.timer, size: 35.0,),
+            icon: Icon(
+              Icons.timer,
+              size: 35.0,
+            ),
             label: 'Timer',
           ),
           BottomNavigationBarItem(

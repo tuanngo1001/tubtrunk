@@ -63,3 +63,7 @@ flutter:
     - family: MyCouponIcon
       fonts:
         - asset: fonts/MyCouponIcon.ttf
+    - family: Stalinist One
+      fonts:
+        - asset: fonts/StalinistOne-Regular.ttf
+          weight: 400
