@@ -26,6 +26,8 @@ dependencies:
   http:
   giffy_dialog: 1.8.0
   condition: ^0.0.8
+  flutter_local_notifications: ^4.0.1+1
+  rxdart: ^0.25.0
 
 
 
