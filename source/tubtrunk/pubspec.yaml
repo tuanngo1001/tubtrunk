@@ -29,7 +29,10 @@ dependencies:
   flutter_local_notifications: ^4.0.1+1
   rxdart: ^0.25.0
   circular_countdown_timer: ^0.1.0
-  flutter_duration_picker: ^1.0.0
+  flutter_duration_picker:
+    git:
+      url: https://github.com/RajaParikshit/flutter_duration_picker
+      ref: issue_#28_button_theme_bar
   intl: ^0.16.1
   fl_chart: ^0.12.3
 
