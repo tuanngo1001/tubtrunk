@@ -1,13 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:tubtrunk/Models/RewardMission.dart';
+import 'package:tubtrunk/Views/missionPage.dart';
 import '../Controllers/notificationsController.dart';
 import './notificationPage.dart';
 import 'package:circular_countdown_timer/circular_countdown_timer.dart';
 import 'package:flutter_duration_picker/flutter_duration_picker.dart';
 
 class TimerPage extends StatefulWidget {
+  final mission;
+  TimerPage({this.mission});////////////////////////////
+
   @override
   _TimerPageState createState() => _TimerPageState();
 }
+
+
 
 class _TimerPageState extends State<TimerPage> with WidgetsBindingObserver {
   CountDownController _controller = CountDownController();
@@ -135,6 +142,7 @@ class _TimerPageState extends State<TimerPage> with WidgetsBindingObserver {
             },
             onComplete: () {
               print('Countdown Ended');
+              widget.mission.missionController.updateRequirementProgress(_duration);            ////////// Send the duration to the missionController to calculate the money user receives
               _controller.restart(duration: _duration);
               _controller.pause();
               setState(() {
@@ -177,6 +185,7 @@ class _TimerPageState extends State<TimerPage> with WidgetsBindingObserver {
               });
             },
           ),
+
           SizedBox(
             width: 10,
           ),

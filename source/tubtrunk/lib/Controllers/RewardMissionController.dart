@@ -31,7 +31,7 @@ class RewardMissionController{
       stubDB[0].addRequiremnt(new RewardRequirement(5, 1, 1));
       stubDB[0].addRequiremnt(new RewardRequirement(10, 1, 1));
       stubDB[0].addRequiremnt(new RewardRequirement(15, 2, 1));
-      stubDB[0].addRequiremnt(new RewardRequirement(20, 3, 1));
+      stubDB[0].addRequiremnt(new RewardRequirement(20, 2, 1));
 
       stubDB[1].addRequiremnt(new RewardRequirement(25, 1, 1));
       stubDB[1].addRequiremnt(new RewardRequirement(30, 2, 2));
@@ -149,6 +149,8 @@ class RewardMissionController{
         for(int j=0;j<stubDB[i].requirementsList.length;j++){
           if(stubDB[i].requirementsList[j].minutes==minutes && stubDB[i].requirementsList[j].howManyTimesLeft!=0){
             stubDB[i].requirementsList[j].howManyTimesLeft--;
+          }else{
+            prizeMoney+= minutes;
           }
         }
       }

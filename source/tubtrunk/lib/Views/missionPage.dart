@@ -7,11 +7,10 @@ import 'package:tubtrunk/Views/ChallengeIcon.dart';
 class MissionPage extends StatefulWidget {
   @override
   _MissionPageState createState() => _MissionPageState();
+  RewardMissionController missionController = new RewardMissionController();
 }
 
 class _MissionPageState extends State<MissionPage> {
-
-  RewardMissionController missionController = new RewardMissionController();
 
   List<RewardMission> availableMissionsList;
   List<RewardMission> inProgressMissionsList;
@@ -20,7 +19,7 @@ class _MissionPageState extends State<MissionPage> {
   void changeMissionState(String missionName, String missionState){
     setState((){
       if(missionState=="lock") {
-        missionController.moveChallengeToInProgress(missionName);
+        widget.missionController.moveChallengeToInProgress(missionName);
       }
     });
   }
@@ -28,18 +27,20 @@ class _MissionPageState extends State<MissionPage> {
   int requirementsProgress(RewardMission mission){
     setState(() {
       if(mission.completedRequirements==mission.requirementsList.length) {
-        missionController.moveInProgressToAchieved(mission.missionName);
+        widget.missionController.moveInProgressToAchieved(mission.missionName);
       }
     });
     return mission.completedRequirements;
   }
 
 
+
+
   @override
   Widget build(BuildContext context) {
-    availableMissionsList= missionController.getAvailableRewardMissions();
-    inProgressMissionsList= missionController.getInProgressRewardMissions();
-    achievedMissionsList = missionController.getAchievedRewardMissions();
+    availableMissionsList= widget.missionController.getAvailableRewardMissions();
+    inProgressMissionsList= widget.missionController.getInProgressRewardMissions();
+    achievedMissionsList = widget.missionController.getAchievedRewardMissions();
     return DefaultTabController(
       length: 3,
       child: Scaffold(
@@ -88,7 +89,7 @@ class _MissionPageState extends State<MissionPage> {
                             title: Text(
                                 "${availableMissionsList[index].missionName}"),
                             subtitle: Text(
-                              "${missionController.getRewardMissionRequirements(availableMissionsList[index].missionName).toString().replaceAll('[', '').replaceAll(']', '').replaceAll(',', '')}",
+                              "${widget.missionController.getRewardMissionRequirements(availableMissionsList[index].missionName).toString().replaceAll('[', '').replaceAll(']', '').replaceAll(',', '')}",
                               style: TextStyle(
                                   fontSize: 14,
                                   fontWeight: FontWeight.w400,
@@ -119,7 +120,10 @@ class _MissionPageState extends State<MissionPage> {
                               Expanded(
                                 child: ElevatedButton.icon(
                                   onPressed: () {
-                                    changeMissionState(availableMissionsList[index].missionName,availableMissionsList[index].missionStatus);
+                                    setState(() {
+                                      changeMissionState(availableMissionsList[index].missionName,availableMissionsList[index].missionStatus);
+                                    });
+
                                   },
                                   style: ElevatedButton.styleFrom(
                                       primary: Colors.green.shade400,
@@ -164,7 +168,8 @@ class _MissionPageState extends State<MissionPage> {
                               title: Text(
                                   "${inProgressMissionsList[index].missionName}"),
                               subtitle: Text(
-                                "${missionController.getRewardMissionRequirements(inProgressMissionsList[index].missionName).toString().replaceAll('[', '').replaceAll(']', '').replaceAll(',', '')}",
+
+                                "${widget.missionController.getRewardMissionRequirements(inProgressMissionsList[index].missionName).toString().replaceAll('[', '').replaceAll(']', '').replaceAll(',', '')}",
                                 style: TextStyle(
                                     fontSize: 14,
                                     fontWeight: FontWeight.w400,
@@ -250,7 +255,7 @@ class _MissionPageState extends State<MissionPage> {
                               title: Text(
                                   "${achievedMissionsList[index].missionName}"),
                               subtitle: Text(
-                                "${missionController.getRewardMissionRequirements(achievedMissionsList[index].missionName).toString().replaceAll('[', '').replaceAll(']', '').replaceAll(',', '')}",
+                                "${widget.missionController.getRewardMissionRequirements(achievedMissionsList[index].missionName).toString().replaceAll('[', '').replaceAll(']', '').replaceAll(',', '')}",
                                 style: TextStyle(
                                     fontSize: 14,
                                     fontWeight: FontWeight.w400,

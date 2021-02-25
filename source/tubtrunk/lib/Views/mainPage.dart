@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tubtrunk/Models/RewardMission.dart';
 import 'missionPage.dart';
 import 'accountPage.dart';
 import 'TimerView.dart';
@@ -13,9 +14,11 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
+
   int _selectedIndex = 0;
+//  MissionPage missionPage= new MissionPage();
   final _pageOptions = [
-    TimerPage(),
+    TimerPage(mission: MissionPage()),
     MissionPage(),
     RewardStorePage(),
     StatisticPage(),
@@ -39,16 +42,22 @@ class _MainPageState extends State<MainPage> {
         actions: [
           IconButton(
 
-              icon: Icon(
-                Icons.euro,
-                color: Colors.black,
-                size: 24.0,
+              padding: EdgeInsets.all(0.0),
+              icon: Image.asset(
+                'assets/TrunkCoinIcon.png',
+                width: 35.0,
+                height: 35.0,
+
               ),
               onPressed: () {}),
-          Center(
-            child: Text(
-              "$money",
-              style: TextStyle(color: Colors.blueGrey[900], fontSize: 20.0),
+          Padding(
+            padding: const EdgeInsets.only(left: 0.0, right: 1),
+            child: Center(
+              child: Text(
+                "$money",
+                style: TextStyle(color: Colors.blueGrey[900], fontSize: 19.0),
+              ),
+
             ),
           )
         ],

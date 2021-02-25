@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:giffy_dialog/giffy_dialog.dart';
 
+
 class NotificationPage extends StatefulWidget {
 
   NetworkGiffyDialog GiftRecievePopUp(context) {
