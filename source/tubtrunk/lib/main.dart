@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import './Views/landingView.dart';
+import './Views/firstScreen.dart';
 
 void main() {
   runApp(MyApp());
@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.teal,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: LandingView(),
+      home: FirstScreen(),
     );
   }
 }

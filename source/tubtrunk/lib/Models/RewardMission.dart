@@ -1,4 +1,5 @@
-import 'rewardRequirementModel.dart';
+import 'RewardRequirement.dart';
+
 
 /*
 Attributes for Reward Mission table
@@ -10,17 +11,17 @@ Attributes for Reward Mission table
 
  */
 
-class RewardMission {
+class RewardMission{
   String _missionName;
   int _prizeMoney;
-  bool _isFinished = false;
-  List<RewardRequirement> requirementsList = List<RewardRequirement>();
+  bool _isFinished=false;
+  List<RewardRequirement> requirementsList= List<RewardRequirement>();
   String _missionStatus;
   int _completedRequirements;
 
-  RewardMission(this._missionName, this._prizeMoney, this._missionStatus,
-      this._completedRequirements) {
-    requirementsList = List<RewardRequirement>();
+
+  RewardMission( this._missionName, this._prizeMoney, this._missionStatus, this._completedRequirements){
+    requirementsList= List<RewardRequirement>();
   }
 //    _completedRequirements=0;
 //    requirementsList = List<RewardRequirement>();
@@ -30,7 +31,9 @@ class RewardMission {
 //    requirementsList.add(new RewardRequirement(45,16));
 ////    missionType="lock";           // lock, in-progress, achieved
 
-  void addRequiremnt(RewardRequirement requirement) {
+
+
+  void addRequiremnt(RewardRequirement requirement){
     requirementsList.add(requirement);
   }
 
@@ -64,4 +67,6 @@ class RewardMission {
   set completedRequirements(int value) {
     _completedRequirements = value;
   }
+
+
 }
