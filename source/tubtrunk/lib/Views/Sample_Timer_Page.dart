@@ -52,7 +52,7 @@ class _Sample_Timer_Page_State extends State<Sample_Timer_Page> {
           ),
           Conditioned(
             cases: [
-              Case(_start == 0, builder: () => new Popup_Base().Reward_Popup())
+              Case(_start == 0, builder: () => new Popup_Base().MoneyRecievePopup())
             ],
             defaultBuilder: () => Text('$_start'),
           ),

@@ -4,6 +4,8 @@ import 'package:tubtrunk/Models/Coupon.dart';
 import 'package:tubtrunk/Models/Pet.dart';
 import 'package:tubtrunk/Views/myCouponIcon.dart';
 
+import 'Popup_Base.dart';
+
 class RewardStorePage extends StatefulWidget {
   @override
   _RewardStorePageState createState() => _RewardStorePageState();
@@ -98,7 +100,11 @@ class _RewardStorePageState extends State<RewardStorePage>{
                   children: List.generate(coupon_list.length, (index){
                     return Center(
                       child: InkWell(
-                          onTap: Testing,
+                          onTap: () {
+                            showDialog(
+                                context: context, builder: (_) => new Popup_Base().PurchasePopUp(context));
+                            // Perform some action
+                          },
                           child: Container(
                               width: MediaQuery.of(context).size.width,
                               child: Column(
