@@ -1,38 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:tubtrunk/Models/RewardMission.dart';
 import 'missionPage.dart';
 import 'accountPage.dart';
 import 'TimerView.dart';
 import 'statisticPage.dart';
 import 'rewardStorePage.dart';
-
-//<<<<<<< HEAD
-//void main() => runApp(MyApp());
-
-//class MyApp extends StatelessWidget {
-//  @override
-//  Widget build(BuildContext context) {
-//    return MaterialApp(
-////      title: _title,
-//      home: MyStatefulWidget(),
-//    );
-//  }
-//}
-//=======
-// void main() => runApp(MyApp());
-
-// /// This is the main application widget.
-// class MyApp extends StatelessWidget {
-// //  static const String _title = 'Flutter Code Sample';
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return MaterialApp(
-// //      title: _title,
-//       home: MyStatefulWidget(),
-//     );
-//   }
-// }
-
 
 class MainPage extends StatefulWidget {
   MainPage({Key key}) : super(key: key);
@@ -42,9 +14,11 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
+
   int _selectedIndex = 0;
+//  MissionPage missionPage= new MissionPage();
   final _pageOptions = [
-    TimerPage(),
+    TimerPage(mission: MissionPage()),
     MissionPage(),
     RewardStorePage(),
     StatisticPage(),
@@ -72,8 +46,7 @@ class _MainPageState extends State<MainPage> {
                 'assets/TrunkCoinIcon.png',
                 width: 35.0,
                 height: 35.0,
-//            fit5
-//            BoxFit.fitHeight,
+
               ),
               onPressed: () {}),
           Padding(
@@ -83,18 +56,7 @@ class _MainPageState extends State<MainPage> {
                 "$money",
                 style: TextStyle(color: Colors.blueGrey[900], fontSize: 19.0),
               ),
-//=======
-//              icon: Icon(
-//                Icons.euro,
-//                color: Colors.black,
-//                size: 24.0,
-//              ),
-//              onPressed: () {}),
-//          Center(
-//            child: Text(
-//              "$money",
-//              style: TextStyle(color: Colors.blueGrey[900], fontSize: 20.0),
-//>>>>>>> develop
+
             ),
           )
         ],
