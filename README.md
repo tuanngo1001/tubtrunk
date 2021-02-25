@@ -27,5 +27,5 @@ Tubtrunk aims to help and motivate users to concentrate on their tasks for a set
 ### Languages & Tools:
 
 - Frontend: Flutter framework - Dart programming language
-- Backend: Flutter + Firebase
-- Databse: TBA
+- Backend: Flutter + PHP + Apache
+- Databse: MySQL
