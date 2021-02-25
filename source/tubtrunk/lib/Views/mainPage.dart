@@ -1,26 +1,28 @@
 import 'package:flutter/material.dart';
-import 'missionView.dart';
-import 'accountView.dart';
+import 'package:tubtrunk/Models/RewardMission.dart';
+import 'missionPage.dart';
+import 'accountPage.dart';
 import 'TimerView.dart';
-import 'statisticView.dart';
-import 'rewardStoreView.dart';
+import 'statisticPage.dart';
+import 'rewardStorePage.dart';
 
-class MainView extends StatefulWidget {
-  MainView({Key key}) : super(key: key);
+class MainPage extends StatefulWidget {
+  MainPage({Key key}) : super(key: key);
 
   @override
-  _MainViewState createState() => _MainViewState();
+  _MainPageState createState() => _MainPageState();
 }
 
-class _MainViewState extends State<MainView> {
+class _MainPageState extends State<MainPage> {
+
   int _selectedIndex = 0;
 //  MissionPage missionPage= new MissionPage();
   final _pageOptions = [
-    TimerPage(mission: MissionView()),
-    MissionView(),
-    RewardStoreView(),
-    StatisticView(),
-    AccountView()
+    TimerPage(mission: MissionPage()),
+    MissionPage(),
+    RewardStorePage(),
+    StatisticPage(),
+    AccountPage()
   ];
 
   void _onItemTapped(int index) {
@@ -28,6 +30,7 @@ class _MainViewState extends State<MainView> {
       _selectedIndex = index;
     });
   }
+
 
   double money = 3000.0;
   static const double iconSize = 32.5;
@@ -38,11 +41,13 @@ class _MainViewState extends State<MainView> {
       appBar: AppBar(
         actions: [
           IconButton(
+
               padding: EdgeInsets.all(0.0),
               icon: Image.asset(
                 'assets/TrunkCoinIcon.png',
                 width: 35.0,
                 height: 35.0,
+
               ),
               onPressed: () {}),
           Padding(
@@ -52,6 +57,7 @@ class _MainViewState extends State<MainView> {
                 "$money",
                 style: TextStyle(color: Colors.blueGrey[900], fontSize: 19.0),
               ),
+
             ),
           )
         ],
@@ -71,6 +77,7 @@ class _MainViewState extends State<MainView> {
         type: BottomNavigationBarType.fixed,
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
+
             icon: Icon(Icons.timer, size: iconSize),
             label: 'Timer',
           ),

@@ -4,12 +4,12 @@ import 'package:tubtrunk/Controllers/statisticController.dart';
 import 'indicator.dart';
 import 'package:flutter/rendering.dart';
 
-class StatisticView extends StatefulWidget {
+class StatisticPage extends StatefulWidget {
   @override
-  _StatisticViewState createState() => _StatisticViewState();
+  _StatisticPageState createState() => _StatisticPageState();
 }
 
-class _StatisticViewState extends State<StatisticView> {
+class _StatisticPageState extends State<StatisticPage> {
   final StatisticController _statisticController = StatisticController();
 
   @override
@@ -24,14 +24,23 @@ class _StatisticViewState extends State<StatisticView> {
             bottom: TabBar(
               tabs: [
                 Tab(
-                  child: Text("Summary",
+                  child: Text(
+                      "Summary",
                       style: TextStyle(
-                          fontSize: 18.0, color: Colors.blueGrey.shade900)),
+                          fontSize: 18.0,
+                          color: Colors.blueGrey.shade900
+                      )
+                  ),
+
                 ),
                 Tab(
-                  child: Text("Details",
+                  child: Text(
+                      "Details",
                       style: TextStyle(
-                          fontSize: 18.0, color: Colors.blueGrey.shade900)),
+                          fontSize:18.0,
+                          color: Colors.blueGrey.shade900
+                      )
+                  ),
                 )
               ],
             ),
@@ -40,11 +49,11 @@ class _StatisticViewState extends State<StatisticView> {
         body: SafeArea(
           child: FutureBuilder<TabBarView>(
             future: _getDataAndReturnTabBarView(),
-            builder:
-                (BuildContext context, AsyncSnapshot<TabBarView> snapshot) {
+            builder: (BuildContext context, AsyncSnapshot<TabBarView> snapshot) {
               if (snapshot.hasData) {
                 return snapshot.data;
-              } else {
+              }
+              else {
                 return Container(width: 0.0, height: 0.0);
               }
             },
@@ -66,8 +75,12 @@ class _StatisticViewState extends State<StatisticView> {
               height: 20,
             ),
             Center(
-                child: Text('Total focus times: $totalTimes',
-                    style: TextStyle(fontSize: 25))),
+                child:
+                Text(
+                    'Total focus times: $totalTimes',
+                    style: TextStyle(fontSize: 25)
+                )
+            ),
             AspectRatio(
               aspectRatio: 1,
               child: PieChart(
@@ -95,6 +108,7 @@ class _StatisticViewState extends State<StatisticView> {
             ),
           ],
         ),
+
         Center(child: Text('Timer Record Details'))
       ],
     );
@@ -117,9 +131,7 @@ class _StatisticViewState extends State<StatisticView> {
             title: '$succeedPercentage% ($succeedTimes)',
             radius: radius,
             titleStyle: TextStyle(
-                fontSize: fontSize,
-                fontWeight: FontWeight.bold,
-                color: const Color(0xffffffff)),
+                fontSize: fontSize, fontWeight: FontWeight.bold, color: const Color(0xffffffff)),
           );
         case 1:
           return PieChartSectionData(
@@ -128,9 +140,7 @@ class _StatisticViewState extends State<StatisticView> {
             title: '$failedPercentage% ($failedTimes)',
             radius: radius,
             titleStyle: TextStyle(
-                fontSize: fontSize,
-                fontWeight: FontWeight.bold,
-                color: const Color(0xffffffff)),
+                fontSize: fontSize, fontWeight: FontWeight.bold, color: const Color(0xffffffff)),
           );
         default:
           return null;

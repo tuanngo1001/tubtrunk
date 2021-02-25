@@ -1,9 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:giffy_dialog/giffy_dialog.dart';
-import 'package:tubtrunk/Views/rewardStoreView.dart';
 
-class NotificationView extends StatefulWidget {
+
+class NotificationPage extends StatefulWidget {
+
   NetworkGiffyDialog GiftRecievePopUp(context) {
     String gifURL = "https://media.giphy.com/media/5Y2bU7FqLOuzK/giphy.gif";
 
@@ -26,9 +27,9 @@ class NotificationView extends StatefulWidget {
     );
   }
 
+
   NetworkGiffyDialog PurchasePopUp(context) {
-    String gifURL =
-        "https://media.giphy.com/media/d906FK91VCXsbDxBu6/giphy.gif";
+    String gifURL = "https://media.giphy.com/media/d906FK91VCXsbDxBu6/giphy.gif";
 
     return NetworkGiffyDialog(
       image: Image.network(gifURL),
@@ -43,8 +44,7 @@ class NotificationView extends StatefulWidget {
       onOkButtonPressed: () {
         Navigator.of(context).pop();
         showDialog(
-            context: context,
-            builder: (_) => new NotificationView().GiftRecievePopUp(context));
+            context: context, builder: (_) => new NotificationPage().GiftRecievePopUp(context));
         // Perform some action
       },
       buttonOkText: Text("Hell Yeah"),
@@ -53,9 +53,8 @@ class NotificationView extends StatefulWidget {
     );
   }
 
-  NetworkGiffyDialog MoneyRecievePopup(context) {
-    String gifURL =
-        "https://media.giphy.com/media/EBSECypExxqvOY6Te1/giphy.gif";
+  NetworkGiffyDialog MoneyRecievePopup() {
+    String gifURL = "https://media.giphy.com/media/EBSECypExxqvOY6Te1/giphy.gif";
 
     return NetworkGiffyDialog(
       image: Image.network(gifURL),
@@ -67,12 +66,7 @@ class NotificationView extends StatefulWidget {
         textAlign: TextAlign.center,
       ),
       entryAnimation: EntryAnimation.TOP,
-      onOkButtonPressed: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => RewardStoreView()),
-        );
-      },
+      onOkButtonPressed: () {},
       buttonOkText: Text("Shop Now"),
       buttonOkColor: Colors.lightGreen,
       buttonCancelText: Text("Nah, I want more"),
