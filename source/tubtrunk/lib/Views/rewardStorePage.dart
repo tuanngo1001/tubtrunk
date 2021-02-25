@@ -31,7 +31,7 @@ class _RewardStorePageState extends State<RewardStorePage>{
 
   Future<List<Coupon>> getCouponList() async{
      coupon_list = await controller.getCoupons();
-     return await coupon_list;
+     return coupon_list;
   }
 
   void Testing(){
@@ -79,140 +79,139 @@ class _RewardStorePageState extends State<RewardStorePage>{
           ),
         ),
         body: SafeArea(
-          child: TabBarView(
-            children: [
-              GridView.count(
-                childAspectRatio: 3.2,
-                mainAxisSpacing: 0,
-                crossAxisSpacing: 0,
-                crossAxisCount: 1,
-                // Generate 100 widgets that display their index in the List.
-                children: List.generate(coupon_list.length, (index){
-                  return FutureBuilder(
-                    future: getCouponList(),
-                    builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-                      if(snapshot.hasError){
-                        return Center(child: Text('ERROR: ${snapshot.error.toString()}'));
-                      }else if(!snapshot.hasData){
-                        return Center(child: CircularProgressIndicator(),);
-                      }
-                      return Center(
+          child: FutureBuilder<List<Coupon>>(
+          future: getCouponList(),
+          builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+            if(snapshot.hasError){
+              return Center(child: Text('ERROR: ${snapshot.error.toString()}'));
+            }else if(!snapshot.hasData){
+              return Center(child: CircularProgressIndicator(),);
+            }
+            return TabBarView(
+              children: [
+                GridView.count(
+                  childAspectRatio: 2.5,
+                  mainAxisSpacing: 0,
+                  crossAxisSpacing: 0,
+                  crossAxisCount: 1,
+                  // Generate 100 widgets that display their index in the List.
+                  children: List.generate(coupon_list.length, (index){
+                    return Center(
+                      child: InkWell(
+                          onTap: Testing,
+                          child: Container(
+                              width: MediaQuery.of(context).size.width,
+                              child: Column(
+                                children: <Widget>[
+                                  Padding(padding: EdgeInsets.all(18.0)),
+                                  Text(
+                                    coupon_list[index].store + " Coupon",
+                                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                                  ),
+                                  Text(
+                                    coupon_list[index].description,
+                                    style: TextStyle(fontWeight: FontWeight.w400, fontSize: 18),
+                                  ),
+                                ],
+                              )
+                          )
+                      ),
+                    );
+                    // return Center(
+                    //   child: InkWell(
+                    //     onTap: Testing,
+                    //       child: Container(
+                    //           width: MediaQuery.of(context).size.width,
+                    //           child: Column(
+                    //               children: <Widget>[
+                    //                 Padding(padding: EdgeInsets.all(18.0)),
+                    //                 Text(
+                    //                   coupon_list[index].store + " Coupon",
+                    //                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                    //                 ),
+                    //                 Text(
+                    //                   coupon_list[index].description,
+                    //                   style: TextStyle(fontWeight: FontWeight.w400, fontSize: 18),
+                    //                 ),
+                    //               ],
+                    //             )
+                    //     )
+                    //   ),
+                    // );
+                  }),
+                ),
+                GridView.count(
+                  crossAxisCount: 1,
+                  childAspectRatio: 4,
+                  mainAxisSpacing: 0,
+                  crossAxisSpacing: 0,
+                  // Generate 100 widgets that display their index in the List.
+                  children: List.generate(100, (index) {
+                    return Center(
                         child: InkWell(
                           onTap: Testing,
-                            child: Container(
-                                width: MediaQuery.of(context).size.width,
-                                child: Column(
-                                    children: <Widget>[
-                                      Padding(padding: EdgeInsets.all(18.0)),
-                                      Text(
-                                        coupon_list[index].store + " Coupon",
-                                        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
-                                      ),
-                                      Text(
-                                        coupon_list[index].description,
-                                        style: TextStyle(fontWeight: FontWeight.w400, fontSize: 18),
-                                      ),
-                                    ],
-                                  )
-                          )
-                        ),
-                      );
-                    },
-                  );
-                  // return Center(
-                  //   child: InkWell(
-                  //     onTap: Testing,
-                  //       child: Container(
-                  //           width: MediaQuery.of(context).size.width,
-                  //           child: Column(
-                  //               children: <Widget>[
-                  //                 Padding(padding: EdgeInsets.all(18.0)),
-                  //                 Text(
-                  //                   coupon_list[index].store + " Coupon",
-                  //                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
-                  //                 ),
-                  //                 Text(
-                  //                   coupon_list[index].description,
-                  //                   style: TextStyle(fontWeight: FontWeight.w400, fontSize: 18),
-                  //                 ),
-                  //               ],
-                  //             )
-                  //     )
-                  //   ),
-                  // );
-                }),
-              ),
-              GridView.count(
-                crossAxisCount: 1,
-                childAspectRatio: 4,
-                mainAxisSpacing: 0,
-                crossAxisSpacing: 0,
-                // Generate 100 widgets that display their index in the List.
-                children: List.generate(100, (index) {
-                  return Center(
-                    child: InkWell(
-                      onTap: Testing,
-                      child: Container(
-                        width: MediaQuery.of(context).size.width,
-                        child: new Column(
-                          children: <Widget>[
-                            Padding(padding: EdgeInsets.all(18.0)),
-                            Text(
-                              "AAA",
-                              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
-                            ),
-                            Text(
-                              "Description",
-                              style: TextStyle(fontWeight: FontWeight.w400, fontSize: 18),
-                            ),
-                          ],
-                        ),
-                      ),
-                    )
-                  );
-                }),
-              ),
-              GridView.count(
-                childAspectRatio: 4,
-                mainAxisSpacing: 0,
-                crossAxisSpacing: 0,
-                crossAxisCount: 1,
-                // Generate 100 widgets that display their index in the List.
-                children: List.generate(pet_list.length, (index) {
-                  return Center(
-                    child: InkWell(
-                        onTap: Testing,
-                        child: Container(
+                          child: Container(
                             width: MediaQuery.of(context).size.width,
-                            child: Column(
+                            child: new Column(
                               children: <Widget>[
                                 Padding(padding: EdgeInsets.all(18.0)),
                                 Text(
-                                  pet_list[index].name,
+                                  "AAA",
                                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
                                 ),
                                 Text(
-                                  pet_list[index].description,
+                                  "Description",
                                   style: TextStyle(fontWeight: FontWeight.w400, fontSize: 18),
                                 ),
                               ],
-                            )
+                            ),
+                          ),
                         )
-                    ),
-                  );
-                }),
-              ),
-              GridView.count(
-                crossAxisCount: 1,
-                // Generate 100 widgets that display their index in the List.
-                children: List.generate(100, (index) {
-                  return Center(
-                    child: Text('Reward $index'),
-                  );
-                }),
-              ),
-            ],
-          ),
+                    );
+                  }),
+                ),
+                GridView.count(
+                  childAspectRatio: 4,
+                  mainAxisSpacing: 0,
+                  crossAxisSpacing: 0,
+                  crossAxisCount: 1,
+                  // Generate 100 widgets that display their index in the List.
+                  children: List.generate(pet_list.length, (index) {
+                    return Center(
+                      child: InkWell(
+                          onTap: Testing,
+                          child: Container(
+                              width: MediaQuery.of(context).size.width,
+                              child: Column(
+                                children: <Widget>[
+                                  Padding(padding: EdgeInsets.all(18.0)),
+                                  Text(
+                                    pet_list[index].name,
+                                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                                  ),
+                                  Text(
+                                    pet_list[index].description,
+                                    style: TextStyle(fontWeight: FontWeight.w400, fontSize: 18),
+                                  ),
+                                ],
+                              )
+                          )
+                      ),
+                    );
+                  }),
+                ),
+                GridView.count(
+                  crossAxisCount: 1,
+                  // Generate 100 widgets that display their index in the List.
+                  children: List.generate(100, (index) {
+                    return Center(
+                      child: Text('Reward $index'),
+                    );
+                  }),
+                ),
+              ],
+            );
+          }),
         ),
         //backgroundColor: Color.fromARGB(255, 202, 240, 246),
       ),
