@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import '../Controllers/notificationsController.dart';
+import './notificationPage.dart';
 import 'package:circular_countdown_timer/circular_countdown_timer.dart';
 import 'package:flutter_duration_picker/flutter_duration_picker.dart';
 
@@ -13,6 +15,26 @@ class _TimerPageState extends State<TimerPage> {
   bool stopped = true;
   bool resumable = false;
   String stopStartButtonText = "Start";
+
+  @override
+  void initState() {
+    super.initState();
+    notificationsController
+        .setListenerForLowerVersions(onNotificationInLowerVersions);
+    notificationsController.setOnNotificationClick(onNotificationClick);
+  }
+
+  onNotificationInLowerVersions(ReceivedNotification receivedNotification) {
+    print('Notification Received ${receivedNotification.id}');
+  }
+
+  onNotificationClick(String payload) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+          builder: (context) => NotificationPage().Reward_Popup()),
+    );
+  }
 
   _button({String title, VoidCallback onPressed}) {
     return Expanded(
@@ -84,6 +106,14 @@ class _TimerPageState extends State<TimerPage> {
                 resumable = false;
                 stopStartButtonText = "Start";
               });
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => NotificationPage().Reward_Popup()),
+              );
+              notificationsController.setNotification("Time's Up",
+                  "Your focus time period is over, click to receive your rewards!");
+              notificationsController.showNotification();
             },
           ),
         ),
