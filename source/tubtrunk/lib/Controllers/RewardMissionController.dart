@@ -28,10 +28,10 @@ class RewardMissionController{
       stubDB.add(new RewardMission("Failure builds character!", 900,"lock",0));
 
 
-      stubDB[0].addRequiremnt(new RewardRequirement(1, 1, 1));
-//      stubDB[0].addRequiremnt(new RewardRequirement(0, 1, 1));
-//      stubDB[0].addRequiremnt(new RewardRequirement(0, 1, 1));
-//      stubDB[0].addRequiremnt(new RewardRequirement(0, 1, 1));
+      stubDB[0].addRequiremnt(new RewardRequirement(5, 1, 1));
+      stubDB[0].addRequiremnt(new RewardRequirement(10, 1, 1));
+      stubDB[0].addRequiremnt(new RewardRequirement(15, 2, 1));
+      stubDB[0].addRequiremnt(new RewardRequirement(20, 2, 1));
 
       stubDB[1].addRequiremnt(new RewardRequirement(25, 1, 1));
       stubDB[1].addRequiremnt(new RewardRequirement(30, 2, 2));
