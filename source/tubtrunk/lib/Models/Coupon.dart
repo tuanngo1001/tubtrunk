@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-
-import 'Reward.dart';
 import 'dart:convert';
 
 class Coupon
@@ -12,8 +10,11 @@ class Coupon
   String discount;
   String description;  //Already in the super class
   DateTime expireDate;
+  String price;
 
-  Coupon({this.id, this.code, this.store, this.discount, this.description, this.expireDate});
+  Coupon({this.id, this.code, this.store, this.discount, this.description, this.expireDate}){
+    price = "\$69.96";
+  }
 
 
   factory Coupon.fromJson(Map< String, dynamic> json){

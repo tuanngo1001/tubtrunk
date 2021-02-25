@@ -1,4 +1,3 @@
-import 'package:tubtrunk/Models/Reward.dart';
 
 class User
 {
@@ -6,13 +5,11 @@ class User
   String name;
   String password;
   String email;
-  List<Reward> _rewardList;
 
   //Constructor
   User(this.name, this.password, this.email);
 
   User.forNow({this.uID, this.name, this.email}){
-    this._rewardList = new List<Reward>();
   }
 
   factory User.fromJson(Map< String, dynamic> json){
@@ -23,8 +20,4 @@ class User
     );
   }
 
-  void addReward(Reward theReward)
-  {
-    this._rewardList.add(theReward);
-  }
 }
