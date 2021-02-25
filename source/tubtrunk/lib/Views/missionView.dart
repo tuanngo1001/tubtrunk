@@ -7,18 +7,18 @@ import 'package:tubtrunk/Views/challengeIcon.dart';
 class MissionView extends StatefulWidget {
   @override
   _MissionViewState createState() => _MissionViewState();
-  final RewardMissionController missionController = RewardMissionController();
 }
 
 class _MissionViewState extends State<MissionView> {
   List<RewardMission> availableMissionsList;
   List<RewardMission> inProgressMissionsList;
   List<RewardMission> achievedMissionsList;
+  RewardMissionController missionController = RewardMissionController();
 
   void changeMissionState(String missionName, String missionState) {
     setState(() {
       if (missionState == "lock") {
-        widget.missionController.moveChallengeToInProgress(missionName);
+        missionController.moveChallengeToInProgress(missionName);
       }
     });
   }
@@ -26,7 +26,7 @@ class _MissionViewState extends State<MissionView> {
   int requirementsProgress(RewardMission mission) {
     setState(() {
       if (mission.completedRequirements == mission.requirementsList.length) {
-        widget.missionController.moveInProgressToAchieved(mission.missionName);
+        missionController.moveInProgressToAchieved(mission.missionName);
       }
     });
     return mission.completedRequirements;
@@ -34,11 +34,9 @@ class _MissionViewState extends State<MissionView> {
 
   @override
   Widget build(BuildContext context) {
-    availableMissionsList =
-        widget.missionController.getAvailableRewardMissions();
-    inProgressMissionsList =
-        widget.missionController.getInProgressRewardMissions();
-    achievedMissionsList = widget.missionController.getAchievedRewardMissions();
+    availableMissionsList = missionController.getAvailableRewardMissions();
+    inProgressMissionsList = missionController.getInProgressRewardMissions();
+    achievedMissionsList = missionController.getAchievedRewardMissions();
     return DefaultTabController(
       length: 3,
       child: Scaffold(
@@ -87,7 +85,7 @@ class _MissionViewState extends State<MissionView> {
                             title: Text(
                                 "${availableMissionsList[index].missionName}"),
                             subtitle: Text(
-                              "${widget.missionController.getRewardMissionRequirements(availableMissionsList[index].missionName).toString().replaceAll('[', '').replaceAll(']', '').replaceAll(',', '')}",
+                              "${missionController.getRewardMissionRequirements(availableMissionsList[index].missionName).toString().replaceAll('[', '').replaceAll(']', '').replaceAll(',', '')}",
                               style: TextStyle(
                                   fontSize: 14,
                                   fontWeight: FontWeight.w400,
@@ -169,7 +167,7 @@ class _MissionViewState extends State<MissionView> {
                               title: Text(
                                   "${inProgressMissionsList[index].missionName}"),
                               subtitle: Text(
-                                "${widget.missionController.getRewardMissionRequirements(inProgressMissionsList[index].missionName).toString().replaceAll('[', '').replaceAll(']', '').replaceAll(',', '')}",
+                                "${missionController.getRewardMissionRequirements(inProgressMissionsList[index].missionName).toString().replaceAll('[', '').replaceAll(']', '').replaceAll(',', '')}",
                                 style: TextStyle(
                                     fontSize: 14,
                                     fontWeight: FontWeight.w400,
@@ -258,7 +256,7 @@ class _MissionViewState extends State<MissionView> {
                               title: Text(
                                   "${achievedMissionsList[index].missionName}"),
                               subtitle: Text(
-                                "${widget.missionController.getRewardMissionRequirements(achievedMissionsList[index].missionName).toString().replaceAll('[', '').replaceAll(']', '').replaceAll(',', '')}",
+                                "${missionController.getRewardMissionRequirements(achievedMissionsList[index].missionName).toString().replaceAll('[', '').replaceAll(']', '').replaceAll(',', '')}",
                                 style: TextStyle(
                                     fontSize: 14,
                                     fontWeight: FontWeight.w400,
