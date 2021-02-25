@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:giffy_dialog/giffy_dialog.dart';
 import 'package:condition/condition.dart';
 import 'notificationPage.dart';
 
