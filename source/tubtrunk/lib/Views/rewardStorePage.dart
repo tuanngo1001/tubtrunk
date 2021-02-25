@@ -112,6 +112,10 @@ class _RewardStorePageState extends State<RewardStorePage>{
                                     coupon_list[index].description,
                                     style: TextStyle(fontWeight: FontWeight.w400, fontSize: 18),
                                   ),
+                                  Text(
+                                    coupon_list[index].price,
+                                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                                  )
                                 ],
                               )
                           )
@@ -142,6 +146,10 @@ class _RewardStorePageState extends State<RewardStorePage>{
                                   "Description",
                                   style: TextStyle(fontWeight: FontWeight.w400, fontSize: 18),
                                 ),
+                                Text(
+                                  "\$640",
+                                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                                )
                               ],
                             ),
                           ),
@@ -172,6 +180,10 @@ class _RewardStorePageState extends State<RewardStorePage>{
                                     pet_list[index].description,
                                     style: TextStyle(fontWeight: FontWeight.w400, fontSize: 18),
                                   ),
+                                  Text(
+                                    pet_list[index].price,
+                                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                                  )
                                 ],
                               )
                           )
