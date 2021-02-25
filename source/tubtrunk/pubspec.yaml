@@ -23,12 +23,13 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  http:
+  http: ^0.12.2
   giffy_dialog: 1.8.0
   condition: ^0.0.8
   circular_countdown_timer: ^0.1.0
   flutter_duration_picker: ^1.0.0
-
+  intl: ^0.16.1
+  fl_chart: ^0.12.3
 
 
   # The following adds the Cupertino Icons font to your application.
