@@ -11,6 +11,8 @@ class NotificationsController {
       didReceivedLocalNotificationSubject =
       BehaviorSubject<ReceivedNotification>();
   var initializationSettings;
+  var notifTitle = "";
+  var notifMessage = "";
 
   NotificationsController._() {
     init();
@@ -22,6 +24,11 @@ class NotificationsController {
       _requestIOSPermission();
     }
     initializePlatformSpecifics();
+  }
+
+  setNotification(String title, String message) {
+    notifTitle = title;
+    notifMessage = message;
   }
 
   initializePlatformSpecifics() {
@@ -67,23 +74,24 @@ class NotificationsController {
 
   Future showNotification() async {
     var androidDetails = new AndroidNotificationDetails(
-      "Timer",
+      "Tubtrunk notification",
       "Local Notification",
-      "Timer done",
+      "Push Notification",
       importance: Importance.high,
       priority: Priority.high,
       timeoutAfter: 5000,
       styleInformation: DefaultStyleInformation(true, true),
     );
-    var iosDetails = new IOSNotificationDetails(threadIdentifier: 'timer_done');
+    var iosDetails =
+        new IOSNotificationDetails(threadIdentifier: 'tubtrunk_notification');
     var generalNotificationDetails =
         new NotificationDetails(android: androidDetails, iOS: iosDetails);
     await localNotification.show(
       0,
-      "Time's Up!!!",
-      "Your focus period is over, take a rest!",
+      notifTitle,
+      notifMessage,
       generalNotificationDetails,
-      payload: 'Test Payload',
+      payload: '',
     );
   }
 
