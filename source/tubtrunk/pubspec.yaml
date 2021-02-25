@@ -30,14 +30,9 @@ dependencies:
   flutter_duration_picker:
     git:
       url: https://github.com/RajaParikshit/flutter_duration_picker
-      ref: issue_#28_button_theme_b
+      ref: issue_#28_button_theme_bar
   intl: ^0.16.1
   fl_chart: ^0.12.3
-
-dependency_overrides:
-  date_range_picker:
-    git:
-      url: https://github.com/LempereurBenjamin/date_range_picker
 
 
   # The following adds the Cupertino Icons font to your application.
