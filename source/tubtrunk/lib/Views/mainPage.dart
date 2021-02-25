@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'missionPage.dart';
 import 'accountPage.dart';
-import 'timerPage.dart';
+import 'TimerView.dart';
 import 'statisticPage.dart';
 import 'rewardStorePage.dart';
 
