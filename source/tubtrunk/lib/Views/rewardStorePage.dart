@@ -27,7 +27,7 @@ class _RewardStorePageState extends State<RewardStorePage>{
     pet_list.add(new Pet("Mocha", "regular", "fat cat with some level of retard"));
     pet_list.add(new Pet("Candace", "Wild", "young and wild"));
     pet_list.add(new Pet("Kiko", "Rare", "Fat but old and wise"));
-    pet_list.add(new Pet("Pink Guy", "Ultra Rare", "Cosmestic level of disturbant"));
+    pet_list.add(new Pet("Pink Guy", "Ultra Rare", "Cosmetic level of disturbance"));
   }
 
   void getCouponList() async{

@@ -9,9 +9,7 @@ class User
   List<Reward> _rewardList;
 
   //Constructor
-  User(this.name, this.password, this.email)
-  {
-  }
+  User(this.name, this.password, this.email);
 
   User.forNow({this.uID, this.name, this.email}){
     this._rewardList = new List<Reward>();
