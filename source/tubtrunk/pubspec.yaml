@@ -27,6 +27,7 @@ dependencies:
   giffy_dialog: 1.8.0
   condition: ^0.0.8
 
+  fl_chart: ^0.12.3
 
 
   # The following adds the Cupertino Icons font to your application.
