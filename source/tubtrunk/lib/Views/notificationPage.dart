@@ -2,7 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:giffy_dialog/giffy_dialog.dart';
 
-class Popup_Base extends StatefulWidget {
+
+class NotificationPage extends StatefulWidget {
   NetworkGiffyDialog Reward_Popup() {
     String gifURL = "https://media.giphy.com/media/5Y2bU7FqLOuzK/giphy.gif";
 
