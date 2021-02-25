@@ -138,7 +138,11 @@ class _RewardStorePageState extends State<RewardStorePage>{
                   children: List.generate(100, (index) {
                     return Center(
                         child: InkWell(
-                          onTap: Testing,
+                          onTap: () {
+                            showDialog(
+                                context: context, builder: (_) => new Popup_Base().PurchasePopUp(context));
+                            // Perform some action
+                          },
                           child: Container(
                             width: MediaQuery.of(context).size.width,
                             child: new Column(
@@ -172,7 +176,11 @@ class _RewardStorePageState extends State<RewardStorePage>{
                   children: List.generate(pet_list.length, (index) {
                     return Center(
                       child: InkWell(
-                          onTap: Testing,
+                          onTap: () {
+                            showDialog(
+                                context: context, builder: (_) => new Popup_Base().PurchasePopUp(context));
+                            // Perform some action
+                          },
                           child: Container(
                               width: MediaQuery.of(context).size.width,
                               child: Column(
