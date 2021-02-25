@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:circular_countdown_timer/circular_countdown_timer.dart';
+import 'package:flutter_duration_picker/flutter_duration_picker.dart';
 
 class TimerPage extends StatefulWidget {
   @override
@@ -8,7 +9,7 @@ class TimerPage extends StatefulWidget {
 
 class _TimerPageState extends State<TimerPage> {
   CountDownController _controller = CountDownController();
-  int _duration = 1800;
+  int _duration = 5;
   bool stopped = true;
   bool resumable = false;
   String stopStartButtonText = "Start";
@@ -26,37 +27,26 @@ class _TimerPageState extends State<TimerPage> {
     );
   }
 
-  String _timerTextFormat() {
-    if (_duration > 3600) {
-      return CountdownTextFormat.HH_MM_SS;
-    } else if (_duration > 60) {
-      return CountdownTextFormat.MM_SS;
-    } else {
-      return CountdownTextFormat.S;
-    }
-  }
-
-  void _showDurationPickerDialog() async {
-    final selectedDurationInMinutes = await showDialog<int>(
-      context: context,
-      builder: (context) => DurationPickerDialog(
-        initialDuration: _duration,
-      ),
-    );
-
-    if (selectedDurationInMinutes != null) {
-      setState(() {
-        _duration = selectedDurationInMinutes * 60;
-      });
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
         child: GestureDetector(
-          onTap: () => _showDurationPickerDialog(),
+          onTap: () async {
+            Duration resultingDuration = await showDurationPicker(
+              context: context,
+              initialTime: new Duration(seconds: _duration),
+            );
+            setState(() {
+              if (resultingDuration == null ||
+                  resultingDuration.inSeconds == 0) {
+                // if cancelled or 0 minutes selected, use previously selected duration
+                _duration = _duration;
+              } else {
+                _duration = resultingDuration.inSeconds;
+              }
+            });
+          },
           child: CircularCountDownTimer(
             duration: _duration,
             initialDuration: 0,
@@ -76,7 +66,7 @@ class _TimerPageState extends State<TimerPage> {
               color: Colors.white,
               fontWeight: FontWeight.bold,
             ),
-            textFormat: _timerTextFormat(),
+            textFormat: CountdownTextFormat.HH_MM_SS,
             isReverse: true,
             isReverseAnimation: true,
             isTimerTextShown: true,
@@ -87,6 +77,13 @@ class _TimerPageState extends State<TimerPage> {
             },
             onComplete: () {
               print('Countdown Ended');
+              _controller.restart(duration: _duration);
+              _controller.pause();
+              setState(() {
+                stopped = true;
+                resumable = false;
+                stopStartButtonText = "Start";
+              });
             },
           ),
         ),
@@ -109,8 +106,8 @@ class _TimerPageState extends State<TimerPage> {
                 stopped
                     ? stopStartButtonText = "Stop"
                     : stopStartButtonText = "Start";
+                stopped = !stopped;
               });
-              stopped = !stopped;
             },
           ),
           SizedBox(
@@ -130,57 +127,6 @@ class _TimerPageState extends State<TimerPage> {
           ),
         ],
       ),
-    );
-  }
-}
-
-class DurationPickerDialog extends StatefulWidget {
-  final int initialDuration;
-  const DurationPickerDialog({Key key, this.initialDuration}) : super(key: key);
-
-  @override
-  _DurationPickerDialogState createState() => _DurationPickerDialogState();
-}
-
-class _DurationPickerDialogState extends State<DurationPickerDialog> {
-  int _durationInMinutes;
-
-  @override
-  void initState() {
-    super.initState();
-    _durationInMinutes = (widget.initialDuration / 60).toInt();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return AlertDialog(
-      title: Text('Enter time'),
-      insetPadding: EdgeInsets.symmetric(
-        horizontal: 10.0,
-        vertical: 300.0,
-      ),
-      content: Container(
-        child: Slider(
-          value: _durationInMinutes.toDouble(),
-          min: 10,
-          max: 240,
-          divisions: 46,
-          onChanged: (value) {
-            setState(() {
-              _durationInMinutes = value.toInt();
-              print(_durationInMinutes);
-            });
-          },
-        ),
-      ),
-      actions: <Widget>[
-        FlatButton(
-          onPressed: () {
-            Navigator.pop(context, _durationInMinutes);
-          },
-          child: Text('Done'),
-        )
-      ],
     );
   }
 }
