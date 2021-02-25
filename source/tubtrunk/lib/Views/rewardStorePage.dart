@@ -103,7 +103,7 @@ class _RewardStorePageState extends State<RewardStorePage>{
                         splashColor: Colors.cyanAccent,
                           onTap: () {
                             showDialog(
-                                context: context, builder: (_) => new notificationPage().PurchasePopUp(context));
+                                context: context, builder: (_) => new NotificationPage().PurchasePopUp(context));
                             // Perform some action
                           },
                           child: Container(
@@ -142,7 +142,7 @@ class _RewardStorePageState extends State<RewardStorePage>{
                           splashColor: Colors.cyanAccent,
                           onTap: () {
                             showDialog(
-                                context: context, builder: (_) => new notificationPage().PurchasePopUp(context));
+                                context: context, builder: (_) => new NotificationPage().PurchasePopUp(context));
                             // Perform some action
                           },
                           child: Container(
@@ -181,7 +181,7 @@ class _RewardStorePageState extends State<RewardStorePage>{
                           splashColor: Colors.cyanAccent,
                           onTap: () {
                             showDialog(
-                                context: context, builder: (_) => new notificationPage().PurchasePopUp(context));
+                                context: context, builder: (_) => new NotificationPage().PurchasePopUp(context));
                             // Perform some action
                           },
                           child: Container(

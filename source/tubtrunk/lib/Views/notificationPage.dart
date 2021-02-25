@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:giffy_dialog/giffy_dialog.dart';
 
-class notificationPage extends StatefulWidget {
+class NotificationPage extends StatefulWidget {
 
   NetworkGiffyDialog GiftRecievePopUp(context) {
     String gifURL = "https://media.giphy.com/media/5Y2bU7FqLOuzK/giphy.gif";
@@ -43,7 +43,7 @@ class notificationPage extends StatefulWidget {
       onOkButtonPressed: () {
         Navigator.of(context).pop();
         showDialog(
-            context: context, builder: (_) => new notificationPage().GiftRecievePopUp(context));
+            context: context, builder: (_) => new NotificationPage().GiftRecievePopUp(context));
         // Perform some action
       },
       buttonOkText: Text("Hell Yeah"),

@@ -24,13 +24,21 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-
   http: ^0.12.2
   step_progress_indicator: ^0.2.5+8
 
+
   giffy_dialog: 1.8.0
   condition: ^0.0.8
-
+  flutter_local_notifications: ^4.0.1+1
+  rxdart: ^0.25.0
+  circular_countdown_timer: ^0.1.0
+  flutter_duration_picker:
+    git:
+      url: https://github.com/RajaParikshit/flutter_duration_picker
+      ref: issue_#28_button_theme_bar
+  intl: ^0.16.1
+  fl_chart: ^0.12.3
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -74,3 +82,7 @@ flutter:
       fonts:
         - asset: fonts/ChallengeIcon.ttf
 
+    - family: Stalinist One
+      fonts:
+        - asset: fonts/StalinistOne-Regular.ttf
+          weight: 400
