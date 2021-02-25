@@ -23,7 +23,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  http:
+  http: ^0.12.2
   giffy_dialog: 1.8.0
   condition: ^0.0.8
 

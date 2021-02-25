@@ -2,12 +2,11 @@ import 'User.dart';
 
 class Reward
 {
-  String _m_Name;
   String _m_Description;
   bool _m_Unlocked;
   User _m_owner;
 
-  Reward(this._m_Name)
+  Reward(this._m_Description)
   {
     this._m_Unlocked = false;
   }
@@ -20,6 +19,14 @@ class Reward
   void unlock()
   {
     this._m_Unlocked = true;
+  }
+
+  String getDescription(){
+    return _m_Description;
+  }
+
+  void setDescription(String newDescription){
+    _m_Description = newDescription;
   }
 }
 

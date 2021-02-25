@@ -1,9 +1,36 @@
+import 'package:flutter/material.dart';
+
 import 'Reward.dart';
+import 'dart:convert';
 
-class Coupon extends Reward
+class Coupon
 {
-  DateTime _expiration_Date;
-  String _apply_To; //Superstore, Giant Tiger, Sobey, . . .
+  //Coupon attributes
+  int id;
+  String code;
+  String store;
+  String discount;
+  String description;  //Already in the super class
+  DateTime expireDate;
 
-  Coupon(String m_Name, this._expiration_Date, this._apply_To) : super(m_Name);
+  Coupon({this.id, this.code, this.store, this.discount, this.description, this.expireDate});
+
+
+  factory Coupon.fromJson(Map< String, dynamic> json){
+    return Coupon(
+      id: int.parse(json['ID']),
+      code: json['Code'],
+      store: json['Store'],
+      discount: json['Discount'],
+      description:json['Description'],
+      expireDate: DateTime.parse(json['ExpireDate']),
+    );
+  }
+
+  @override
+  String toString() {
+    // TODO: implement toString
+    return "ID: "+id.toString()+ "description "+ description;
+
+  }
 }

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:tubtrunk/Views/Popup_Base.dart';
+import 'package:tubtrunk/Controllers/storeController.dart';
 import 'package:tubtrunk/Views/Sample_Timer_Page.dart';
 
+import 'Models/Coupon.dart';
 
 void main() {
   runApp(MyApp());
@@ -67,6 +68,8 @@ class _MyHomePageState extends State<MyHomePage> {
 
   }
 
+  storeController coupTroller = new storeController();
+
   @override
   Widget build(BuildContext context) {
     // This method is rerun every time setState is called, for instance as done
@@ -126,10 +129,19 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
+        onPressed: printCu,
         tooltip: 'Increment',
         child: Icon(Icons.add),
       ), // This trailing comma makes auto-formatting nicer for build methods.
     );
+  }
+
+
+  Future<void> printCu() async{
+    List<Coupon> list = await coupTroller.getCoupons();
+
+    list.forEach((element) {
+      print(element.toString());
+    });
   }
 }
