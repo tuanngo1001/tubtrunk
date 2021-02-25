@@ -4,7 +4,7 @@ import 'package:giffy_dialog/giffy_dialog.dart';
 
 class Popup_Base extends StatefulWidget {
 
-  NetworkGiffyDialog GiftRecievePopUp() {
+  NetworkGiffyDialog GiftRecievePopUp(context) {
     String gifURL = "https://media.giphy.com/media/5Y2bU7FqLOuzK/giphy.gif";
 
     return NetworkGiffyDialog(
@@ -17,10 +17,12 @@ class Popup_Base extends StatefulWidget {
         textAlign: TextAlign.center,
       ),
       entryAnimation: EntryAnimation.TOP,
-      onOkButtonPressed: () {},
-      buttonOkText: Text("Check it"),
+      onOkButtonPressed: () {
+        Navigator.of(context).pop();
+      },
+      onlyOkButton: true,
+      buttonOkText: Text("OK!"),
       buttonOkColor: Colors.lightGreen,
-      buttonCancelText: Text("Later"),
     );
   }
 
@@ -39,8 +41,9 @@ class Popup_Base extends StatefulWidget {
       ),
       entryAnimation: EntryAnimation.TOP,
       onOkButtonPressed: () {
+        Navigator.of(context).pop();
         showDialog(
-            context: context, builder: (_) => new Popup_Base().GiftRecievePopUp());
+            context: context, builder: (_) => new Popup_Base().GiftRecievePopUp(context));
         // Perform some action
       },
       buttonOkText: Text("Hell Yeah"),
