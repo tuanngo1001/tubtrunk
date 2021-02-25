@@ -67,7 +67,7 @@ class _TimerPageState extends State<TimerPage> with WidgetsBindingObserver {
       Navigator.push(
         context,
         MaterialPageRoute(
-            builder: (context) => NotificationPage().Reward_Popup()),
+            builder: (context) => NotificationPage().MoneyRecievePopup()),
       );
   }
 
@@ -146,7 +146,7 @@ class _TimerPageState extends State<TimerPage> with WidgetsBindingObserver {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (context) => NotificationPage().Reward_Popup()),
+                    builder: (context) => NotificationPage().MoneyRecievePopup()),
               );
               notificationsController.setNotification("Time's Up!!!",
                   "Your focus time period is over, click to receive your rewards!");

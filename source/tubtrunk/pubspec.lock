@@ -170,9 +170,11 @@ packages:
   flutter_duration_picker:
     dependency: "direct main"
     description:
-      name: flutter_duration_picker
-      url: "https://pub.dartlang.org"
-    source: hosted
+      path: "."
+      ref: "issue_#28_button_theme_bar"
+      resolved-ref: "9aa6ba10cdf96d2beb3ab7ae1f0887a72c81bde6"
+      url: "https://github.com/RajaParikshit/flutter_duration_picker"
+    source: git
     version: "1.0.4"
   flutter_launcher_icons:
     dependency: "direct dev"
@@ -255,7 +257,7 @@ packages:
       name: io
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.3.4"
+    version: "0.3.5"
   js:
     dependency: transitive
     description:
@@ -450,6 +452,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.10.0-nullsafety.1"
+  step_progress_indicator:
+    dependency: "direct main"
+    description:
+      name: step_progress_indicator
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.2.5+8"
   stream_channel:
     dependency: transitive
     description:

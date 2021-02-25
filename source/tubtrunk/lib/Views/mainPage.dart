@@ -5,21 +5,6 @@ import 'TimerView.dart';
 import 'statisticPage.dart';
 import 'rewardStorePage.dart';
 
-// void main() => runApp(MyApp());
-
-// /// This is the main application widget.
-// class MyApp extends StatelessWidget {
-// //  static const String _title = 'Flutter Code Sample';
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return MaterialApp(
-// //      title: _title,
-//       home: MyStatefulWidget(),
-//     );
-//   }
-// }
-
 class MainPage extends StatefulWidget {
   MainPage({Key key}) : super(key: key);
 
@@ -43,14 +28,17 @@ class _MainPageState extends State<MainPage> {
     });
   }
 
+
   double money = 3000.0;
   static const double iconSize = 32.5;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         actions: [
           IconButton(
+
               icon: Icon(
                 Icons.euro,
                 color: Colors.black,
@@ -80,6 +68,7 @@ class _MainPageState extends State<MainPage> {
         type: BottomNavigationBarType.fixed,
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
+
             icon: Icon(Icons.timer, size: iconSize),
             label: 'Timer',
           ),
