@@ -1,22 +1,23 @@
-import 'package:tubtrunk/Models/Reward.dart';
 
 class User
 {
-  String _name;
-  String _password;
-  String _email;
-  List<Reward> _rewardList;
-
+  int uID;
+  String name;
+  String password;
+  String email;
 
   //Constructor
-  User(this._name, this._password, this._email)
-  {
-    this._rewardList = new List<Reward>();
+  User(this.name, this.password, this.email);
 
+  User.forNow({this.uID, this.name, this.email}){
   }
 
-  void addReward(Reward theReward)
-  {
-    this._rewardList.add(theReward);
+  factory User.fromJson(Map< String, dynamic> json){
+    return User.forNow(
+      uID: int.parse(json['uID']),
+      name: json['Name'],
+      email: json['uEmail'],
+    );
   }
+
 }

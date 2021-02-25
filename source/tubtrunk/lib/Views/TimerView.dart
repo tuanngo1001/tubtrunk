@@ -14,20 +14,55 @@ class TimerPage extends StatefulWidget {
   _TimerPageState createState() => _TimerPageState();
 }
 
-class _TimerPageState extends State<TimerPage> {
 
+
+class _TimerPageState extends State<TimerPage> with WidgetsBindingObserver {
   CountDownController _controller = CountDownController();
   int _duration = 5;
   bool stopped = true;
   bool resumable = false;
+  bool finished = false;
   String stopStartButtonText = "Start";
+  String setButtonText = "Reset";
 
   @override
   void initState() {
     super.initState();
+
+    WidgetsBinding.instance.addObserver(this);
+
     notificationsController
         .setListenerForLowerVersions(onNotificationInLowerVersions);
     notificationsController.setOnNotificationClick(onNotificationClick);
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    super.didChangeAppLifecycleState(state);
+
+    if (state == AppLifecycleState.inactive ||
+        state == AppLifecycleState.detached) return;
+
+    final isBackground = state == AppLifecycleState.paused;
+    if (isBackground && !stopped) {
+      notificationsController.setNotification("Warning! You've left Tubtrunk!",
+          "Your focus time is reset and the ongoing period will be invalid.");
+      notificationsController.showNotification();
+      _controller.restart(duration: _duration);
+      _controller.pause();
+      setState(() {
+        stopped = true;
+        resumable = false;
+        finished = false;
+        stopStartButtonText = "Start";
+      });
+    }
   }
 
   onNotificationInLowerVersions(ReceivedNotification receivedNotification) {
@@ -35,11 +70,12 @@ class _TimerPageState extends State<TimerPage> {
   }
 
   onNotificationClick(String payload) {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-          builder: (context) => NotificationPage().Reward_Popup()),
-    );
+    if (finished)
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => NotificationPage().MoneyRecievePopup()),
+      );
   }
 
   _button({String title, VoidCallback onPressed}) {
@@ -102,6 +138,7 @@ class _TimerPageState extends State<TimerPage> {
             onStart: () {
               print('Countdown Started');
               resumable = true;
+              finished = false;
             },
             onComplete: () {
               print('Countdown Ended');
@@ -111,12 +148,13 @@ class _TimerPageState extends State<TimerPage> {
               setState(() {
                 stopped = true;
                 resumable = false;
+                finished = true;
                 stopStartButtonText = "Start";
               });
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (context) => NotificationPage().Reward_Popup()),
+                    builder: (context) => NotificationPage().MoneyRecievePopup()),
               );
               notificationsController.setNotification("Time's Up!!!",
                   "Your focus time period is over, click to receive your rewards!");
@@ -152,13 +190,14 @@ class _TimerPageState extends State<TimerPage> {
             width: 10,
           ),
           _button(
-            title: "Reset",
+            title: setButtonText,
             onPressed: () {
               _controller.restart(duration: _duration);
               _controller.pause();
               setState(() {
                 stopped = true;
                 resumable = false;
+                finished = false;
                 stopStartButtonText = "Start";
               });
             },

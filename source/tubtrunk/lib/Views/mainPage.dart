@@ -31,7 +31,8 @@ class _MainPageState extends State<MainPage> {
     });
   }
 
-  double money = 0.0;
+
+  double money = 3000.0;
   static const double iconSize = 32.5;
 
   @override

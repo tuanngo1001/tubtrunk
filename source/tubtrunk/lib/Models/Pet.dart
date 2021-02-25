@@ -1,8 +1,14 @@
-import 'Reward.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
-class Pet extends Reward
+class Pet
 {
-  String _rarity;
-  Pet(String m_Name, this._rarity) :
-        super(m_Name);
+  String rarity;
+  String name;
+  String description;
+  String price;
+  Pet(this.name, this.rarity, this.description){
+    price = "\$100";
+  }
+
 }
