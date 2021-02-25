@@ -117,27 +117,6 @@ class _RewardStorePageState extends State<RewardStorePage>{
                           )
                       ),
                     );
-                    // return Center(
-                    //   child: InkWell(
-                    //     onTap: Testing,
-                    //       child: Container(
-                    //           width: MediaQuery.of(context).size.width,
-                    //           child: Column(
-                    //               children: <Widget>[
-                    //                 Padding(padding: EdgeInsets.all(18.0)),
-                    //                 Text(
-                    //                   coupon_list[index].store + " Coupon",
-                    //                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
-                    //                 ),
-                    //                 Text(
-                    //                   coupon_list[index].description,
-                    //                   style: TextStyle(fontWeight: FontWeight.w400, fontSize: 18),
-                    //                 ),
-                    //               ],
-                    //             )
-                    //     )
-                    //   ),
-                    // );
                   }),
                 ),
                 GridView.count(
