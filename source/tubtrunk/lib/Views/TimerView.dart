@@ -111,7 +111,7 @@ class _TimerPageState extends State<TimerPage> {
                 MaterialPageRoute(
                     builder: (context) => NotificationPage().Reward_Popup()),
               );
-              notificationsController.setNotification("Time's Up",
+              notificationsController.setNotification("Time's Up!!!",
                   "Your focus time period is over, click to receive your rewards!");
               notificationsController.showNotification();
             },
