@@ -5,27 +5,18 @@ on:
     branches: [ main, develop ]
   pull_request:
     branches: [ main, develop ]
-    
+
 jobs:
-  build:
+  workflow:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v1
-    - uses: actions/setup-java@v1
-      with:
-        java-version: '12.x'
-    
-    # Setup the flutter environment.
-    - uses: subosito/flutter-action@v1
-      with:
-        channel: 'beta' # 'dev', 'alpha', default to: 'stable'
-        # flutter-version: '1.12.x' # you can also specify exact version of flutter
-    
-    # Get flutter dependencies.
-    - run: flutter pub get
-      working-directory: source/tubtrunk/
-      
-    # Run widget tests for our flutter project.
-    - run: flutter test
-      working-directory: source/tubtrunk/
-    
+      - uses: actions/checkout@v2 # (1)
+      - name: Setup Flutter # (2)
+        run: |
+          git clone https://github.com/flutter/flutter.git --depth 1
+          echo "$GITHUB_WORKSPACE/flutter/bin" >> $GITHUB_PATH
+      - name: Run Checks # (3)
+        run: |
+          flutter pub get
+          flutter test --no-pub
+        working-directory: source/tubtrunk/
