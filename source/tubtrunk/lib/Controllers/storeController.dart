@@ -19,7 +19,9 @@ class storeController{
       for(var key in data){
         couponList.add(Coupon.fromJson(key));
       }
-      return couponList;
+      //return couponList;
+      return Future.delayed(
+          Duration(seconds: 1),() => couponList);
     }else{
       print(response.statusCode);
       throw Exception('Failed to load post');

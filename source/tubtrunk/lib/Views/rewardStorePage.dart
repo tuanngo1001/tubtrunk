@@ -11,28 +11,27 @@ class RewardStorePage extends StatefulWidget {
 
 class _RewardStorePageState extends State<RewardStorePage>{
 
-  @override
-  void initState(){
-    Stub_Pet_List();
-    getCouponList();
-    super.initState();
-  }
-
   storeController controller = new storeController();
-
   List<Pet> pet_list = new List<Pet>();
   List<Coupon> coupon_list = new List<Coupon>();
+
+  @override
+  void initState(){
+    getCouponList();
+    Stub_Pet_List();
+    super.initState();
+  }
 
   void Stub_Pet_List(){
     pet_list.add(new Pet("Mocha", "regular", "fat cat with some level of retard"));
     pet_list.add(new Pet("Candace", "Wild", "young and wild"));
     pet_list.add(new Pet("Kiko", "Rare", "Fat but old and wise"));
-    pet_list.add(new Pet("Pink Guy", "Ultra Rare", "Cosmetic level of disturbance"));
+    pet_list.add(new Pet("Pink Guy", "Ultra Rare", "Cosmic level of disturbance"));
   }
 
-  void getCouponList() async{
+  Future<List<Coupon>> getCouponList() async{
      coupon_list = await controller.getCoupons();
-     print(coupon_list.length);
+     return await coupon_list;
   }
 
   void Testing(){
@@ -89,27 +88,58 @@ class _RewardStorePageState extends State<RewardStorePage>{
                 crossAxisCount: 1,
                 // Generate 100 widgets that display their index in the List.
                 children: List.generate(coupon_list.length, (index){
-                  return Center(
-                    child: InkWell(
-                      onTap: Testing,
-                        child: Container(
-                            width: MediaQuery.of(context).size.width,
-                            child: Column(
-                                children: <Widget>[
-                                  Padding(padding: EdgeInsets.all(18.0)),
-                                  Text(
-                                    coupon_list[index].store + " Coupon",
-                                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
-                                  ),
-                                  Text(
-                                    coupon_list[index].description,
-                                    style: TextStyle(fontWeight: FontWeight.w400, fontSize: 18),
-                                  ),
-                                ],
-                              )
-                      )
-                    ),
+                  return FutureBuilder(
+                    future: getCouponList(),
+                    builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+                      if(snapshot.hasError){
+                        return Center(child: Text('ERROR: ${snapshot.error.toString()}'));
+                      }else if(!snapshot.hasData){
+                        return Center(child: CircularProgressIndicator(),);
+                      }
+                      return Center(
+                        child: InkWell(
+                          onTap: Testing,
+                            child: Container(
+                                width: MediaQuery.of(context).size.width,
+                                child: Column(
+                                    children: <Widget>[
+                                      Padding(padding: EdgeInsets.all(18.0)),
+                                      Text(
+                                        coupon_list[index].store + " Coupon",
+                                        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                                      ),
+                                      Text(
+                                        coupon_list[index].description,
+                                        style: TextStyle(fontWeight: FontWeight.w400, fontSize: 18),
+                                      ),
+                                    ],
+                                  )
+                          )
+                        ),
+                      );
+                    },
                   );
+                  // return Center(
+                  //   child: InkWell(
+                  //     onTap: Testing,
+                  //       child: Container(
+                  //           width: MediaQuery.of(context).size.width,
+                  //           child: Column(
+                  //               children: <Widget>[
+                  //                 Padding(padding: EdgeInsets.all(18.0)),
+                  //                 Text(
+                  //                   coupon_list[index].store + " Coupon",
+                  //                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                  //                 ),
+                  //                 Text(
+                  //                   coupon_list[index].description,
+                  //                   style: TextStyle(fontWeight: FontWeight.w400, fontSize: 18),
+                  //                 ),
+                  //               ],
+                  //             )
+                  //     )
+                  //   ),
+                  // );
                 }),
               ),
               GridView.count(
