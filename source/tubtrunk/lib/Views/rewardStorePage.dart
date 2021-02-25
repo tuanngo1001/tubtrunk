@@ -19,16 +19,29 @@ class _RewardStorePageState extends State<RewardStorePage> {
             bottom: TabBar(
               tabs: [
                 Tab(
-                  icon: Icon(MyCouponIcon.coupon,size: 30.0,color: Colors.blueGrey.shade800),
+                  icon: Icon(MyCouponIcon.coupon,
+                      size: 30.0, color: Colors.blueGrey.shade800),
                 ),
                 Tab(
-                  icon: Icon(Icons.my_library_music_outlined ,size: 30.0,color: Colors.blueGrey.shade800,),
+                  icon: Icon(
+                    Icons.my_library_music_outlined,
+                    size: 30.0,
+                    color: Colors.blueGrey.shade800,
+                  ),
                 ),
                 Tab(
-                  icon: Icon(Icons.pets_outlined ,size: 30.0,color: Colors.blueGrey.shade800,),
+                  icon: Icon(
+                    Icons.pets_outlined,
+                    size: 30.0,
+                    color: Colors.blueGrey.shade800,
+                  ),
                 ),
                 Tab(
-                  icon: Icon(Icons.palette_outlined,size: 30.0,color: Colors.blueGrey.shade800,),
+                  icon: Icon(
+                    Icons.palette_outlined,
+                    size: 30.0,
+                    color: Colors.blueGrey.shade800,
+                  ),
                 )
               ],
             ),
@@ -43,9 +56,7 @@ class _RewardStorePageState extends State<RewardStorePage> {
                 // Generate 100 widgets that display their index in the List.
                 children: List.generate(100, (index) {
                   return Center(
-                    child: Text(
-                        'Reward $index'
-                    ),
+                    child: Text('Reward $index'),
                   );
                 }),
               ),
@@ -54,21 +65,7 @@ class _RewardStorePageState extends State<RewardStorePage> {
                 // Generate 100 widgets that display their index in the List.
                 children: List.generate(100, (index) {
                   return Center(
-                    child: Text(
-                        'Reward $index'
-                    ),
-                  );
-                }),
-              ),
-
-              GridView.count(
-                crossAxisCount: 1,
-                // Generate 100 widgets that display their index in the List.
-                children: List.generate(100, (index) {
-                  return Center(
-                    child: Text(
-                        'Reward $index'
-                    ),
+                    child: Text('Reward $index'),
                   );
                 }),
               ),
@@ -77,9 +74,16 @@ class _RewardStorePageState extends State<RewardStorePage> {
                 // Generate 100 widgets that display their index in the List.
                 children: List.generate(100, (index) {
                   return Center(
-                    child: Text(
-                        'Reward $index'
-                    ),
+                    child: Text('Reward $index'),
+                  );
+                }),
+              ),
+              GridView.count(
+                crossAxisCount: 1,
+                // Generate 100 widgets that display their index in the List.
+                children: List.generate(100, (index) {
+                  return Center(
+                    child: Text('Reward $index'),
                   );
                 }),
               ),
