@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-
 class TimerPage extends StatefulWidget {
   @override
   _TimerPageState createState() => _TimerPageState();

@@ -24,7 +24,10 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+
   http: ^0.12.2
+  step_progress_indicator: ^0.2.5+8
+
   giffy_dialog: 1.8.0
   condition: ^0.0.8
 
@@ -59,8 +62,15 @@ flutter:
 #    - family: MyCouponIcon
 #      fonts:
 #        - asset: assets/MyCouponIcon.ttf
+  assets:
+    - assets/TrunkCoinIcon.png
 
   fonts:
     - family: MyCouponIcon
       fonts:
         - asset: fonts/MyCouponIcon.ttf
+
+    - family:  Challenge
+      fonts:
+        - asset: fonts/ChallengeIcon.ttf
+

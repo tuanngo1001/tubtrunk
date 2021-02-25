@@ -11,7 +11,7 @@
 ///      fonts:
 ///       - asset: fonts/MyCouponIcon.ttf
 ///
-/// 
+///
 ///
 import 'package:flutter/widgets.dart';
 
@@ -21,5 +21,6 @@ class MyCouponIcon {
   static const _kFontFam = 'MyCouponIcon';
   static const String _kFontPkg = null;
 
-  static const IconData coupon = IconData(0xe800, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData coupon =
+      IconData(0xe800, fontFamily: _kFontFam, fontPackage: _kFontPkg);
 }

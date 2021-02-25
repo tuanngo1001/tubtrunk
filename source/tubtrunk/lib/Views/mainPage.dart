@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'missionPage.dart';
 import 'accountPage.dart';
@@ -6,13 +5,9 @@ import 'timerPage.dart';
 import 'statisticPage.dart';
 import 'rewardStorePage.dart';
 
-
 void main() => runApp(MyApp());
 
-/// This is the main application widget.
 class MyApp extends StatelessWidget {
-//  static const String _title = 'Flutter Code Sample';
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -44,37 +39,37 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
       _selectedIndex = index;
     });
   }
-  double money=3000.0;
+
+  double money = 0.0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        actions:[
+        actions: [
           IconButton(
-            icon: Icon(
-              Icons.euro,
-              color: Colors.black,
-              size: 24.0,
-            ),
-            onPressed: (){
-            }
-          ),
-          Center(
-            child: Text(
-              "$money",
-              style: TextStyle(
-                color: Colors.blueGrey[900],
-                fontSize: 20.0
+              padding: EdgeInsets.all(0.0),
+              icon: Image.asset(
+                'assets/TrunkCoinIcon.png',
+                width: 35.0,
+                height: 35.0,
+//            fit5
+//            BoxFit.fitHeight,
+              ),
+              onPressed: () {}),
+          Padding(
+            padding: const EdgeInsets.only(left: 0.0, right: 1),
+            child: Center(
+              child: Text(
+                "$money",
+                style: TextStyle(color: Colors.blueGrey[900], fontSize: 19.0),
               ),
             ),
           )
         ],
         backgroundColor: Colors.red,
-        title:  Text(
+        title: Text(
           'Tubtrunk',
-          style: TextStyle(
-              color: Colors.blueGrey[900]
-          ),
+          style: TextStyle(color: Colors.blueGrey[900]),
         ),
       ),
       body: Center(
@@ -87,7 +82,10 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
         type: BottomNavigationBarType.fixed,
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-            icon: Icon(Icons.timer, size: 35.0,),
+            icon: Icon(
+              Icons.timer,
+              size: 35.0,
+            ),
             label: 'Timer',
           ),
           BottomNavigationBarItem(
