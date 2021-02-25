@@ -105,7 +105,7 @@ class _TimerPageState extends State<TimerPage> {
             },
             onComplete: () {
               print('Countdown Ended');
-              widget.mission.missionController.updateRequirementProgress(1);            ////////// Send the duration to the missionController to calculate the money user receives
+              widget.mission.missionController.updateRequirementProgress(_duration);            ////////// Send the duration to the missionController to calculate the money user receives
               _controller.restart(duration: _duration);
               _controller.pause();
               setState(() {
