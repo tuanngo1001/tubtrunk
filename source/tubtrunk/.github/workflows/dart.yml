@@ -2,9 +2,9 @@ name: Dart
 
 on:
   push:
-    branches: [ main, develop ]
+    branches: [ main, develop, create-yml-for-ci ]
   pull_request:
-    branches: [ main, develop ]
+    branches: [ main, develop, create-yml-for-ci ]
 
 jobs:
   build:
