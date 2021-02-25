@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'mainPage.dart';
+import 'mainView.dart';
 
-class FirstScreen extends StatefulWidget {
+class LandingView extends StatefulWidget {
   @override
-  _FirstScreenState createState() => _FirstScreenState();
+  _LandingViewState createState() => _LandingViewState();
 }
 
-class _FirstScreenState extends State<FirstScreen> {
+class _LandingViewState extends State<LandingView> {
   String text = "";
 
   void changeText(String text) {
@@ -65,7 +65,7 @@ class NavigateButtonWidget extends StatelessWidget {
         onPressed: () {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => MainPage()),
+            MaterialPageRoute(builder: (context) => MainView()),
           );
         });
   }
