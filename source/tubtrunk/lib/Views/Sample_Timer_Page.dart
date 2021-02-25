@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:giffy_dialog/giffy_dialog.dart';
 import 'package:condition/condition.dart';
-import 'Popup_Base.dart';
+import 'notificationPage.dart';
 
 class Sample_Timer_Page extends StatefulWidget {
   @override
@@ -52,7 +52,7 @@ class _Sample_Timer_Page_State extends State<Sample_Timer_Page> {
           ),
           Conditioned(
             cases: [
-              Case(_start == 0, builder: () => new Popup_Base().MoneyRecievePopup())
+              Case(_start == 0, builder: () => new notificationPage().MoneyRecievePopup())
             ],
             defaultBuilder: () => Text('$_start'),
           ),

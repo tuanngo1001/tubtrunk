@@ -4,7 +4,7 @@ import 'package:tubtrunk/Models/Coupon.dart';
 import 'package:tubtrunk/Models/Pet.dart';
 import 'package:tubtrunk/Views/myCouponIcon.dart';
 
-import 'Popup_Base.dart';
+import 'notificationPage.dart';
 
 class RewardStorePage extends StatefulWidget {
   @override
@@ -100,9 +100,10 @@ class _RewardStorePageState extends State<RewardStorePage>{
                   children: List.generate(coupon_list.length, (index){
                     return Center(
                       child: InkWell(
+                        splashColor: Colors.cyanAccent,
                           onTap: () {
                             showDialog(
-                                context: context, builder: (_) => new Popup_Base().PurchasePopUp(context));
+                                context: context, builder: (_) => new notificationPage().PurchasePopUp(context));
                             // Perform some action
                           },
                           child: Container(
@@ -131,16 +132,17 @@ class _RewardStorePageState extends State<RewardStorePage>{
                 ),
                 GridView.count(
                   crossAxisCount: 1,
-                  childAspectRatio: 4,
+                  childAspectRatio: 3,
                   mainAxisSpacing: 0,
                   crossAxisSpacing: 0,
                   // Generate 100 widgets that display their index in the List.
                   children: List.generate(100, (index) {
                     return Center(
                         child: InkWell(
+                          splashColor: Colors.cyanAccent,
                           onTap: () {
                             showDialog(
-                                context: context, builder: (_) => new Popup_Base().PurchasePopUp(context));
+                                context: context, builder: (_) => new notificationPage().PurchasePopUp(context));
                             // Perform some action
                           },
                           child: Container(
@@ -168,7 +170,7 @@ class _RewardStorePageState extends State<RewardStorePage>{
                   }),
                 ),
                 GridView.count(
-                  childAspectRatio: 4,
+                  childAspectRatio: 3,
                   mainAxisSpacing: 0,
                   crossAxisSpacing: 0,
                   crossAxisCount: 1,
@@ -176,9 +178,10 @@ class _RewardStorePageState extends State<RewardStorePage>{
                   children: List.generate(pet_list.length, (index) {
                     return Center(
                       child: InkWell(
+                          splashColor: Colors.cyanAccent,
                           onTap: () {
                             showDialog(
-                                context: context, builder: (_) => new Popup_Base().PurchasePopUp(context));
+                                context: context, builder: (_) => new notificationPage().PurchasePopUp(context));
                             // Perform some action
                           },
                           child: Container(
