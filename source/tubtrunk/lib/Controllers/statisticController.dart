@@ -1,4 +1,4 @@
-import 'package:tubtrunk/Models/timerRecord.dart';
+import 'package:tubtrunk/Models/timerRecordModel.dart';
 import 'package:tubtrunk/Utils/globalSettings.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
@@ -21,11 +21,11 @@ class StatisticController {
 
     var response = await http.post(
         GlobalSettings.ServerAddress + "getTimerRecordsForUser.php",
-        body: map
-    );
+        body: map);
 
     if (response.statusCode == 200) {
-      _timerRecords = List<TimerRecord>.from(json.decode(response.body).map((tr) => TimerRecord.fromJson(tr)));
+      _timerRecords = List<TimerRecord>.from(
+          json.decode(response.body).map((tr) => TimerRecord.fromJson(tr)));
       _totalFocusTimes = _timerRecords != null ? _timerRecords.length : 0;
 
       _succeedFocusTimes = _failedFocusTimes = 0;
@@ -50,8 +50,7 @@ class StatisticController {
   }
 
   int getSucceedPercentage() {
-    if (_totalFocusTimes == 0)
-      return 0;
+    if (_totalFocusTimes == 0) return 0;
 
     return (_succeedFocusTimes * 100 / _totalFocusTimes).toInt();
   }
@@ -61,8 +60,7 @@ class StatisticController {
   }
 
   int getFailedPercentage() {
-    if (_totalFocusTimes == 0)
-      return 0;
+    if (_totalFocusTimes == 0) return 0;
 
     return (_failedFocusTimes * 100 / _totalFocusTimes).toInt();
   }
