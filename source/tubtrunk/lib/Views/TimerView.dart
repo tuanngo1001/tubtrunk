@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:tubtrunk/Models/RewardMission.dart';
-import 'package:tubtrunk/Views/missionPage.dart';
 import '../Controllers/notificationsController.dart';
 import './notificationPage.dart';
 import 'package:circular_countdown_timer/circular_countdown_timer.dart';
@@ -8,7 +6,7 @@ import 'package:flutter_duration_picker/flutter_duration_picker.dart';
 
 class TimerPage extends StatefulWidget {
   final mission;
-  TimerPage({this.mission});////////////////////////////
+  TimerPage({this.mission});
 
   @override
   _TimerPageState createState() => _TimerPageState();
@@ -80,13 +78,16 @@ class _TimerPageState extends State<TimerPage> with WidgetsBindingObserver {
 
   _button({String title, VoidCallback onPressed}) {
     return Expanded(
-      child: RaisedButton(
+      child: ElevatedButton(
         child: Text(
           title,
           style: TextStyle(color: Colors.white),
         ),
         onPressed: onPressed,
-        color: Color(0xfffc575e),
+        style: ElevatedButton.styleFrom(
+          primary: Color(0xfffc575e),
+        ),
+        // backgroundColor: Color(0xfffc575e),
       ),
     );
   }
