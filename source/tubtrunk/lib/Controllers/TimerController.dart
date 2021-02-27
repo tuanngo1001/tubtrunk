@@ -1,9 +1,7 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter_duration_picker/flutter_duration_picker.dart';
 import 'package:circular_countdown_timer/circular_countdown_timer.dart';
+import 'package:tubtrunk/Utils/globalSettings.dart';
+import 'package:http/http.dart' as http;
 
-import '../Models/timerRecord.dart';
-import '../Views/TimerView.dart';
 import '../Controllers/RewardMissionController.dart';
 
 class TimerController {
@@ -26,6 +24,30 @@ class TimerController {
   String _stopStartButtonText = "Start";
   String get stopStartButtonText => _stopStartButtonText;
 
+  DateTime _startDateTime;
+
+  void updateStartDateTime() {
+    _startDateTime = DateTime.now();
+  }
+
+  void saveTimerRecord({int duration: 0, bool completed: false}) async {
+    var map = new Map<String, String>();
+    map["UserID"] = "1";
+    map["Date"] = GlobalSettings.DateFormatted.format(_startDateTime);
+    map["Time"] = GlobalSettings.TimeFormatted.format(_startDateTime);
+    map["Duration"] = duration.toString();
+    map["Completed"] = completed ? "1" : "0";
+
+    var response = await http.post(
+        GlobalSettings.ServerAddress + "addTimerRecord.php",
+        body: map
+    );
+
+    if (response.statusCode == 200) {
+      print("Successfully saved new timer record");
+    }
+  }
+
   void chooseDuration(Duration resultingDuration) {
     if (resultingDuration == null ||
         resultingDuration.inSeconds == 0) {
@@ -34,7 +56,6 @@ class TimerController {
     } else {
       _duration = resultingDuration.inSeconds;
     }
-    print(_duration);
   }
 
   void onStart() {
@@ -52,6 +73,7 @@ class TimerController {
     _resumable = false;
     _finished = true;
     _stopStartButtonText = "Start";
+    saveTimerRecord(duration: _duration, completed: finished);
   }
 
   void stopStart() {
@@ -60,15 +82,19 @@ class TimerController {
     } else {
       countDownController.pause();
     }
-      _stopped
-          ? _stopStartButtonText = "Stop"
-          : _stopStartButtonText = "Start";
-      _stopped = !stopped;
+    _stopped
+        ? _stopStartButtonText = "Stop"
+        : _stopStartButtonText = "Start";
+    _stopped = !stopped;
+    updateStartDateTime();
   }
 
   void reset() {
     countDownController.restart(duration: _duration);
     countDownController.pause();
+    if (!stopped) {
+      saveTimerRecord();
+    }
     _stopped = true;
     _resumable = false;
     _finished = false;

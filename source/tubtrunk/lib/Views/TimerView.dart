@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tubtrunk/Controllers/TimerController.dart';
 import 'package:circular_countdown_timer/circular_countdown_timer.dart';
 import 'package:flutter_duration_picker/flutter_duration_picker.dart';
 
@@ -12,7 +13,13 @@ class TimerPage extends StatefulWidget {
 }
 
 class _TimerPageState extends State<TimerPage> with WidgetsBindingObserver {
-  TimerController _timerController = TimerController();
+  final TimerController _timerController = TimerController();
+  int _duration = 5;
+  bool stopped = true;
+  bool resumable = false;
+  bool finished = false;
+  String stopStartButtonText = "Start";
+  String setButtonText = "Reset";
 
   @override
   void initState() {
@@ -123,6 +130,9 @@ class _TimerPageState extends State<TimerPage> with WidgetsBindingObserver {
               setState(() {
                 _timerController.onComplete();
               });
+
+              _timerController.saveTimerRecord(duration: _duration, completed: finished);
+
               Navigator.push(
                 context,
                 MaterialPageRoute(

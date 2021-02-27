@@ -2,6 +2,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:tubtrunk/Models/Coupon.dart';
 import 'package:tubtrunk/Models/User.dart';
+import 'package:tubtrunk/Utils/globalSettings.dart';
 
 class storeController{
 
@@ -9,9 +10,9 @@ class storeController{
 
   //#region Methods
   Future<List<Coupon>> getCoupons() async{
-    List<Coupon> couponList = new List<Coupon>();
+    List<Coupon> couponList = [];
 
-    var url = 'https://tubtrunk.tk/getCoupons.php';
+    var url = GlobalSettings.ServerAddress + "getCoupons.php";
     http.Response response = await http.get(url);
     if(response.statusCode == 200){
       var data = jsonDecode(response.body);
@@ -29,7 +30,7 @@ class storeController{
   }
 
   Future<List<User>> getUsers() async{
-    List<User> userList = new List<User>();
+    List<User> userList = [];
 
     var url = 'https://tubtrunk.tk/getUsers.php';
     http.Response response = await http.get(url);
