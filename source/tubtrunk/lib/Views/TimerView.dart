@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tubtrunk/Controllers/TimerController.dart';
 import 'package:tubtrunk/Models/RewardMission.dart';
 import 'package:tubtrunk/Views/missionPage.dart';
 import '../Controllers/notificationsController.dart';
@@ -17,6 +18,7 @@ class TimerPage extends StatefulWidget {
 
 
 class _TimerPageState extends State<TimerPage> with WidgetsBindingObserver {
+  final TimerController _timerController = TimerController();
   CountDownController _controller = CountDownController();
   int _duration = 5;
   bool stopped = true;
@@ -151,6 +153,9 @@ class _TimerPageState extends State<TimerPage> with WidgetsBindingObserver {
                 finished = true;
                 stopStartButtonText = "Start";
               });
+
+              _timerController.saveTimerRecord(duration: _duration, completed: finished);
+
               Navigator.push(
                 context,
                 MaterialPageRoute(
@@ -173,6 +178,8 @@ class _TimerPageState extends State<TimerPage> with WidgetsBindingObserver {
             title: stopStartButtonText,
             onPressed: () {
               if (stopped) {
+                _timerController.updateStartDateTime();
+
                 resumable == true ? _controller.resume() : _controller.start();
               } else {
                 _controller.pause();
@@ -195,6 +202,9 @@ class _TimerPageState extends State<TimerPage> with WidgetsBindingObserver {
               _controller.restart(duration: _duration);
               _controller.pause();
               setState(() {
+                if (!stopped) {
+                  _timerController.saveTimerRecord();
+                }
                 stopped = true;
                 resumable = false;
                 finished = false;
