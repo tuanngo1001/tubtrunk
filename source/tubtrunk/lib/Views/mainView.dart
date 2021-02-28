@@ -14,13 +14,12 @@ class MainView extends StatefulWidget {
 
 class _MainViewState extends State<MainView> {
   int _selectedIndex = 0;
-//  MissionPage missionPage= new MissionPage();
   final _pageOptions = [
     TimerView(mission: MissionView()),
     MissionView(),
     RewardStoreView(),
     StatisticView(),
-    AccountView()
+    AccountView(),
   ];
 
   void _onItemTapped(int index) {
