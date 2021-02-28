@@ -2,7 +2,7 @@ import 'package:circular_countdown_timer/circular_countdown_timer.dart';
 import 'package:tubtrunk/Utils/globalSettings.dart';
 import 'package:http/http.dart' as http;
 
-import '../Controllers/RewardMissionController.dart';
+import '../Controllers/rewardMissionController.dart';
 
 class TimerController {
   RewardMissionController _rewardMissionController = RewardMissionController();

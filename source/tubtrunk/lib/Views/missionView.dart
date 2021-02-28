@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:tubtrunk/Controllers/RewardMissionController.dart';
+import 'package:tubtrunk/Controllers/rewardMissionController.dart';
 import 'package:tubtrunk/Models/RewardMissionModel.dart';
 import 'package:step_progress_indicator/step_progress_indicator.dart';
-import 'package:tubtrunk/Views/ChallengeIcon.dart';
+import 'package:tubtrunk/Views/challengeIcon.dart';
 
 class MissionView extends StatefulWidget {
   @override
