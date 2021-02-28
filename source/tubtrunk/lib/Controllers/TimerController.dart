@@ -33,15 +33,13 @@ class TimerController {
   void saveTimerRecord({int duration: 0, bool completed: false}) async {
     var map = new Map<String, String>();
     map["UserID"] = "1";
-    map["Date"] = GlobalSettings.DateFormatted.format(_startDateTime);
-    map["Time"] = GlobalSettings.TimeFormatted.format(_startDateTime);
+    map["Date"] = GlobalSettings.dateFormatted.format(_startDateTime);
+    map["Time"] = GlobalSettings.timeFormatted.format(_startDateTime);
     map["Duration"] = duration.toString();
     map["Completed"] = completed ? "1" : "0";
 
-    var response = await http.post(
-        GlobalSettings.ServerAddress + "addTimerRecord.php",
-        body: map
-    );
+    var response = await http
+        .post(GlobalSettings.serverAddress + "addTimerRecord.php", body: map);
 
     if (response.statusCode == 200) {
       print("Successfully saved new timer record");
@@ -49,8 +47,7 @@ class TimerController {
   }
 
   void chooseDuration(Duration resultingDuration) {
-    if (resultingDuration == null ||
-        resultingDuration.inSeconds == 0) {
+    if (resultingDuration == null || resultingDuration.inSeconds == 0) {
       // if cancelled or 0 minutes selected, use previously selected duration
       _duration = _duration;
     } else {
@@ -66,7 +63,8 @@ class TimerController {
 
   void onComplete() {
     print('Countdown Ended');
-    _rewardMissionController.updateRequirementProgress(_duration); // Send the duration to the missionController to calculate the money user receives
+    _rewardMissionController.updateRequirementProgress(
+        _duration); // Send the duration to the missionController to calculate the money user receives
     countDownController.restart(duration: _duration);
     countDownController.pause();
     _stopped = true;
@@ -78,13 +76,13 @@ class TimerController {
 
   void stopStart() {
     if (stopped) {
-      resumable == true ? countDownController.resume() : countDownController.start();
+      resumable == true
+          ? countDownController.resume()
+          : countDownController.start();
     } else {
       countDownController.pause();
     }
-    _stopped
-        ? _stopStartButtonText = "Stop"
-        : _stopStartButtonText = "Start";
+    _stopped ? _stopStartButtonText = "Stop" : _stopStartButtonText = "Start";
     _stopped = !stopped;
     updateStartDateTime();
   }

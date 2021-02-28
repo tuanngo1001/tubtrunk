@@ -1,11 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:giffy_dialog/giffy_dialog.dart';
+import 'package:tubtrunk/Views/rewardStoreView.dart';
 
-
-class NotificationPage extends StatefulWidget {
-
-  NetworkGiffyDialog GiftRecievePopUp(context) {
+class NotificationView extends StatefulWidget {
+  NetworkGiffyDialog giftRecievePopUp(context) {
     String gifURL = "https://media.giphy.com/media/5Y2bU7FqLOuzK/giphy.gif";
 
     return NetworkGiffyDialog(
@@ -27,9 +26,9 @@ class NotificationPage extends StatefulWidget {
     );
   }
 
-
-  NetworkGiffyDialog PurchasePopUp(context) {
-    String gifURL = "https://media.giphy.com/media/d906FK91VCXsbDxBu6/giphy.gif";
+  NetworkGiffyDialog purchasePopUp(context) {
+    String gifURL =
+        "https://media.giphy.com/media/d906FK91VCXsbDxBu6/giphy.gif";
 
     return NetworkGiffyDialog(
       image: Image.network(gifURL),
@@ -44,7 +43,8 @@ class NotificationPage extends StatefulWidget {
       onOkButtonPressed: () {
         Navigator.of(context).pop();
         showDialog(
-            context: context, builder: (_) => new NotificationPage().GiftRecievePopUp(context));
+            context: context,
+            builder: (_) => new NotificationView().giftRecievePopUp(context));
         // Perform some action
       },
       buttonOkText: Text("Hell Yeah"),
@@ -53,8 +53,9 @@ class NotificationPage extends StatefulWidget {
     );
   }
 
-  NetworkGiffyDialog MoneyRecievePopup() {
-    String gifURL = "https://media.giphy.com/media/EBSECypExxqvOY6Te1/giphy.gif";
+  NetworkGiffyDialog moneyRecievePopup(context) {
+    String gifURL =
+        "https://media.giphy.com/media/EBSECypExxqvOY6Te1/giphy.gif";
 
     return NetworkGiffyDialog(
       image: Image.network(gifURL),
@@ -66,7 +67,12 @@ class NotificationPage extends StatefulWidget {
         textAlign: TextAlign.center,
       ),
       entryAnimation: EntryAnimation.TOP,
-      onOkButtonPressed: () {},
+      onOkButtonPressed: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => RewardStoreView()),
+        );
+      },
       buttonOkText: Text("Shop Now"),
       buttonOkColor: Colors.lightGreen,
       buttonCancelText: Text("Nah, I want more"),
@@ -75,7 +81,6 @@ class NotificationPage extends StatefulWidget {
 
   @override
   State<StatefulWidget> createState() {
-    // TODO: implement createState
     throw UnimplementedError();
   }
 }

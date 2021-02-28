@@ -1,18 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:tubtrunk/Controllers/TimerController.dart';
+// import 'package:tubtrunk/Models/RewardMissionModel.dart';
+// import 'package:tubtrunk/Views/MissionView.dart';
+import '../Controllers/NotificationsController.dart';
+import './NotificationView.dart';
 import 'package:circular_countdown_timer/circular_countdown_timer.dart';
 import 'package:flutter_duration_picker/flutter_duration_picker.dart';
 
-import '../Controllers/notificationsController.dart';
-import './notificationPage.dart';
-import '../Controllers/TimerController.dart';
+class TimerView extends StatefulWidget {
+  final mission;
+  TimerView({this.mission});
 
-class TimerPage extends StatefulWidget {
   @override
-  _TimerPageState createState() => _TimerPageState();
+  _TimerViewState createState() => _TimerViewState();
 }
 
-class _TimerPageState extends State<TimerPage> with WidgetsBindingObserver {
+class _TimerViewState extends State<TimerView> with WidgetsBindingObserver {
   final TimerController _timerController = TimerController();
   int _duration = 5;
   bool stopped = true;
@@ -64,7 +67,8 @@ class _TimerPageState extends State<TimerPage> with WidgetsBindingObserver {
       Navigator.push(
         context,
         MaterialPageRoute(
-            builder: (context) => NotificationPage().MoneyRecievePopup()),
+            builder: (context) =>
+                NotificationView().moneyRecievePopup(context)),
       );
   }
 
@@ -127,16 +131,19 @@ class _TimerPageState extends State<TimerPage> with WidgetsBindingObserver {
               });
             },
             onComplete: () {
+              // widget.mission.rewardMissionController.updateRequirementProgress(_duration); ////////// Send the duration to the missionController to calculate the money user receives
               setState(() {
                 _timerController.onComplete();
               });
 
-              _timerController.saveTimerRecord(duration: _duration, completed: finished);
+              _timerController.saveTimerRecord(
+                  duration: _duration, completed: finished);
 
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (context) => NotificationPage().MoneyRecievePopup()),
+                    builder: (context) =>
+                        NotificationView().moneyRecievePopup(context)),
               );
               notificationsController.setNotification("Time's Up!!!",
                   "Your focus time period is over, click to receive your rewards!");
@@ -159,7 +166,6 @@ class _TimerPageState extends State<TimerPage> with WidgetsBindingObserver {
               });
             },
           ),
-
           SizedBox(
             width: 10,
           ),

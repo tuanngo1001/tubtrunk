@@ -1,15 +1,15 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
-import 'package:tubtrunk/Controllers/statisticController.dart';
+import 'package:tubtrunk/Controllers/StatisticController.dart';
 import 'indicator.dart';
 import 'package:flutter/rendering.dart';
 
-class StatisticPage extends StatefulWidget {
+class StatisticView extends StatefulWidget {
   @override
-  _StatisticPageState createState() => _StatisticPageState();
+  _StatisticViewState createState() => _StatisticViewState();
 }
 
-class _StatisticPageState extends State<StatisticPage> {
+class _StatisticViewState extends State<StatisticView> {
   final StatisticController _statisticController = StatisticController();
 
   @override
@@ -24,23 +24,14 @@ class _StatisticPageState extends State<StatisticPage> {
             bottom: TabBar(
               tabs: [
                 Tab(
-                  child: Text(
-                      "Summary",
+                  child: Text("Summary",
                       style: TextStyle(
-                          fontSize: 18.0,
-                          color: Colors.blueGrey.shade900
-                      )
-                  ),
-
+                          fontSize: 18.0, color: Colors.blueGrey.shade900)),
                 ),
                 Tab(
-                  child: Text(
-                      "Details",
+                  child: Text("Details",
                       style: TextStyle(
-                          fontSize:18.0,
-                          color: Colors.blueGrey.shade900
-                      )
-                  ),
+                          fontSize: 18.0, color: Colors.blueGrey.shade900)),
                 )
               ],
             ),
@@ -49,11 +40,11 @@ class _StatisticPageState extends State<StatisticPage> {
         body: SafeArea(
           child: FutureBuilder<TabBarView>(
             future: _getDataAndReturnTabBarView(),
-            builder: (BuildContext context, AsyncSnapshot<TabBarView> snapshot) {
+            builder:
+                (BuildContext context, AsyncSnapshot<TabBarView> snapshot) {
               if (snapshot.hasData) {
                 return snapshot.data;
-              }
-              else {
+              } else {
                 return Container(width: 0.0, height: 0.0);
               }
             },
@@ -75,12 +66,8 @@ class _StatisticPageState extends State<StatisticPage> {
               height: 20,
             ),
             Center(
-                child:
-                Text(
-                    'Total focus times: $totalTimes',
-                    style: TextStyle(fontSize: 25)
-                )
-            ),
+                child: Text('Total focus times: $totalTimes',
+                    style: TextStyle(fontSize: 25))),
             AspectRatio(
               aspectRatio: 1,
               child: PieChart(
@@ -108,7 +95,6 @@ class _StatisticPageState extends State<StatisticPage> {
             ),
           ],
         ),
-
         Center(child: Text('Timer Record Details'))
       ],
     );
@@ -131,7 +117,9 @@ class _StatisticPageState extends State<StatisticPage> {
             title: '$succeedPercentage% ($succeedTimes)',
             radius: radius,
             titleStyle: TextStyle(
-                fontSize: fontSize, fontWeight: FontWeight.bold, color: const Color(0xffffffff)),
+                fontSize: fontSize,
+                fontWeight: FontWeight.bold,
+                color: const Color(0xffffffff)),
           );
         case 1:
           return PieChartSectionData(
@@ -140,7 +128,9 @@ class _StatisticPageState extends State<StatisticPage> {
             title: '$failedPercentage% ($failedTimes)',
             radius: radius,
             titleStyle: TextStyle(
-                fontSize: fontSize, fontWeight: FontWeight.bold, color: const Color(0xffffffff)),
+                fontSize: fontSize,
+                fontWeight: FontWeight.bold,
+                color: const Color(0xffffffff)),
           );
         default:
           return null;
