@@ -17,7 +17,7 @@ class StatisticController {
 
   Future<int> fetchTimerRecord() async {
     var map = new Map<String, String>();
-    map['UserID'] = '1';
+    map["UserID"] = "1";
 
     var response = await http.post(
         GlobalSettings.serverAddress + "getTimerRecordsForUser.php",
@@ -53,7 +53,7 @@ class StatisticController {
   int getSucceedPercentage() {
     if (_totalFocusTimes == 0) return 0;
 
-    return (_succeedFocusTimes * 100 ~/ _totalFocusTimes).toInt();
+    return _succeedFocusTimes * 100 ~/ _totalFocusTimes;
   }
 
   int getFailedFocusTimes() {
@@ -63,6 +63,6 @@ class StatisticController {
   int getFailedPercentage() {
     if (_totalFocusTimes == 0) return 0;
 
-    return (_failedFocusTimes * 100 ~/ _totalFocusTimes).toInt();
+    return _failedFocusTimes * 100 ~/ _totalFocusTimes;
   }
 }

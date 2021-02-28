@@ -2,15 +2,16 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:tubtrunk/Models/CouponModel.dart';
 import 'package:tubtrunk/Models/UserModel.dart';
+import 'package:tubtrunk/Utils/globalSettings.dart';
 
 class StoreController {
   StoreController();
 
   //#region Methods
   Future<List<CouponModel>> getCoupons() async {
-    List<CouponModel> couponList = new List<CouponModel>();
+    List<CouponModel> couponList = [];
 
-    var url = 'https://tubtrunk.tk/getCoupons.php';
+    var url = GlobalSettings.serverAddress + "getCoupons.php";
     http.Response response = await http.get(url);
     if (response.statusCode == 200) {
       var data = jsonDecode(response.body);
@@ -27,7 +28,7 @@ class StoreController {
   }
 
   Future<List<UserModel>> getUsers() async {
-    List<UserModel> userList = new List<UserModel>();
+    List<UserModel> userList = [];
 
     var url = 'https://tubtrunk.tk/getUsers.php';
     http.Response response = await http.get(url);

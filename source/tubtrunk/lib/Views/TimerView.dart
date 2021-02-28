@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:tubtrunk/Controllers/TimerController.dart';
+// import 'package:tubtrunk/Models/RewardMissionModel.dart';
+// import 'package:tubtrunk/Views/MissionView.dart';
 import '../Controllers/NotificationsController.dart';
 import './NotificationView.dart';
 import 'package:circular_countdown_timer/circular_countdown_timer.dart';
@@ -13,6 +16,7 @@ class TimerView extends StatefulWidget {
 }
 
 class _TimerViewState extends State<TimerView> with WidgetsBindingObserver {
+  final TimerController _timerController = TimerController();
   CountDownController _controller = CountDownController();
   int _duration = 5;
   bool stopped = true;
@@ -148,6 +152,10 @@ class _TimerViewState extends State<TimerView> with WidgetsBindingObserver {
                 finished = true;
                 stopStartButtonText = "Start";
               });
+
+              _timerController.saveTimerRecord(
+                  duration: _duration, completed: finished);
+
               Navigator.push(
                 context,
                 MaterialPageRoute(
@@ -171,6 +179,8 @@ class _TimerViewState extends State<TimerView> with WidgetsBindingObserver {
             title: stopStartButtonText,
             onPressed: () {
               if (stopped) {
+                _timerController.updateStartDateTime();
+
                 resumable == true ? _controller.resume() : _controller.start();
               } else {
                 _controller.pause();
@@ -192,6 +202,9 @@ class _TimerViewState extends State<TimerView> with WidgetsBindingObserver {
               _controller.restart(duration: _duration);
               _controller.pause();
               setState(() {
+                if (!stopped) {
+                  _timerController.saveTimerRecord();
+                }
                 stopped = true;
                 resumable = false;
                 finished = false;
