@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:tubtrunk/Controllers/TimerController.dart';
+import 'package:tubtrunk/Controllers/timerController.dart';
 // import 'package:tubtrunk/Models/RewardMissionModel.dart';
 // import 'package:tubtrunk/Views/MissionView.dart';
 import '../Controllers/NotificationsController.dart';
