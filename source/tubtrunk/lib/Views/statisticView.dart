@@ -1,6 +1,6 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
-import 'package:tubtrunk/Controllers/statisticController.dart';
+import 'package:tubtrunk/Controllers/StatisticController.dart';
 import 'indicator.dart';
 import 'package:flutter/rendering.dart';
 

@@ -4,7 +4,7 @@ import 'package:giffy_dialog/giffy_dialog.dart';
 import 'package:tubtrunk/Views/rewardStoreView.dart';
 
 class NotificationView extends StatefulWidget {
-  NetworkGiffyDialog GiftRecievePopUp(context) {
+  NetworkGiffyDialog giftRecievePopUp(context) {
     String gifURL = "https://media.giphy.com/media/5Y2bU7FqLOuzK/giphy.gif";
 
     return NetworkGiffyDialog(
@@ -26,7 +26,7 @@ class NotificationView extends StatefulWidget {
     );
   }
 
-  NetworkGiffyDialog PurchasePopUp(context) {
+  NetworkGiffyDialog purchasePopUp(context) {
     String gifURL =
         "https://media.giphy.com/media/d906FK91VCXsbDxBu6/giphy.gif";
 
@@ -44,7 +44,7 @@ class NotificationView extends StatefulWidget {
         Navigator.of(context).pop();
         showDialog(
             context: context,
-            builder: (_) => new NotificationView().GiftRecievePopUp(context));
+            builder: (_) => new NotificationView().giftRecievePopUp(context));
         // Perform some action
       },
       buttonOkText: Text("Hell Yeah"),
@@ -53,7 +53,7 @@ class NotificationView extends StatefulWidget {
     );
   }
 
-  NetworkGiffyDialog MoneyRecievePopup(context) {
+  NetworkGiffyDialog moneyRecievePopup(context) {
     String gifURL =
         "https://media.giphy.com/media/EBSECypExxqvOY6Te1/giphy.gif";
 
@@ -81,7 +81,6 @@ class NotificationView extends StatefulWidget {
 
   @override
   State<StatefulWidget> createState() {
-    // TODO: implement createState
     throw UnimplementedError();
   }
 }

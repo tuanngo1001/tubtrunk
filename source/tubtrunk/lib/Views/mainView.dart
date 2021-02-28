@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'missionView.dart';
-import 'accountView.dart';
-import 'timerView.dart';
-import 'statisticView.dart';
-import 'rewardStoreView.dart';
+import 'MissionView.dart';
+import 'AccountView.dart';
+import 'TimerView.dart';
+import 'StatisticView.dart';
+import 'RewardStoreView.dart';
 
 class MainView extends StatefulWidget {
   MainView({Key key}) : super(key: key);
@@ -16,7 +16,7 @@ class _MainViewState extends State<MainView> {
   int _selectedIndex = 0;
 //  MissionPage missionPage= new MissionPage();
   final _pageOptions = [
-    TimerPage(mission: MissionView()),
+    TimerView(mission: MissionView()),
     MissionView(),
     RewardStoreView(),
     StatisticView(),

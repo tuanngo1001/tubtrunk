@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:tubtrunk/Controllers/storeController.dart';
-import 'package:tubtrunk/Models/couponModel.dart';
-import 'package:tubtrunk/Models/petModel.dart';
-import 'package:tubtrunk/Views/myCouponIcon.dart';
+import 'package:tubtrunk/Controllers/StoreController.dart';
+import 'package:tubtrunk/Models/CouponModel.dart';
+import 'package:tubtrunk/Models/PetModel.dart';
+import 'package:tubtrunk/Views/MyCouponIcon.dart';
 
 import 'notificationView.dart';
 
@@ -12,32 +12,32 @@ class RewardStoreView extends StatefulWidget {
 }
 
 class _RewardStoreViewState extends State<RewardStoreView> {
-  storeController controller = new storeController();
-  List<Pet> pet_list = new List<Pet>();
-  List<Coupon> coupon_list = new List<Coupon>();
+  StoreController controller = new StoreController();
+  List<PetModel> petList = new List<PetModel>();
+  List<CouponModel> couponList = new List<CouponModel>();
 
   @override
   void initState() {
     getCouponList();
-    Stub_Pet_List();
+    stubPetList();
     super.initState();
   }
 
-  void Stub_Pet_List() {
-    pet_list
-        .add(new Pet("Mocha", "regular", "fat cat with some level of retard"));
-    pet_list.add(new Pet("Candace", "Wild", "young and wild"));
-    pet_list.add(new Pet("Kiko", "Rare", "Fat but old and wise"));
-    pet_list
-        .add(new Pet("Pink Guy", "Ultra Rare", "Cosmic level of disturbance"));
+  void stubPetList() {
+    petList.add(
+        new PetModel("Mocha", "regular", "fat cat with some level of retard"));
+    petList.add(new PetModel("Candace", "Wild", "young and wild"));
+    petList.add(new PetModel("Kiko", "Rare", "Fat but old and wise"));
+    petList.add(
+        new PetModel("Pink Guy", "Ultra Rare", "Cosmic level of disturbance"));
   }
 
-  Future<List<Coupon>> getCouponList() async {
-    coupon_list = await controller.getCoupons();
-    return coupon_list;
+  Future<List<CouponModel>> getCouponList() async {
+    couponList = await controller.getCoupons();
+    return couponList;
   }
 
-  void Testing() {
+  void testing() {
     print("Pressed");
   }
 
@@ -82,7 +82,7 @@ class _RewardStoreViewState extends State<RewardStoreView> {
           ),
         ),
         body: SafeArea(
-          child: FutureBuilder<List<Coupon>>(
+          child: FutureBuilder<List<CouponModel>>(
               future: getCouponList(),
               builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
                 if (snapshot.hasError) {
@@ -101,7 +101,7 @@ class _RewardStoreViewState extends State<RewardStoreView> {
                       crossAxisSpacing: 0,
                       crossAxisCount: 1,
                       // Generate 100 widgets that display their index in the List.
-                      children: List.generate(coupon_list.length, (index) {
+                      children: List.generate(couponList.length, (index) {
                         return Center(
                           child: InkWell(
                               splashColor: Colors.cyanAccent,
@@ -109,7 +109,7 @@ class _RewardStoreViewState extends State<RewardStoreView> {
                                 showDialog(
                                     context: context,
                                     builder: (_) => new NotificationView()
-                                        .PurchasePopUp(context));
+                                        .purchasePopUp(context));
                                 // Perform some action
                               },
                               child: Container(
@@ -118,19 +118,19 @@ class _RewardStoreViewState extends State<RewardStoreView> {
                                     children: <Widget>[
                                       Padding(padding: EdgeInsets.all(18.0)),
                                       Text(
-                                        coupon_list[index].store + " Coupon",
+                                        couponList[index].store + " Coupon",
                                         style: TextStyle(
                                             fontWeight: FontWeight.bold,
                                             fontSize: 20),
                                       ),
                                       Text(
-                                        coupon_list[index].description,
+                                        couponList[index].description,
                                         style: TextStyle(
                                             fontWeight: FontWeight.w400,
                                             fontSize: 18),
                                       ),
                                       Text(
-                                        coupon_list[index].price,
+                                        couponList[index].price,
                                         style: TextStyle(
                                             fontWeight: FontWeight.bold,
                                             fontSize: 16),
@@ -154,7 +154,7 @@ class _RewardStoreViewState extends State<RewardStoreView> {
                             showDialog(
                                 context: context,
                                 builder: (_) => new NotificationView()
-                                    .PurchasePopUp(context));
+                                    .purchasePopUp(context));
                             // Perform some action
                           },
                           child: Container(
@@ -192,7 +192,7 @@ class _RewardStoreViewState extends State<RewardStoreView> {
                       crossAxisSpacing: 0,
                       crossAxisCount: 1,
                       // Generate 100 widgets that display their index in the List.
-                      children: List.generate(pet_list.length, (index) {
+                      children: List.generate(petList.length, (index) {
                         return Center(
                           child: InkWell(
                               splashColor: Colors.cyanAccent,
@@ -200,7 +200,7 @@ class _RewardStoreViewState extends State<RewardStoreView> {
                                 showDialog(
                                     context: context,
                                     builder: (_) => new NotificationView()
-                                        .PurchasePopUp(context));
+                                        .purchasePopUp(context));
                                 // Perform some action
                               },
                               child: Container(
@@ -209,19 +209,19 @@ class _RewardStoreViewState extends State<RewardStoreView> {
                                     children: <Widget>[
                                       Padding(padding: EdgeInsets.all(18.0)),
                                       Text(
-                                        pet_list[index].name,
+                                        petList[index].name,
                                         style: TextStyle(
                                             fontWeight: FontWeight.bold,
                                             fontSize: 20),
                                       ),
                                       Text(
-                                        pet_list[index].description,
+                                        petList[index].description,
                                         style: TextStyle(
                                             fontWeight: FontWeight.w400,
                                             fontSize: 18),
                                       ),
                                       Text(
-                                        pet_list[index].price,
+                                        petList[index].price,
                                         style: TextStyle(
                                             fontWeight: FontWeight.bold,
                                             fontSize: 16),

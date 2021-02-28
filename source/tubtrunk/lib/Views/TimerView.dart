@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
-import '../Controllers/notificationsController.dart';
-import './notificationView.dart';
+import '../Controllers/NotificationsController.dart';
+import './NotificationView.dart';
 import 'package:circular_countdown_timer/circular_countdown_timer.dart';
 import 'package:flutter_duration_picker/flutter_duration_picker.dart';
 
-class TimerPage extends StatefulWidget {
+class TimerView extends StatefulWidget {
   final mission;
-  TimerPage({this.mission});
+  TimerView({this.mission});
 
   @override
-  _TimerPageState createState() => _TimerPageState();
+  _TimerViewState createState() => _TimerViewState();
 }
 
-class _TimerPageState extends State<TimerPage> with WidgetsBindingObserver {
+class _TimerViewState extends State<TimerView> with WidgetsBindingObserver {
   CountDownController _controller = CountDownController();
   int _duration = 5;
   bool stopped = true;
@@ -71,7 +71,7 @@ class _TimerPageState extends State<TimerPage> with WidgetsBindingObserver {
         context,
         MaterialPageRoute(
             builder: (context) =>
-                NotificationView().MoneyRecievePopup(context)),
+                NotificationView().moneyRecievePopup(context)),
       );
   }
 
@@ -139,8 +139,7 @@ class _TimerPageState extends State<TimerPage> with WidgetsBindingObserver {
             },
             onComplete: () {
               print('Countdown Ended');
-              widget.mission.missionController.updateRequirementProgress(
-                  _duration); ////////// Send the duration to the missionController to calculate the money user receives
+              // widget.mission.rewardMissionController.updateRequirementProgress(_duration); ////////// Send the duration to the missionController to calculate the money user receives
               _controller.restart(duration: _duration);
               _controller.pause();
               setState(() {
@@ -153,7 +152,7 @@ class _TimerPageState extends State<TimerPage> with WidgetsBindingObserver {
                 context,
                 MaterialPageRoute(
                     builder: (context) =>
-                        NotificationView().MoneyRecievePopup(context)),
+                        NotificationView().moneyRecievePopup(context)),
               );
               notificationsController.setNotification("Time's Up!!!",
                   "Your focus time period is over, click to receive your rewards!");
