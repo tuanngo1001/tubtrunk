@@ -1,25 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:tubtrunk/Controllers/TimerController.dart';
-import 'package:tubtrunk/Models/RewardMission.dart';
-import 'package:tubtrunk/Views/missionPage.dart';
-import '../Controllers/notificationsController.dart';
-import './notificationPage.dart';
 import 'package:circular_countdown_timer/circular_countdown_timer.dart';
 import 'package:flutter_duration_picker/flutter_duration_picker.dart';
 
-class TimerPage extends StatefulWidget {
-  final mission;
-  TimerPage({this.mission});////////////////////////////
+import '../Controllers/notificationsController.dart';
+import './notificationPage.dart';
+import '../Controllers/TimerController.dart';
 
+class TimerPage extends StatefulWidget {
   @override
   _TimerPageState createState() => _TimerPageState();
 }
 
-
-
 class _TimerPageState extends State<TimerPage> with WidgetsBindingObserver {
   final TimerController _timerController = TimerController();
-  CountDownController _controller = CountDownController();
   int _duration = 5;
   bool stopped = true;
   bool resumable = false;
@@ -52,17 +46,11 @@ class _TimerPageState extends State<TimerPage> with WidgetsBindingObserver {
         state == AppLifecycleState.detached) return;
 
     final isBackground = state == AppLifecycleState.paused;
-    if (isBackground && !stopped) {
+    if (isBackground && !_timerController.stopped) {
       notificationsController.setNotification("Warning! You've left Tubtrunk!",
           "Your focus time is reset and the ongoing period will be invalid.");
-      notificationsController.showNotification();
-      _controller.restart(duration: _duration);
-      _controller.pause();
       setState(() {
-        stopped = true;
-        resumable = false;
-        finished = false;
-        stopStartButtonText = "Start";
+        _timerController.reset();
       });
     }
   }
@@ -72,7 +60,7 @@ class _TimerPageState extends State<TimerPage> with WidgetsBindingObserver {
   }
 
   onNotificationClick(String payload) {
-    if (finished)
+    if (_timerController.finished)
       Navigator.push(
         context,
         MaterialPageRoute(
@@ -82,13 +70,15 @@ class _TimerPageState extends State<TimerPage> with WidgetsBindingObserver {
 
   _button({String title, VoidCallback onPressed}) {
     return Expanded(
-      child: RaisedButton(
+      child: ElevatedButton(
         child: Text(
           title,
           style: TextStyle(color: Colors.white),
         ),
         onPressed: onPressed,
-        color: Color(0xfffc575e),
+        style: ElevatedButton.styleFrom(
+          primary: Color(0xfffc575e),
+        ),
       ),
     );
   }
@@ -101,22 +91,16 @@ class _TimerPageState extends State<TimerPage> with WidgetsBindingObserver {
           onTap: () async {
             Duration resultingDuration = await showDurationPicker(
               context: context,
-              initialTime: new Duration(seconds: _duration),
+              initialTime: new Duration(seconds: _timerController.duration),
             );
             setState(() {
-              if (resultingDuration == null ||
-                  resultingDuration.inSeconds == 0) {
-                // if cancelled or 0 minutes selected, use previously selected duration
-                _duration = _duration;
-              } else {
-                _duration = resultingDuration.inSeconds;
-              }
+              _timerController.chooseDuration(resultingDuration);
             });
           },
           child: CircularCountDownTimer(
-            duration: _duration,
+            duration: _timerController.duration,
             initialDuration: 0,
-            controller: _controller,
+            controller: _timerController.countDownController,
             width: MediaQuery.of(context).size.width / 1.5,
             height: MediaQuery.of(context).size.height / 1.5,
             ringColor: Colors.grey[300],
@@ -138,20 +122,13 @@ class _TimerPageState extends State<TimerPage> with WidgetsBindingObserver {
             isTimerTextShown: true,
             autoStart: false,
             onStart: () {
-              print('Countdown Started');
-              resumable = true;
-              finished = false;
+              setState(() {
+                _timerController.onStart();
+              });
             },
             onComplete: () {
-              print('Countdown Ended');
-              widget.mission.missionController.updateRequirementProgress(_duration);            ////////// Send the duration to the missionController to calculate the money user receives
-              _controller.restart(duration: _duration);
-              _controller.pause();
               setState(() {
-                stopped = true;
-                resumable = false;
-                finished = true;
-                stopStartButtonText = "Start";
+                _timerController.onComplete();
               });
 
               _timerController.saveTimerRecord(duration: _duration, completed: finished);
@@ -175,20 +152,10 @@ class _TimerPageState extends State<TimerPage> with WidgetsBindingObserver {
             width: 30,
           ),
           _button(
-            title: stopStartButtonText,
+            title: _timerController.stopStartButtonText,
             onPressed: () {
-              if (stopped) {
-                _timerController.updateStartDateTime();
-
-                resumable == true ? _controller.resume() : _controller.start();
-              } else {
-                _controller.pause();
-              }
               setState(() {
-                stopped
-                    ? stopStartButtonText = "Stop"
-                    : stopStartButtonText = "Start";
-                stopped = !stopped;
+                _timerController.stopStart();
               });
             },
           ),
@@ -197,18 +164,10 @@ class _TimerPageState extends State<TimerPage> with WidgetsBindingObserver {
             width: 10,
           ),
           _button(
-            title: setButtonText,
+            title: "Reset",
             onPressed: () {
-              _controller.restart(duration: _duration);
-              _controller.pause();
               setState(() {
-                if (!stopped) {
-                  _timerController.saveTimerRecord();
-                }
-                stopped = true;
-                resumable = false;
-                finished = false;
-                stopStartButtonText = "Start";
+                _timerController.reset();
               });
             },
           ),
