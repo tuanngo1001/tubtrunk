@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:tubtrunk/Controllers/timerController.dart';
-// import 'package:tubtrunk/Models/RewardMissionModel.dart';
-// import 'package:tubtrunk/Views/MissionView.dart';
 import '../Controllers/NotificationsController.dart';
 import './NotificationView.dart';
 import 'package:circular_countdown_timer/circular_countdown_timer.dart';
@@ -9,6 +7,7 @@ import 'package:flutter_duration_picker/flutter_duration_picker.dart';
 
 class TimerView extends StatefulWidget {
   final mission;
+
   TimerView({this.mission});
 
   @override
@@ -131,14 +130,11 @@ class _TimerViewState extends State<TimerView> with WidgetsBindingObserver {
               });
             },
             onComplete: () {
-              // widget.mission.rewardMissionController.updateRequirementProgress(_duration); ////////// Send the duration to the missionController to calculate the money user receives
               setState(() {
                 _timerController.onComplete();
               });
-
               _timerController.saveTimerRecord(
                   duration: _duration, completed: finished);
-
               Navigator.push(
                 context,
                 MaterialPageRoute(

@@ -6,6 +6,7 @@ import '../Controllers/rewardMissionController.dart';
 
 class TimerController {
   RewardMissionController _rewardMissionController = RewardMissionController();
+
   CountDownController _countDownController = CountDownController();
   CountDownController get countDownController => _countDownController;
 
@@ -16,7 +17,6 @@ class TimerController {
   bool get stopped => _stopped;
 
   bool _resumable = false;
-  bool get resumable => _resumable;
 
   bool _finished = false;
   bool get finished => _finished;
@@ -52,6 +52,8 @@ class TimerController {
       _duration = _duration;
     } else {
       _duration = resultingDuration.inSeconds;
+      countDownController.restart(duration: _duration);
+      countDownController.pause();
     }
   }
 
@@ -59,10 +61,11 @@ class TimerController {
     print('Countdown Started');
     _resumable = true;
     _finished = false;
+    updateStartDateTime();
   }
 
   void onComplete() {
-    print('Countdown Ended');
+    print('Countdown Completed');
     _rewardMissionController.updateRequirementProgress(
         _duration); // Send the duration to the missionController to calculate the money user receives
     countDownController.restart(duration: _duration);
@@ -75,22 +78,23 @@ class TimerController {
   }
 
   void stopStart() {
-    if (stopped) {
-      resumable == true
+    if (_stopped) {
+      _stopStartButtonText = "Stop";
+      _resumable == true
           ? countDownController.resume()
           : countDownController.start();
+
     } else {
+      _stopStartButtonText = "Start";
       countDownController.pause();
     }
-    _stopped ? _stopStartButtonText = "Stop" : _stopStartButtonText = "Start";
-    _stopped = !stopped;
-    updateStartDateTime();
+    _stopped = !_stopped;
   }
 
   void reset() {
     countDownController.restart(duration: _duration);
     countDownController.pause();
-    if (!stopped) {
+    if (!_stopped) {
       saveTimerRecord();
     }
     _stopped = true;
