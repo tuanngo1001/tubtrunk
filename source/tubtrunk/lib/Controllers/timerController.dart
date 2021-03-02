@@ -92,11 +92,11 @@ class TimerController {
   }
 
   void reset() {
-    countDownController.restart(duration: _duration);
-    countDownController.pause();
-    if (!_stopped) {
+    if (_resumable) {
       saveTimerRecord();
     }
+    countDownController.restart(duration: _duration);
+    countDownController.pause();
     _stopped = true;
     _resumable = false;
     _finished = false;
