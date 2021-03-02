@@ -17,6 +17,7 @@ class TimerController {
   bool get stopped => _stopped;
 
   bool _resumable = false;
+  bool get resumable => _resumable;
 
   bool _finished = false;
   bool get finished => _finished;
@@ -52,8 +53,7 @@ class TimerController {
       _duration = _duration;
     } else {
       _duration = resultingDuration.inSeconds;
-      countDownController.restart(duration: _duration);
-      countDownController.pause();
+      reset();
     }
   }
 
@@ -92,7 +92,7 @@ class TimerController {
   }
 
   void reset() {
-    if (_resumable) {
+    if (_resumable) { // Reset is pressed when timer is still resumable. This should count as a fail and save to db as such
       saveTimerRecord();
     }
     countDownController.restart(duration: _duration);
