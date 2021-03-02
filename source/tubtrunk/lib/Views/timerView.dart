@@ -133,8 +133,6 @@ class _TimerViewState extends State<TimerView> with WidgetsBindingObserver {
               setState(() {
                 _timerController.onComplete();
               });
-              _timerController.saveTimerRecord(
-                  duration: _duration, completed: finished);
               Navigator.push(
                 context,
                 MaterialPageRoute(
