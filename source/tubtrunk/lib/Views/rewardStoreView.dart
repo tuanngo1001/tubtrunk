@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:tubtrunk/Controllers/StoreController.dart';
-import 'package:tubtrunk/Models/CouponModel.dart';
-import 'package:tubtrunk/Models/PetModel.dart';
+import 'package:tubtrunk/Controllers/storeController.dart';
+import 'package:tubtrunk/Models/couponModel.dart';
+import 'package:tubtrunk/Models/petModel.dart';
 import 'package:tubtrunk/Views/MyCouponIcon.dart';
 
 import 'notificationView.dart';
@@ -33,6 +33,7 @@ class _RewardStoreViewState extends State<RewardStoreView> {
   }
 
   Future<List<CouponModel>> getCouponList() async {
+
     couponList = await controller.getCoupons();
     return couponList;
   }
