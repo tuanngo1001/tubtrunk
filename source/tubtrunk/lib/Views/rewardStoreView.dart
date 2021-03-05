@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:tubtrunk/Controllers/storeController.dart';
 import 'package:tubtrunk/Models/couponModel.dart';
 import 'package:tubtrunk/Models/petModel.dart';
-import 'package:tubtrunk/Views/MyCouponIcon.dart';
-
+import 'package:tubtrunk/Views/myCouponIcon.dart';
 import 'notificationView.dart';
 
 class RewardStoreView extends StatefulWidget {
@@ -13,29 +12,10 @@ class RewardStoreView extends StatefulWidget {
 
 class _RewardStoreViewState extends State<RewardStoreView> {
   StoreController controller = new StoreController();
-  List<PetModel> petList = new List<PetModel>();
-  List<CouponModel> couponList = new List<CouponModel>();
 
   @override
   void initState() {
-    getCouponList();
-    stubPetList();
     super.initState();
-  }
-
-  void stubPetList() {
-    petList.add(
-        new PetModel("Mocha", "regular", "fat cat with some level of retard"));
-    petList.add(new PetModel("Candace", "Wild", "young and wild"));
-    petList.add(new PetModel("Kiko", "Rare", "Fat but old and wise"));
-    petList.add(
-        new PetModel("Pink Guy", "Ultra Rare", "Cosmic level of disturbance"));
-  }
-
-  Future<List<CouponModel>> getCouponList() async {
-
-    couponList = await controller.getCoupons();
-    return couponList;
   }
 
   void testing() {
@@ -84,7 +64,7 @@ class _RewardStoreViewState extends State<RewardStoreView> {
         ),
         body: SafeArea(
           child: FutureBuilder<List<CouponModel>>(
-              future: getCouponList(),
+              future: controller.getCouponList(),
               builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
                 if (snapshot.hasError) {
                   return Center(
@@ -102,15 +82,16 @@ class _RewardStoreViewState extends State<RewardStoreView> {
                       crossAxisSpacing: 0,
                       crossAxisCount: 1,
                       // Generate 100 widgets that display their index in the List.
-                      children: List.generate(couponList.length, (index) {
+                      children: List.generate(controller.couponList.length, (index) {
                         return Center(
                           child: InkWell(
                               splashColor: Colors.cyanAccent,
                               onTap: () {
-                                showDialog(
-                                    context: context,
-                                    builder: (_) => new NotificationView()
-                                        .purchasePopUp(context));
+                                setState(() {
+                                  showDialog(
+                                      context: context,
+                                      builder: (_) => new NotificationView().purchasePopUp(context, controller.removeCouponAtIndex, index));
+                                });
                                 // Perform some action
                               },
                               child: Container(
@@ -119,19 +100,19 @@ class _RewardStoreViewState extends State<RewardStoreView> {
                                     children: <Widget>[
                                       Padding(padding: EdgeInsets.all(18.0)),
                                       Text(
-                                        couponList[index].store + " Coupon",
+                                        controller.couponList[index].store + " Coupon",
                                         style: TextStyle(
                                             fontWeight: FontWeight.bold,
                                             fontSize: 20),
                                       ),
                                       Text(
-                                        couponList[index].description,
+                                        controller.couponList[index].description,
                                         style: TextStyle(
                                             fontWeight: FontWeight.w400,
                                             fontSize: 18),
                                       ),
                                       Text(
-                                        couponList[index].price,
+                                        controller.couponList[index].price,
                                         style: TextStyle(
                                             fontWeight: FontWeight.bold,
                                             fontSize: 16),
@@ -152,11 +133,10 @@ class _RewardStoreViewState extends State<RewardStoreView> {
                             child: InkWell(
                           splashColor: Colors.cyanAccent,
                           onTap: () {
-                            showDialog(
-                                context: context,
-                                builder: (_) => new NotificationView()
-                                    .purchasePopUp(context));
-                            // Perform some action
+                          //   showDialog(
+                          //       context: context,
+                          //       builder: (_) => new NotificationView().purchasePopUp(context));
+                          //   // Perform some action
                           },
                           child: Container(
                             width: MediaQuery.of(context).size.width,
@@ -193,15 +173,16 @@ class _RewardStoreViewState extends State<RewardStoreView> {
                       crossAxisSpacing: 0,
                       crossAxisCount: 1,
                       // Generate 100 widgets that display their index in the List.
-                      children: List.generate(petList.length, (index) {
+                      children: List.generate(controller.petList.length, (index) {
                         return Center(
                           child: InkWell(
                               splashColor: Colors.cyanAccent,
                               onTap: () {
-                                showDialog(
-                                    context: context,
-                                    builder: (_) => new NotificationView()
-                                        .purchasePopUp(context));
+                                setState(() {
+                                  showDialog(
+                                      context: context,
+                                      builder: (_) => new NotificationView().purchasePopUp(context, controller.removePetAtIndex, index));
+                                });
                                 // Perform some action
                               },
                               child: Container(
@@ -210,19 +191,19 @@ class _RewardStoreViewState extends State<RewardStoreView> {
                                     children: <Widget>[
                                       Padding(padding: EdgeInsets.all(18.0)),
                                       Text(
-                                        petList[index].name,
+                                        controller.petList[index].name,
                                         style: TextStyle(
                                             fontWeight: FontWeight.bold,
                                             fontSize: 20),
                                       ),
                                       Text(
-                                        petList[index].description,
+                                        controller.petList[index].description,
                                         style: TextStyle(
                                             fontWeight: FontWeight.w400,
                                             fontSize: 18),
                                       ),
                                       Text(
-                                        petList[index].price,
+                                        controller.petList[index].price,
                                         style: TextStyle(
                                             fontWeight: FontWeight.bold,
                                             fontSize: 16),

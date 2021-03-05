@@ -26,9 +26,8 @@ class NotificationView extends StatefulWidget {
     );
   }
 
-  NetworkGiffyDialog purchasePopUp(context) {
-    String gifURL =
-        "https://media.giphy.com/media/d906FK91VCXsbDxBu6/giphy.gif";
+  NetworkGiffyDialog purchasePopUp(context,void Function(int) removeStoreItem, int index) {
+    String gifURL = "https://media.giphy.com/media/d906FK91VCXsbDxBu6/giphy.gif";
 
     return NetworkGiffyDialog(
       image: Image.network(gifURL),
@@ -42,6 +41,7 @@ class NotificationView extends StatefulWidget {
       entryAnimation: EntryAnimation.TOP,
       onOkButtonPressed: () {
         Navigator.of(context).pop();
+        removeStoreItem(index);
         showDialog(
             context: context,
             builder: (_) => new NotificationView().giftRecievePopUp(context));
