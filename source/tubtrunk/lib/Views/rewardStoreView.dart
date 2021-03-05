@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:tubtrunk/Controllers/storeController.dart';
-import 'package:tubtrunk/Models/couponModel.dart';
-import 'package:tubtrunk/Models/petModel.dart';
 import 'package:tubtrunk/Views/myCouponIcon.dart';
 import 'notificationView.dart';
 
@@ -19,8 +17,10 @@ class _RewardStoreViewState extends State<RewardStoreView> {
     super.initState();
   }
 
-  void testing() {
-    print("Pressed");
+  void rewardStoreViewSetState(int index){
+    setState(() {
+      controller.couponList.removeAt(index);
+    });
   }
 
   @override
@@ -88,13 +88,14 @@ class _RewardStoreViewState extends State<RewardStoreView> {
                           child: InkWell(
                               splashColor: Colors.cyanAccent,
                               onTap: () {
+                                print("BEFORE SET STATE, list.length: "+controller.couponList.length.toString());
                                 setState(() {
-                                  controller.removeCouponAtIndex(index);
                                   showDialog(
                                       context: context,
-                                      builder: (_) => new NotificationView().purchasePopUp(context, controller.removeCouponAtIndex, index));
+                                      builder: (_) => new NotificationView(rewardStoreViewSetState).purchasePopUp(context, controller.removeCouponAtIndex, index));
                                 });
                                 // Perform some action
+                                print("AFTER SET STATE, list.length: "+controller.couponList.length.toString());
                               },
                               child: Container(
                                   width: MediaQuery.of(context).size.width,
@@ -183,7 +184,8 @@ class _RewardStoreViewState extends State<RewardStoreView> {
                                 setState(() {
                                   showDialog(
                                       context: context,
-                                      builder: (_) => new NotificationView().purchasePopUp(context, controller.removePetAtIndex, index));
+                                      builder: (_) => new NotificationView(rewardStoreViewSetState).purchasePopUp(context, controller.removePetAtIndex, index));
+
                                 });
                                 // Perform some action
                               },

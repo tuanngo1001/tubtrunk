@@ -18,9 +18,6 @@ class StoreController {
   //#endregion
 
   //#region Constructor
-  // StoreController(){
-  //   stubPetList();
-  // }
 
   factory StoreController(){
     return theOnlyStoreController;
@@ -87,27 +84,19 @@ class StoreController {
     petList.removeAt(index);
   }
 
-  void removeCouponAtIndex(int index) async{
+  Future<void> removeCouponAtIndex(int index) async{
     var map = new Map<String, String>();
     map["couponID"] = couponList[index].id.toString();
 
-    var response = await http
-        .post(GlobalSettings.serverAddress + "removeCouponByID.php", body: map);
+    var response = await http.post(GlobalSettings.serverAddress + "removeCouponByID.php", body: map);
 
     if (response.statusCode == 200) {
       print("Successfully delete coupon item");
+      getCouponList();
+
     }
 
-    couponList.removeAt(index);
     print("Coupon deleted");
-  }
-
-  Future checkCouponReady() async{
-    while(true){
-      if(couponList !=null){
-        return;
-      }
-    }
   }
 
 //#endregion

@@ -1,9 +1,16 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:giffy_dialog/giffy_dialog.dart';
+import 'package:tubtrunk/Controllers/storeController.dart';
 import 'package:tubtrunk/Views/rewardStoreView.dart';
 
 class NotificationView extends StatefulWidget {
+
+  Function rewardStoreViewSetState;
+
+  NotificationView([this.rewardStoreViewSetState]);
+
+
   NetworkGiffyDialog giftRecievePopUp(context) {
     String gifURL = "https://media.giphy.com/media/5Y2bU7FqLOuzK/giphy.gif";
 
@@ -39,12 +46,14 @@ class NotificationView extends StatefulWidget {
         textAlign: TextAlign.center,
       ),
       entryAnimation: EntryAnimation.TOP,
-      onOkButtonPressed: () {
-        Navigator.of(context).pop();
+      onOkButtonPressed: () async {
+
         removeStoreItem(index);
+        this.rewardStoreViewSetState(index);
+        Navigator.of(context).pop();
         showDialog(
             context: context,
-            builder: (_) => new NotificationView().giftRecievePopUp(context));
+            builder: (_) => new NotificationView(rewardStoreViewSetState).giftRecievePopUp(context));
         // Perform some action
       },
       buttonOkText: Text("Hell Yeah"),
