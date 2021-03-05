@@ -3,8 +3,8 @@ import 'package:tubtrunk/Controllers/timerController.dart';
 import 'package:circular_countdown_timer/circular_countdown_timer.dart';
 import 'package:flutter_duration_picker/flutter_duration_picker.dart';
 
-import '../Controllers/NotificationsController.dart';
-import './NotificationView.dart';
+import '../Controllers/notificationsController.dart';
+import './notificationView.dart';
 
 class TimerView extends StatefulWidget {
   final mission;
