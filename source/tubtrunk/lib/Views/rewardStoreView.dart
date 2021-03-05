@@ -11,10 +11,11 @@ class RewardStoreView extends StatefulWidget {
 }
 
 class _RewardStoreViewState extends State<RewardStoreView> {
-  StoreController controller = new StoreController();
+  StoreController controller;
 
   @override
   void initState() {
+    controller = new StoreController();
     super.initState();
   }
 
@@ -63,7 +64,7 @@ class _RewardStoreViewState extends State<RewardStoreView> {
           ),
         ),
         body: SafeArea(
-          child: FutureBuilder<List<CouponModel>>(
+          child: FutureBuilder(
               future: controller.getCouponList(),
               builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
                 if (snapshot.hasError) {
@@ -88,6 +89,7 @@ class _RewardStoreViewState extends State<RewardStoreView> {
                               splashColor: Colors.cyanAccent,
                               onTap: () {
                                 setState(() {
+                                  controller.removeCouponAtIndex(index);
                                   showDialog(
                                       context: context,
                                       builder: (_) => new NotificationView().purchasePopUp(context, controller.removeCouponAtIndex, index));

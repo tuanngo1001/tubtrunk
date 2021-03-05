@@ -29,13 +29,12 @@ class StoreController {
   StoreController._initializerFunction(){
     stubPetList();
     getCouponList();
+    print("GET INITED ");
   }
   //#endregion
 
-
   //#region Methods
-  void stubPetList()
-  {
+  void stubPetList() {
     petList.add(new PetModel("Mocha", "regular", "fat cat with some level of retard"));
     petList.add(new PetModel("Candace", "Wild", "young and wild"));
     petList.add(new PetModel("Kiko", "Rare", "Fat but old and wise"));
@@ -88,8 +87,27 @@ class StoreController {
     petList.removeAt(index);
   }
 
-  void removeCouponAtIndex(int index){
+  void removeCouponAtIndex(int index) async{
+    var map = new Map<String, String>();
+    map["couponID"] = couponList[index].id.toString();
+
+    var response = await http
+        .post(GlobalSettings.serverAddress + "removeCouponByID.php", body: map);
+
+    if (response.statusCode == 200) {
+      print("Successfully delete coupon item");
+    }
+
     couponList.removeAt(index);
+    print("Coupon deleted");
+  }
+
+  Future checkCouponReady() async{
+    while(true){
+      if(couponList !=null){
+        return;
+      }
+    }
   }
 
 //#endregion
