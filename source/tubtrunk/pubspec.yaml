@@ -71,6 +71,7 @@ flutter:
 #        - asset: assets/MyCouponIcon.ttf
   assets:
     - assets/TrunkCoinIcon.png
+    - assets/facebook.png
 
   fonts:
     - family: MyCouponIcon
@@ -85,4 +86,10 @@ flutter:
       fonts:
         - asset: fonts/StalinistOne-Regular.ttf
           weight: 400
+
+    - family: Montserrat
+      fonts:
+        - asset: fonts/Montserrat-Regular.ttf
+        - asset: fonts/Montserrat-Bold.ttf
+          weight: 700
 
