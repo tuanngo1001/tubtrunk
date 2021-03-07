@@ -49,15 +49,15 @@ class _MainViewState extends State<MainView> {
             child: Center(
               child: Text(
                 "$money",
-                style: TextStyle(color: Colors.blueGrey[900], fontSize: 19.0),
+                style: TextStyle(color: Colors.white, fontSize: 19.0),
               ),
             ),
           )
         ],
-        backgroundColor: Colors.red,
+        backgroundColor: Color(0xfff97c7c),
         title: Text(
           'Tubtrunk',
-          style: TextStyle(color: Colors.blueGrey[900]),
+          style: TextStyle(color: Colors.white),
         ),
       ),
       body: Center(
