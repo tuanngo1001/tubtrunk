@@ -14,13 +14,6 @@ class MainView extends StatefulWidget {
 
 class _MainViewState extends State<MainView> {
   int _selectedIndex = 0;
-  final _pageOptions = [
-    TimerView(mission: MissionView()),
-    MissionView(),
-    RewardStoreView(),
-    StatisticView(),
-    AccountView(),
-  ];
 
   void _onItemTapped(int index) {
     setState(() {
@@ -60,8 +53,15 @@ class _MainViewState extends State<MainView> {
           style: TextStyle(color: Colors.blueGrey[900]),
         ),
       ),
-      body: Center(
-        child: _pageOptions.elementAt(_selectedIndex),
+      body: IndexedStack(
+        children: <Widget>[
+          TimerView(mission: MissionView()),
+          MissionView(),
+          RewardStoreView(),
+          StatisticView(),
+          AccountView(),
+        ],
+        index: _selectedIndex,
       ),
       bottomNavigationBar: BottomNavigationBar(
         selectedFontSize: 15.0,
