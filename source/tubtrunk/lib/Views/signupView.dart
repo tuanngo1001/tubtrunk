@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
-import 'signupView.dart';
 import 'mainView.dart';
+import 'loginView.dart';
 
-class LoginView extends StatefulWidget {
+class SignupView extends StatefulWidget {
   @override
-  _LoginViewState createState() => _LoginViewState();
+  _SignupViewState createState() => _SignupViewState();
 }
 
-class _LoginViewState extends State<LoginView> {
+class _SignupViewState extends State<SignupView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -19,18 +19,27 @@ class _LoginViewState extends State<LoginView> {
             children: <Widget>[
               Container(
                   padding: EdgeInsets.fromLTRB(15.0, 110.0, 0.0, 0.0),
+                  child: Text('SIGN UP for',
+                      style: TextStyle(
+                          fontSize: 40.0,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.grey))),
+              Container(
+                  padding: EdgeInsets.fromLTRB(15.0, 140.0, 0.0, 0.0),
                   child: Text('tub',
                       style: TextStyle(
-                          fontSize: 80.0, fontWeight: FontWeight.bold))),
+                          fontSize: 70.0,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black))),
               Container(
-                  padding: EdgeInsets.fromLTRB(15.0, 175.0, 0.0, 0.0),
+                  padding: EdgeInsets.fromLTRB(120.0, 140.0, 0.0, 0.0),
                   child: Text('trunk',
                       style: TextStyle(
-                          fontSize: 80.0,
+                          fontSize: 70.0,
                           fontWeight: FontWeight.bold,
                           color: Color(0xfff97c7c)))),
               Container(
-                  padding: EdgeInsets.fromLTRB(210.0, 212.0, 0.0, 0.0),
+                  padding: EdgeInsets.fromLTRB(290.0, 169.0, 0.0, 0.0),
                   child: Icon(
                     Icons.alarm,
                     size: 40.0,
@@ -51,7 +60,7 @@ class _LoginViewState extends State<LoginView> {
                         focusedBorder: UnderlineInputBorder(
                             borderSide: BorderSide(color: Color(0xfff97c7c)))),
                   ),
-                  SizedBox(height: 20.0),
+                  SizedBox(height: 10.0),
                   TextField(
                     decoration: InputDecoration(
                         labelText: "PASSWORD",
@@ -63,19 +72,18 @@ class _LoginViewState extends State<LoginView> {
                             borderSide: BorderSide(color: Color(0xfff97c7c)))),
                     obscureText: true,
                   ),
-                  SizedBox(height: 5.0),
-                  Container(
-                      alignment: Alignment(1.0, 0.0),
-                      padding: EdgeInsets.only(top: 15.0, left: 20.0),
-                      child: InkWell(
-                        child: Text(
-                          'Forgot Password',
-                          style: TextStyle(
-                              color: Color(0xfff97c7c),
-                              fontWeight: FontWeight.bold,
-                              decoration: TextDecoration.underline),
-                        ),
-                      )),
+                  SizedBox(height: 10.0),
+                  TextField(
+                    decoration: InputDecoration(
+                        labelText: "CONFIRM PASSWORD",
+                        labelStyle: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontFamily: 'Montserrat',
+                            color: Colors.grey),
+                        focusedBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(color: Color(0xfff97c7c)))),
+                    obscureText: true,
+                  ),
                   SizedBox(height: 40.0),
                   Container(
                       height: 40.0,
@@ -93,42 +101,19 @@ class _LoginViewState extends State<LoginView> {
                             );
                           },
                           child: Center(
-                            child: Text('LOGIN',
+                            child: Text('SIGN UP',
                                 style: TextStyle(
                                     color: Colors.white,
                                     fontWeight: FontWeight.bold,
                                     fontFamily: 'Montserrat')),
                           ))),
-                  SizedBox(height: 20.0),
-                  Container(
-                      height: 40.0,
-                      child: OutlineButton(
-                          highlightedBorderColor: Color(0xfff97c7c),
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(20.0)),
-                          color: Colors.transparent,
-                          onPressed: () {},
-                          child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: <Widget>[
-                                Center(
-                                    child: ImageIcon(
-                                        AssetImage('assets/facebook.png'))),
-                                SizedBox(width: 5.0),
-                                Center(
-                                  child: Text('Log in with facebook',
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          fontFamily: 'Montserrat')),
-                                )
-                              ]))),
                 ],
               )),
           SizedBox(height: 30.0),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              Text('New to Tubtrunk?',
+              Text('Already have an account?',
                   style:
                       TextStyle(color: Colors.grey, fontFamily: 'Montserrat')),
               SizedBox(width: 5.0),
@@ -136,11 +121,11 @@ class _LoginViewState extends State<LoginView> {
                   onTap: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => SignupView()),
+                      MaterialPageRoute(builder: (context) => LoginView()),
                     );
                   },
                   child: Text(
-                    'Register',
+                    'Log in',
                     style: TextStyle(
                         color: Color(0xfff97c7c),
                         fontFamily: 'Montserrat',
