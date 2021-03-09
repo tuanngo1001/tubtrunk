@@ -24,8 +24,7 @@ class _TimerViewState extends State<TimerView> with WidgetsBindingObserver {
 
     WidgetsBinding.instance.addObserver(this);
 
-    notificationsController
-        .setListenerForLowerVersions(onNotificationInLowerVersions);
+    notificationsController.setListenerForLowerVersions(onNotificationInLowerVersions);
     notificationsController.setOnNotificationClick(onNotificationClick);
   }
 
@@ -45,7 +44,8 @@ class _TimerViewState extends State<TimerView> with WidgetsBindingObserver {
     final isBackground = state == AppLifecycleState.paused;
     if (isBackground && !_timerController.stopped) {
       notificationsController.setNotification("Warning! You've left Tubtrunk!",
-          "Your focus time is reset and the ongoing period will be invalid.");
+          "You have been assessed a failed session.");
+      notificationsController.showNotification();
       setState(() {
         _timerController.reset();
       });
