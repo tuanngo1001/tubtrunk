@@ -53,7 +53,7 @@ class NotificationView extends StatefulWidget {
     );
   }
 
-  NetworkGiffyDialog moneyRecievePopup(context) {
+  NetworkGiffyDialog moneyReceivePopup(context) {
     String gifURL =
         "https://media.giphy.com/media/EBSECypExxqvOY6Te1/giphy.gif";
 

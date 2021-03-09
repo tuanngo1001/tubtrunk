@@ -62,7 +62,7 @@ class _TimerViewState extends State<TimerView> with WidgetsBindingObserver {
         context,
         MaterialPageRoute(
             builder: (context) =>
-                NotificationView().moneyRecievePopup(context)),
+                NotificationView().moneyReceivePopup(context)),
       );
   }
 
@@ -171,7 +171,7 @@ class _TimerViewState extends State<TimerView> with WidgetsBindingObserver {
                 context,
                 MaterialPageRoute(
                     builder: (context) =>
-                        NotificationView().moneyRecievePopup(context)),
+                        NotificationView().moneyReceivePopup(context)),
               );
               notificationsController.setNotification("Time's Up!!!",
                   "Your focus time period is over, click to receive your rewards!");
