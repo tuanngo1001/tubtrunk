@@ -79,7 +79,6 @@ class NotificationsController {
       "Push Notification",
       importance: Importance.high,
       priority: Priority.high,
-      timeoutAfter: 5000,
       styleInformation: DefaultStyleInformation(true, true),
     );
     var iosDetails =

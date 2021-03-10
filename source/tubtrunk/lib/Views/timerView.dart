@@ -15,7 +15,7 @@ class TimerView extends StatefulWidget {
   _TimerViewState createState() => _TimerViewState();
 }
 
-class _TimerViewState extends State<TimerView> with WidgetsBindingObserver {
+class _TimerViewState extends State<TimerView> with WidgetsBindingObserver, AutomaticKeepAliveClientMixin {
   final TimerController _timerController = TimerController();
 
   @override
@@ -24,8 +24,7 @@ class _TimerViewState extends State<TimerView> with WidgetsBindingObserver {
 
     WidgetsBinding.instance.addObserver(this);
 
-    notificationsController
-        .setListenerForLowerVersions(onNotificationInLowerVersions);
+    notificationsController.setListenerForLowerVersions(onNotificationInLowerVersions);
     notificationsController.setOnNotificationClick(onNotificationClick);
   }
 
@@ -34,6 +33,9 @@ class _TimerViewState extends State<TimerView> with WidgetsBindingObserver {
     WidgetsBinding.instance.removeObserver(this);
     super.dispose();
   }
+
+  @override
+  bool get wantKeepAlive => true;
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
@@ -45,7 +47,8 @@ class _TimerViewState extends State<TimerView> with WidgetsBindingObserver {
     final isBackground = state == AppLifecycleState.paused;
     if (isBackground && !_timerController.stopped) {
       notificationsController.setNotification("Warning! You've left Tubtrunk!",
-          "Your focus time is reset and the ongoing period will be invalid.");
+          "You have been assessed a failed session.");
+      notificationsController.showNotification();
       setState(() {
         _timerController.reset();
       });
@@ -62,7 +65,7 @@ class _TimerViewState extends State<TimerView> with WidgetsBindingObserver {
         context,
         MaterialPageRoute(
             builder: (context) =>
-                NotificationView().moneyRecievePopup(context)),
+                NotificationView().moneyReceivePopup(context)),
       );
   }
 
@@ -171,7 +174,7 @@ class _TimerViewState extends State<TimerView> with WidgetsBindingObserver {
                 context,
                 MaterialPageRoute(
                     builder: (context) =>
-                        NotificationView().moneyRecievePopup(context)),
+                        NotificationView().moneyReceivePopup(context)),
               );
               notificationsController.setNotification("Time's Up!!!",
                   "Your focus time period is over, click to receive your rewards!");
