@@ -15,7 +15,7 @@ class TimerView extends StatefulWidget {
   _TimerViewState createState() => _TimerViewState();
 }
 
-class _TimerViewState extends State<TimerView> with WidgetsBindingObserver {
+class _TimerViewState extends State<TimerView> with WidgetsBindingObserver, AutomaticKeepAliveClientMixin {
   final TimerController _timerController = TimerController();
 
   @override
@@ -33,6 +33,9 @@ class _TimerViewState extends State<TimerView> with WidgetsBindingObserver {
     WidgetsBinding.instance.removeObserver(this);
     super.dispose();
   }
+
+  @override
+  bool get wantKeepAlive => true;
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
