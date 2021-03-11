@@ -5,26 +5,47 @@ import 'package:http/http.dart' as http;
 import '../Controllers/rewardMissionController.dart';
 
 class TimerController {
-  RewardMissionController _rewardMissionController = RewardMissionController();
-  CountDownController _countDownController = CountDownController();
+  RewardMissionController _rewardMissionController;
+
+  CountDownController _countDownController;
   CountDownController get countDownController => _countDownController;
 
-  int _duration = 5;
+  int _duration;
   int get duration => _duration;
 
-  bool _stopped = true;
+  bool _stopped;
   bool get stopped => _stopped;
 
-  bool _resumable = false;
+  bool _resumable;
   bool get resumable => _resumable;
 
-  bool _finished = false;
+  bool _finished;
   bool get finished => _finished;
 
-  String _stopStartButtonText = "Start";
+  String _stopStartButtonText;
   String get stopStartButtonText => _stopStartButtonText;
 
   DateTime _startDateTime;
+
+  // Private constructor
+  TimerController._internal() {
+    _rewardMissionController = RewardMissionController();
+    _countDownController = CountDownController();
+    _duration = 5;
+    _stopped = true;
+    _resumable = false;
+    _finished = false;
+    _stopStartButtonText = "Start";
+  }
+
+  //Singleton
+  static TimerController _instance;
+  factory TimerController() {
+    if (_instance == null) {
+      _instance = TimerController._internal();
+    }
+    return _instance;
+  }
 
   void updateStartDateTime() {
     _startDateTime = DateTime.now();
@@ -52,6 +73,7 @@ class TimerController {
       _duration = _duration;
     } else {
       _duration = resultingDuration.inSeconds;
+      reset();
     }
   }
 
@@ -59,10 +81,11 @@ class TimerController {
     print('Countdown Started');
     _resumable = true;
     _finished = false;
+    updateStartDateTime();
   }
 
   void onComplete() {
-    print('Countdown Ended');
+    print('Countdown Completed');
     _rewardMissionController.updateRequirementProgress(
         _duration); // Send the duration to the missionController to calculate the money user receives
     countDownController.restart(duration: _duration);
@@ -75,24 +98,25 @@ class TimerController {
   }
 
   void stopStart() {
-    if (stopped) {
-      resumable == true
+    if (_stopped) {
+      _stopStartButtonText = "Stop";
+      _resumable == true
           ? countDownController.resume()
           : countDownController.start();
+
     } else {
+      _stopStartButtonText = "Start";
       countDownController.pause();
     }
-    _stopped ? _stopStartButtonText = "Stop" : _stopStartButtonText = "Start";
-    _stopped = !stopped;
-    updateStartDateTime();
+    _stopped = !_stopped;
   }
 
   void reset() {
-    countDownController.restart(duration: _duration);
-    countDownController.pause();
-    if (!stopped) {
+    if (_resumable) { // Reset is pressed when timer is still resumable. This should count as a fail and save to db as such
       saveTimerRecord();
     }
+    countDownController.restart(duration: _duration);
+    countDownController.pause();
     _stopped = true;
     _resumable = false;
     _finished = false;

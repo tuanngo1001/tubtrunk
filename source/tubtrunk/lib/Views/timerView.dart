@@ -1,28 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:tubtrunk/Controllers/timerController.dart';
-// import 'package:tubtrunk/Models/RewardMissionModel.dart';
-// import 'package:tubtrunk/Views/MissionView.dart';
-import '../Controllers/NotificationsController.dart';
-import './NotificationView.dart';
 import 'package:circular_countdown_timer/circular_countdown_timer.dart';
 import 'package:flutter_duration_picker/flutter_duration_picker.dart';
 
+import '../Controllers/notificationsController.dart';
+import './notificationView.dart';
+
 class TimerView extends StatefulWidget {
   final mission;
+
   TimerView({this.mission});
 
   @override
   _TimerViewState createState() => _TimerViewState();
 }
 
-class _TimerViewState extends State<TimerView> with WidgetsBindingObserver {
+class _TimerViewState extends State<TimerView> with WidgetsBindingObserver, AutomaticKeepAliveClientMixin {
   final TimerController _timerController = TimerController();
-  int _duration = 5;
-  bool stopped = true;
-  bool resumable = false;
-  bool finished = false;
-  String stopStartButtonText = "Start";
-  String setButtonText = "Reset";
 
   @override
   void initState() {
@@ -30,8 +24,7 @@ class _TimerViewState extends State<TimerView> with WidgetsBindingObserver {
 
     WidgetsBinding.instance.addObserver(this);
 
-    notificationsController
-        .setListenerForLowerVersions(onNotificationInLowerVersions);
+    notificationsController.setListenerForLowerVersions(onNotificationInLowerVersions);
     notificationsController.setOnNotificationClick(onNotificationClick);
   }
 
@@ -40,6 +33,9 @@ class _TimerViewState extends State<TimerView> with WidgetsBindingObserver {
     WidgetsBinding.instance.removeObserver(this);
     super.dispose();
   }
+
+  @override
+  bool get wantKeepAlive => true;
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
@@ -51,7 +47,8 @@ class _TimerViewState extends State<TimerView> with WidgetsBindingObserver {
     final isBackground = state == AppLifecycleState.paused;
     if (isBackground && !_timerController.stopped) {
       notificationsController.setNotification("Warning! You've left Tubtrunk!",
-          "Your focus time is reset and the ongoing period will be invalid.");
+          "You have been assessed a failed session.");
+      notificationsController.showNotification();
       setState(() {
         _timerController.reset();
       });
@@ -68,7 +65,7 @@ class _TimerViewState extends State<TimerView> with WidgetsBindingObserver {
         context,
         MaterialPageRoute(
             builder: (context) =>
-                NotificationView().moneyRecievePopup(context)),
+                NotificationView().moneyReceivePopup(context)),
       );
   }
 
@@ -87,6 +84,23 @@ class _TimerViewState extends State<TimerView> with WidgetsBindingObserver {
     );
   }
 
+  Widget _confirmationDialog({Text text, VoidCallback cancelOnPressed, VoidCallback okOnPressed,}) {
+    return new AlertDialog(
+      title: Text("Confirmation"),
+      content: text,
+      actions: [
+        TextButton(
+          onPressed: cancelOnPressed,
+          child: Text("Cancel"),
+        ),
+        TextButton(
+          onPressed: okOnPressed,
+          child: Text("Ok"),
+        )
+      ],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -97,9 +111,31 @@ class _TimerViewState extends State<TimerView> with WidgetsBindingObserver {
               context: context,
               initialTime: new Duration(seconds: _timerController.duration),
             );
-            setState(() {
-              _timerController.chooseDuration(resultingDuration);
-            });
+            if (_timerController.resumable) {
+              print("Asking for confirmation");
+              // Timer running, ask for confirmation to set duration
+              // Confirmation dialog
+              await showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return _confirmationDialog(
+                    text: Text("Changing the duration now would result in a failure for this session, are you sure?"),
+                    cancelOnPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                    okOnPressed: () {
+                      Navigator.of(context).pop();
+                      _timerController.chooseDuration(resultingDuration);
+                    },
+                  );
+                },
+              );
+            } else {
+              // Timer not started, set duration as per normal
+              setState(() {
+                _timerController.chooseDuration(resultingDuration);
+              });
+            }
           },
           child: CircularCountDownTimer(
             duration: _timerController.duration,
@@ -131,19 +167,14 @@ class _TimerViewState extends State<TimerView> with WidgetsBindingObserver {
               });
             },
             onComplete: () {
-              // widget.mission.rewardMissionController.updateRequirementProgress(_duration); ////////// Send the duration to the missionController to calculate the money user receives
               setState(() {
                 _timerController.onComplete();
               });
-
-              _timerController.saveTimerRecord(
-                  duration: _duration, completed: finished);
-
               Navigator.push(
                 context,
                 MaterialPageRoute(
                     builder: (context) =>
-                        NotificationView().moneyRecievePopup(context)),
+                        NotificationView().moneyReceivePopup(context)),
               );
               notificationsController.setNotification("Time's Up!!!",
                   "Your focus time period is over, click to receive your rewards!");
@@ -171,10 +202,32 @@ class _TimerViewState extends State<TimerView> with WidgetsBindingObserver {
           ),
           _button(
             title: "Reset",
-            onPressed: () {
-              setState(() {
-                _timerController.reset();
-              });
+            onPressed: () async {
+              if (_timerController.resumable) {
+                print("Asking for confirmation");
+                // Timer running, ask for confirmation to reset
+                // Confirmation dialog
+                await showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return _confirmationDialog(
+                      text: Text("Resetting now would result in a failure for this session, are you sure?"),
+                      cancelOnPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                      okOnPressed: () {
+                        Navigator.of(context).pop();
+                        _timerController.reset();
+                      },
+                    );
+                  },
+                );
+              } else {
+                // Timer not started, reset timer as usual
+                setState(() {
+                  _timerController.reset();
+                });
+              }
             },
           ),
         ],

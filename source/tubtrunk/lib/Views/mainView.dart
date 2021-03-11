@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'MissionView.dart';
-import 'AccountView.dart';
+import 'missionView.dart';
+import 'accountView.dart';
 import 'timerView.dart';
-import 'StatisticView.dart';
-import 'RewardStoreView.dart';
+import 'statisticView.dart';
+import 'rewardStoreView.dart';
+import '../Controllers/mainController.dart';
 
 class MainView extends StatefulWidget {
   MainView({Key key}) : super(key: key);
@@ -12,27 +13,21 @@ class MainView extends StatefulWidget {
   _MainViewState createState() => _MainViewState();
 }
 
-class _MainViewState extends State<MainView> {
-  int _selectedIndex = 0;
-  final _pageOptions = [
-    TimerView(mission: MissionView()),
-    MissionView(),
-    RewardStoreView(),
-    StatisticView(),
-    AccountView(),
-  ];
+class _MainViewState extends State<MainView> with SingleTickerProviderStateMixin {
+  MainController _mainController;
 
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
-  }
-
-  double money = 3000.0;
   static const double iconSize = 32.5;
+
+  @override initState() {
+    super.initState();
+    _mainController = MainController();
+    _mainController.tabController = TabController(length: 5, vsync: this);
+  }
 
   @override
   Widget build(BuildContext context) {
+    double money = _mainController.money;
+
     return Scaffold(
       appBar: AppBar(
         actions: [
@@ -60,8 +55,15 @@ class _MainViewState extends State<MainView> {
           style: TextStyle(color: Colors.blueGrey[900]),
         ),
       ),
-      body: Center(
-        child: _pageOptions.elementAt(_selectedIndex),
+      body: TabBarView(
+        controller: _mainController.tabController,
+        children: <Widget> [
+          TimerView(mission: MissionView()),
+          MissionView(),
+          RewardStoreView(),
+          StatisticView(),
+          AccountView(),
+        ],
       ),
       bottomNavigationBar: BottomNavigationBar(
         selectedFontSize: 15.0,
@@ -90,9 +92,13 @@ class _MainViewState extends State<MainView> {
             label: 'Account',
           ),
         ],
-        currentIndex: _selectedIndex,
+        currentIndex: _mainController.selectedIndex,
         selectedItemColor: Colors.orange,
-        onTap: _onItemTapped,
+        onTap: (int index) {
+          setState(() {
+            _mainController.changeMainView(index);
+          });
+        },
       ),
     );
   }

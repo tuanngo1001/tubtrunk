@@ -1,12 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:giffy_dialog/giffy_dialog.dart';
+import 'package:tubtrunk/Controllers/mainController.dart';
 import 'package:tubtrunk/Controllers/storeController.dart';
 import 'package:tubtrunk/Views/rewardStoreView.dart';
 
 class NotificationView extends StatefulWidget {
 
   Function rewardStoreViewSetState;
+  MainController _mainController = MainController();
 
   NotificationView([this.rewardStoreViewSetState]);
 
@@ -62,25 +64,24 @@ class NotificationView extends StatefulWidget {
     );
   }
 
-  NetworkGiffyDialog moneyRecievePopup(context) {
+  NetworkGiffyDialog moneyReceivePopup(context) {
     String gifURL =
         "https://media.giphy.com/media/EBSECypExxqvOY6Te1/giphy.gif";
 
     return NetworkGiffyDialog(
       image: Image.network(gifURL),
-      title: Text('CONGRATULATION!',
+      title: Text('CONGRATULATIONS!',
           textAlign: TextAlign.center,
           style: TextStyle(fontSize: 22.0, fontWeight: FontWeight.w600)),
       description: Text(
-        'You have received a surprise reward for being focus. Enjoy!',
+        'You have received a surprise reward for being focused. Enjoy!',
         textAlign: TextAlign.center,
       ),
       entryAnimation: EntryAnimation.TOP,
       onOkButtonPressed: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => RewardStoreView()),
-        );
+        Navigator.of(context).pop();
+        // Switch to store view
+        _mainController.changeMainView(2);
       },
       buttonOkText: Text("Shop Now"),
       buttonOkColor: Colors.lightGreen,
