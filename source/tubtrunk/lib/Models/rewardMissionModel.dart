@@ -1,4 +1,4 @@
-import 'RewardRequirementModel.dart';
+import 'rewardRequirementModel.dart';
 
 /*
 Attributes for Reward Mission table
@@ -13,18 +13,16 @@ Attributes for Reward Mission table
 class RewardMissionModel {
   String missionName;
   int prizeMoney;
-  // bool isFinished = false;
-  List<RewardRequirementModel> requirementsList =
-      List<RewardRequirementModel>();
+  List<RewardRequirementModel> requirementsList = [];
   String missionStatus;
   int completedRequirements;
 
   RewardMissionModel(this.missionName, this.prizeMoney, this.missionStatus,
       this.completedRequirements) {
-    requirementsList = List<RewardRequirementModel>();
+    requirementsList = [];
   }
 
-  void addRequiremnt(RewardRequirementModel requirement) {
+  void addRequirement(RewardRequirementModel requirement) {
     requirementsList.add(requirement);
   }
 }
