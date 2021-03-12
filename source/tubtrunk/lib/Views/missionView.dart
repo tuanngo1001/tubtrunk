@@ -18,15 +18,9 @@ class _MissionViewState extends State<MissionView> {
 
   @override
   void initState() {
-    rewardMissionController = widget._rewardMissionController;
-  }
+    super.initState();
 
-  void changeMissionState(String missionName, String missionState) {
-    setState(() {
-      if (missionState == "lock") {
-        rewardMissionController.moveChallengeToInProgress(missionName);
-      }
-    });
+    rewardMissionController = widget._rewardMissionController;
   }
 
   int requirementsProgress(RewardMissionModel mission) {
@@ -40,306 +34,271 @@ class _MissionViewState extends State<MissionView> {
 
   @override
   Widget build(BuildContext context) {
-    availableMissionsList = rewardMissionController.availableMissions; //getAvailableRewardMissions();
+    availableMissionsList = rewardMissionController.availableMissions;
     inProgressMissionsList = rewardMissionController.getInProgressRewardMissions();
     achievedMissionsList = rewardMissionController.getAchievedRewardMissions();
 
     return DefaultTabController(
       length: 3,
       child: Scaffold(
-        appBar: PreferredSize(
-          preferredSize: Size.fromHeight(50.0),
-          child: AppBar(
-            backgroundColor: Colors.orangeAccent,
-            bottom: TabBar(
-              tabs: [
-                Tab(
-                  child: Text("All",
-                      style: TextStyle(
-                          fontSize: 16.0, color: Colors.blueGrey.shade900)),
-                ),
-                Tab(
-                  child: Text("In-Progress",
-                      style: TextStyle(
-                          fontSize: 16.0, color: Colors.blueGrey.shade900)),
-                ),
-                Tab(
-                  child: Text("Achieved",
-                      style: TextStyle(
-                          fontSize: 16.0, color: Colors.blueGrey.shade900)),
-                )
-              ],
+        appBar: _buildAppBar(),
+        body: _buildBody(),
+      ),
+    );
+  }
+
+  Widget _buildAppBar() {
+    return PreferredSize(
+      preferredSize: Size.fromHeight(50.0),
+      child: AppBar(
+        backgroundColor: Colors.orangeAccent,
+        bottom: _buildTabBar(),
+      ),
+    );
+  }
+
+  Widget _buildTabBar() {
+    return TabBar(
+      tabs: [
+        _buildTab("All"),
+        _buildTab("In-Progress"),
+        _buildTab("Achieved"),
+      ],
+    );
+  }
+
+  Widget _buildTab(String tabName) {
+    return Tab(
+      child: Text(
+          tabName,
+          style: TextStyle(
+              fontSize: 16.0, color: Colors.blueGrey.shade900
+          )
+      ),
+    );
+  }
+
+  Widget _buildBody() {
+    return SafeArea(
+      child: _buildTabBarView(),
+    );
+  }
+
+  Widget _buildTabBarView() {
+    return TabBarView(
+      children: [
+        _buildAvailableMissions(),
+        _buildInProgressMissions(),
+        _buildAchievedMissions(),
+      ],
+    );
+  }
+
+  Widget _buildAvailableMissions() {
+    List<Widget> missionWidgets = List.generate(availableMissionsList.length, (index) {
+      List<Widget> missionComponents = _buildAvailableMissionComponents(
+          availableMissionsList[index].title,
+          availableMissionsList[index].prize,
+          availableMissionsList[index].toString()
+      );
+      return _buildMission(missionComponents);
+    });
+
+    return _buildMissions(missionWidgets);
+  }
+
+  Widget _buildInProgressMissions() {
+    List<Widget> missionWidgets = List.generate(inProgressMissionsList.length, (index) {
+      List<Widget> missionComponents = _buildInProgressMissionComponents(
+          inProgressMissionsList[index].title,
+          inProgressMissionsList[index].prize,
+          inProgressMissionsList[index].toString()
+      );
+      return _buildMission(missionComponents);
+    });
+
+    return _buildMissions(missionWidgets);
+  }
+
+  Widget _buildAchievedMissions() {
+    List<Widget> missionWidgets = List.generate(achievedMissionsList.length, (index) {
+      List<Widget> missionComponents = _buildAchievedMissionComponents(
+          achievedMissionsList[index].title,
+          achievedMissionsList[index].prize,
+          achievedMissionsList[index].toString()
+      );
+      return _buildMission(missionComponents);
+    });
+
+    return _buildMissions(missionWidgets);
+  }
+
+  Widget _buildMissions(List<Widget> missionComponents) {
+    return GridView.count(
+      childAspectRatio: 1 / 1.9,
+      crossAxisCount: 2,
+      children: missionComponents,
+    );
+  }
+
+  Widget _buildMission(List<Widget> missionComponents) {
+    return Card(
+      color: Colors.grey.shade100,
+      child: Column(
+        mainAxisSize: MainAxisSize.max,
+        children: missionComponents,
+      ),
+    );
+  }
+
+  List<Widget> _buildAvailableMissionComponents(String title, int prize, String requirements) {
+    return <Widget>[
+      _buildMissionDescription(title, requirements),
+      Expanded(
+        flex: 0,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: <Widget>[
+            _buildMissionPrize(prize),
+            const SizedBox(width: 2),
+            Expanded(
+              child: _buildChallengeButton(title),
             ),
-          ),
+            const SizedBox(width: 3)
+          ],
         ),
-        body: SafeArea(
-          child: TabBarView(
-            children: [
-              GridView.count(
-                childAspectRatio: 1 / 1.9,
-                crossAxisCount: 2,
-                // Generate 100 widgets that display their index in the List.
-                children: List.generate(availableMissionsList.length, (index) {
-                  return Card(
-                    color: Colors.grey.shade100,
-                    child: Column(
-                      mainAxisSize: MainAxisSize.max,
-                      children: <Widget>[
-                        Expanded(
-                          flex: 3,
-                          child: ListTile(
-//                            leading: Icon(Icons.album),
-                            title: Text(
-                                "${availableMissionsList[index].title}"),
-                            subtitle: Text(
-                              "${availableMissionsList[index].toString()}",
-                              style: TextStyle(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w400,
-                                  color: Colors.black87),
-                            ),
-                          ),
-                        ),
-                        Expanded(
-                          flex: 0,
-                          child: Row(
-//                               crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: <Widget>[
-                              Image.asset(
-                                'assets/TrunkCoinIcon.png',
-                                width: 14.0,
-                                height: 14.0,
-                              ),
-                              const SizedBox(width: 1),
-                              Text(
-                                "${availableMissionsList[index].prize}",
-                                style: TextStyle(
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w500,
-                                    color: Colors.black87),
-                              ),
-                              const SizedBox(width: 2),
-                              Expanded(
-                                child: ElevatedButton.icon(
-                                  onPressed: () {
-                                    setState(() {
-                                      changeMissionState(
-                                          availableMissionsList[index]
-                                              .title,
-                                          availableMissionsList[index]
-                                              .missionStatus);
-                                    });
-                                  },
-                                  style: ElevatedButton.styleFrom(
-                                      primary: Colors.green.shade400,
-                                      padding:
-                                          EdgeInsets.symmetric(horizontal: 2),
-                                      textStyle: TextStyle(
-                                          fontSize: 30,
-                                          fontWeight: FontWeight.bold)),
-                                  icon: Icon(Challenge.challenge_icon,
-                                      size: 30.0, color: Colors.black),
-                                  label: Text(
-                                    'Challenge!  ', ///////////////////////////////////////////////////////////////////////////////
-                                    style: TextStyle(
-                                        fontSize: 15, color: Colors.black87),
-                                  ),
-                                ),
-                              ),
-                              const SizedBox(width: 3)
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  );
-                }),
-              ),
-              GridView.count(
-                childAspectRatio: 1 / 2,
-                crossAxisCount: 2,
-                // Generate 100 widgets that display their index in the List.
-                children: List.generate(inProgressMissionsList.length, (index) {
-                  return Container(
-                    child: Card(
-                      color: Colors.grey.shade100,
-                      child: Column(
-                        mainAxisSize: MainAxisSize.max,
-                        children: <Widget>[
-                          Expanded(
-                            flex: 6,
-                            child: ListTile(
-//                            leading: Icon(Icons.album),
-                              title: Text(
-                                  "${inProgressMissionsList[index].title}"),
-                              subtitle: Text(
-                                "${rewardMissionController.getRewardMissionRequirements(inProgressMissionsList[index].title).toString().replaceAll('[', '').replaceAll(']', '').replaceAll(',', '')}",
-                                style: TextStyle(
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w400,
-                                    color: Colors.black87),
-                              ),
-                            ),
-                          ),
-                          Expanded(
-                            flex: 0,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: <Widget>[
-                                Image.asset(
-                                  'assets/TrunkCoinIcon.png',
-                                  width: 15.0,
-                                  height: 15.0,
-                                ),
-                                const SizedBox(width: 1),
-                                Text(
-                                  "${inProgressMissionsList[index].prize}",
-                                  style: TextStyle(
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w500,
-                                      color: Colors.black87),
-                                ),
-                                const SizedBox(width: 5),
-                                Text(
-                                  "In-Progress", ///////////////////////////////////////////////////////
-                                  style: TextStyle(
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                                const SizedBox(width: 3)
-                              ],
-                            ),
-                          ),
-                          Expanded(
-                            flex: 1,
-                            child: StepProgressIndicator(
-                              totalSteps: inProgressMissionsList[index]
-                                  .requirementsList
-                                  .length,
-                              currentStep: requirementsProgress(
-                                  inProgressMissionsList[index]),
-                              size: 24,
-                              selectedColor: Colors.green,
-                              unselectedColor: Colors.grey[400],
-                              customStep: (index, color, _) =>
-                                  color == Colors.green
-                                      ? Container(
-                                          color: color,
-                                          child: Icon(
-                                            Icons.check,
-                                            color: Colors.white,
-                                          ),
-                                        )
-                                      : Container(
-                                          color: color,
-                                          child: Icon(
-                                            Icons.remove,
-                                          ),
-                                        ),
-                            ),
-                          )
-                        ],
-                      ),
-                    ),
-                  );
-                }),
-              ),
-              GridView.count(
-                childAspectRatio: 1 / 2,
-                crossAxisCount: 2,
-                // Generate 100 widgets that display their index in the List.
-                children: List.generate(achievedMissionsList.length, (index) {
-                  return Container(
-                    child: Card(
-                      color: Colors.grey.shade100,
-                      child: Column(
-                        mainAxisSize: MainAxisSize.max,
-                        children: <Widget>[
-                          Expanded(
-                            flex: 6,
-                            child: ListTile(
-//                            leading: Icon(Icons.album),
-                              title: Text(
-                                  "${achievedMissionsList[index].title}"),
-                              subtitle: Text(
-                                "${rewardMissionController.getRewardMissionRequirements(achievedMissionsList[index].title).toString().replaceAll('[', '').replaceAll(']', '').replaceAll(',', '')}",
-                                style: TextStyle(
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w400,
-                                    color: Colors.black87),
-                              ),
-                            ),
-                          ),
-                          Expanded(
-                            flex: 0,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: <Widget>[
-//
-                                Image.asset(
-                                  'assets/TrunkCoinIcon.png',
-                                  width: 15.0,
-                                  height: 15.0,
-                                ),
-                                const SizedBox(width: 1),
-                                Text(
-                                  "${achievedMissionsList[index].prize}",
-                                  style: TextStyle(
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w500,
-                                      color: Colors.black87),
-                                ),
-                                const SizedBox(width: 5),
-                                Text(
-                                  "Achieved",
-                                  style: TextStyle(
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                                const SizedBox(width: 3)
-                              ],
-                            ),
-                          ),
-                          Expanded(
-                            flex: 1,
-                            child: StepProgressIndicator(
-                              totalSteps: achievedMissionsList[index]
-                                  .requirementsList
-                                  .length,
-                              currentStep: achievedMissionsList[index]
-                                  .completedRequirements,
-                              size: 24,
-                              selectedColor: Colors.green,
-                              unselectedColor: Colors.grey[400],
-                              customStep: (index, color, _) =>
-                                  color == Colors.green
-                                      ? Container(
-                                          color: color,
-                                          child: Icon(
-                                            Icons.check,
-                                            color: Colors.white,
-                                          ),
-                                        )
-                                      : Container(
-                                          color: color,
-                                          child: Icon(
-                                            Icons.remove,
-                                          ),
-                                        ),
-                            ),
-                          )
-                        ],
-                      ),
-                    ),
-                  );
-                }),
-              ),
-            ],
+      ),
+    ];
+  }
+
+  List<Widget> _buildInProgressMissionComponents(String title, int prize, String requirements) {
+    return <Widget>[
+      _buildMissionDescription(title, requirements),
+      _buildMissionStatus(prize, "In-Progress"),
+      _buildProgressIndicator(totalRequirements: 4, finishedRequirements: 0)
+    ];
+  }
+
+  List<Widget> _buildAchievedMissionComponents(String title, int prize, String requirements) {
+    return <Widget>[
+      _buildMissionDescription(title, requirements),
+      _buildMissionStatus(prize, "Achieved"),
+      _buildProgressIndicator(totalRequirements: 4, finishedRequirements: 4)
+    ];
+  }
+  
+  Widget _buildMissionDescription(String title, String requirements) {
+    return Expanded(
+      flex: 3,
+      child: ListTile(
+        title: Text(title),
+        subtitle: Text(
+          requirements,
+          style: TextStyle(
+              fontSize: 14,
+              fontWeight: FontWeight.w400,
+              color: Colors.black87),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildMissionPrize(int prize) {
+    return Row(
+      children: <Widget>[
+        Image.asset(
+          'assets/TrunkCoinIcon.png',
+          width: 14.0,
+          height: 14.0,
+        ),
+        const SizedBox(width: 1),
+        Text(
+          prize.toString(),
+          style: TextStyle(
+              fontSize: 14,
+              fontWeight: FontWeight.w500,
+              color: Colors.black87),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildChallengeButton(String title) {
+    return ElevatedButton.icon(
+      onPressed: () => _challengeMissionPressed(title),
+      style: ElevatedButton.styleFrom(
+          primary: Colors.green.shade400,
+          padding: EdgeInsets.symmetric(horizontal: 2),
+          textStyle: TextStyle(
+              fontSize: 30,
+              fontWeight: FontWeight.bold
+          )
+      ),
+      icon: Icon(
+          Challenge.challenge_icon,
+          size: 30.0, color: Colors.black
+      ),
+      label: Text(
+        'Challenge!',
+        style: TextStyle(
+          fontSize: 15,
+          color: Colors.black87,
+        ),
+      ),
+    );
+  }
+
+  void _challengeMissionPressed(String title) {
+    setState(() {
+      rewardMissionController.moveChallengeToInProgress(title);
+    });
+  }
+
+  Widget _buildMissionStatus(int prize, String status) {
+    return Expanded(
+      flex: 0,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: <Widget>[
+          _buildMissionPrize(prize),
+          const SizedBox(width: 5),
+          Text(
+            status,
+            style: TextStyle(
+                fontSize: 15,
+                fontWeight: FontWeight.bold),
+          ),
+          const SizedBox(width: 3)
+        ],
+      ),
+    );
+  }
+
+  Widget _buildProgressIndicator({int totalRequirements, int finishedRequirements}) {
+    return Expanded(
+      flex: 1,
+      child: StepProgressIndicator(
+        totalSteps: totalRequirements,
+        currentStep: finishedRequirements,
+        size: 24,
+        selectedColor: Colors.green,
+        unselectedColor: Colors.grey[400],
+        customStep: (index, color, _) =>
+        color == Colors.green
+            ? Container(
+          color: color,
+          child: Icon(
+            Icons.check,
+            color: Colors.white,
+          ),
+        )
+            : Container(
+          color: color,
+          child: Icon(
+            Icons.remove,
           ),
         ),
       ),
     );
-//    );
   }
 }

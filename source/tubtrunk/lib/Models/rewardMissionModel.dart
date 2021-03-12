@@ -22,6 +22,7 @@ class RewardMissionModel {
   int completedRequirements;
 
   RewardMissionModel(this.title, this.prize, this.missionStatus, this.completedRequirements) {
+    requirements = [];
     requirementsList = [];
   }
 
