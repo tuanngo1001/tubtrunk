@@ -12,23 +12,29 @@ $getQuery = "SELECT * FROM User WHERE uPassword = '$userPassword' AND uEmail = '
 $result = mysqli_query($con, $getQuery);
 $token = "";
 
-while ($row = mysqli_fetch_assoc($result)) {
+while ($row = mysqli_fetch_assoc($result)) 
+{
     //Generate a random unique token for "remember me functionality"
 
-    if($row['uToken'] == null || $row['uToken'] == ''){
+    if ($row['uToken'] == null || $row['uToken'] == '')
+    {
         $token = uniqid();
         $insertQuery = "UPDATE User SET uToken = '$token' WHERE uEmail = '$userEmail'";
 
         //If successfully insert new token, return it
-        if(mysqli_query($con, $insertQuery)){
+        if (mysqli_query($con, $insertQuery))
+        {
             die($token);
-        }else{
+        }else
+        {
             die(mysqli_error($con));
         }
-    }else{
+    }else
+    {
         die($row['uToken']);
     }
 }
+
 die("Not found");
 ?>
 

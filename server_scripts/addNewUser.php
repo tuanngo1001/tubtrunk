@@ -15,7 +15,8 @@ $getQuery = "SELECT * FROM User WHERE uEmail = '$userEmail'" ;
 $result = mysqli_query($con, $getQuery);
 
 
-while ($row = mysqli_fetch_assoc($result)) {
+while ($row = mysqli_fetch_assoc($result)) 
+{
     die("Already Exist");
 }
 
@@ -24,8 +25,10 @@ $insertQuery = "
 	VALUES ('$userFirstName', '$userLastName', '$userEmail', '$userPassword','$userName')";
 
 //mysqli_query($con, $insertQuery) or die(mysqli_error($con));
-if(mysqli_query($con, $insertQuery)){
+if (mysqli_query($con, $insertQuery))
+{
 	die("Success");
 }
+
 die("Not found");
 ?>
