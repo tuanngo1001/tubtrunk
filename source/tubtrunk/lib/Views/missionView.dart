@@ -7,13 +7,19 @@ import 'package:tubtrunk/Views/challengeIcon.dart';
 class MissionView extends StatefulWidget {
   @override
   _MissionViewState createState() => _MissionViewState();
+  final RewardMissionController _rewardMissionController = RewardMissionController();
 }
 
 class _MissionViewState extends State<MissionView> {
   List<RewardMissionModel> availableMissionsList;
   List<RewardMissionModel> inProgressMissionsList;
   List<RewardMissionModel> achievedMissionsList;
-  RewardMissionController rewardMissionController = RewardMissionController();
+  RewardMissionController rewardMissionController;
+
+  @override
+  void initState() {
+    rewardMissionController = widget._rewardMissionController;
+  }
 
   void changeMissionState(String missionName, String missionState) {
     setState(() {
@@ -26,7 +32,7 @@ class _MissionViewState extends State<MissionView> {
   int requirementsProgress(RewardMissionModel mission) {
     setState(() {
       if (mission.completedRequirements == mission.requirementsList.length) {
-        rewardMissionController.moveInProgressToAchieved(mission.missionName);
+        rewardMissionController.moveInProgressToAchieved(mission.title);
       }
     });
     return mission.completedRequirements;
@@ -34,11 +40,10 @@ class _MissionViewState extends State<MissionView> {
 
   @override
   Widget build(BuildContext context) {
-    availableMissionsList =
-        rewardMissionController.getAvailableRewardMissions();
-    inProgressMissionsList =
-        rewardMissionController.getInProgressRewardMissions();
+    availableMissionsList = rewardMissionController.availableMissions; //getAvailableRewardMissions();
+    inProgressMissionsList = rewardMissionController.getInProgressRewardMissions();
     achievedMissionsList = rewardMissionController.getAchievedRewardMissions();
+
     return DefaultTabController(
       length: 3,
       child: Scaffold(
@@ -85,9 +90,9 @@ class _MissionViewState extends State<MissionView> {
                           child: ListTile(
 //                            leading: Icon(Icons.album),
                             title: Text(
-                                "${availableMissionsList[index].missionName}"),
+                                "${availableMissionsList[index].title}"),
                             subtitle: Text(
-                              "${rewardMissionController.getRewardMissionRequirements(availableMissionsList[index].missionName).toString().replaceAll('[', '').replaceAll(']', '').replaceAll(',', '')}",
+                              "${availableMissionsList[index].toString()}",
                               style: TextStyle(
                                   fontSize: 14,
                                   fontWeight: FontWeight.w400,
@@ -108,7 +113,7 @@ class _MissionViewState extends State<MissionView> {
                               ),
                               const SizedBox(width: 1),
                               Text(
-                                "${availableMissionsList[index].prizeMoney}",
+                                "${availableMissionsList[index].prize}",
                                 style: TextStyle(
                                     fontSize: 14,
                                     fontWeight: FontWeight.w500,
@@ -121,7 +126,7 @@ class _MissionViewState extends State<MissionView> {
                                     setState(() {
                                       changeMissionState(
                                           availableMissionsList[index]
-                                              .missionName,
+                                              .title,
                                           availableMissionsList[index]
                                               .missionStatus);
                                     });
@@ -167,9 +172,9 @@ class _MissionViewState extends State<MissionView> {
                             child: ListTile(
 //                            leading: Icon(Icons.album),
                               title: Text(
-                                  "${inProgressMissionsList[index].missionName}"),
+                                  "${inProgressMissionsList[index].title}"),
                               subtitle: Text(
-                                "${rewardMissionController.getRewardMissionRequirements(inProgressMissionsList[index].missionName).toString().replaceAll('[', '').replaceAll(']', '').replaceAll(',', '')}",
+                                "${rewardMissionController.getRewardMissionRequirements(inProgressMissionsList[index].title).toString().replaceAll('[', '').replaceAll(']', '').replaceAll(',', '')}",
                                 style: TextStyle(
                                     fontSize: 14,
                                     fontWeight: FontWeight.w400,
@@ -189,7 +194,7 @@ class _MissionViewState extends State<MissionView> {
                                 ),
                                 const SizedBox(width: 1),
                                 Text(
-                                  "${inProgressMissionsList[index].prizeMoney}",
+                                  "${inProgressMissionsList[index].prize}",
                                   style: TextStyle(
                                       fontSize: 14,
                                       fontWeight: FontWeight.w500,
@@ -256,9 +261,9 @@ class _MissionViewState extends State<MissionView> {
                             child: ListTile(
 //                            leading: Icon(Icons.album),
                               title: Text(
-                                  "${achievedMissionsList[index].missionName}"),
+                                  "${achievedMissionsList[index].title}"),
                               subtitle: Text(
-                                "${rewardMissionController.getRewardMissionRequirements(achievedMissionsList[index].missionName).toString().replaceAll('[', '').replaceAll(']', '').replaceAll(',', '')}",
+                                "${rewardMissionController.getRewardMissionRequirements(achievedMissionsList[index].title).toString().replaceAll('[', '').replaceAll(']', '').replaceAll(',', '')}",
                                 style: TextStyle(
                                     fontSize: 14,
                                     fontWeight: FontWeight.w400,
@@ -279,7 +284,7 @@ class _MissionViewState extends State<MissionView> {
                                 ),
                                 const SizedBox(width: 1),
                                 Text(
-                                  "${achievedMissionsList[index].prizeMoney}",
+                                  "${achievedMissionsList[index].prize}",
                                   style: TextStyle(
                                       fontSize: 14,
                                       fontWeight: FontWeight.w500,

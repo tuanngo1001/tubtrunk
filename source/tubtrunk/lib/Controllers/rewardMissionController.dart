@@ -1,22 +1,19 @@
 import 'package:tubtrunk/Models/rewardMissionModel.dart';
 import 'package:tubtrunk/Models/rewardRequirementModel.dart';
-
-//
-//      stubDB[6].addRequirement(new RewardRequirement(_minutes, _times, _howManyTimesLeft));
-//      stubDB[6].addRequirement(new RewardRequirement(_minutes, _times, _howManyTimesLeft));
-//      stubDB[6].addRequirement(new RewardRequirement(_minutes, _times, _howManyTimesLeft));
-//      stubDB[6].addRequirement(new RewardRequirement(_minutes, _times, _howManyTimesLeft));
-//
-//      stubDB[7].addRequirement(new RewardRequirement(_minutes, _times, _howManyTimesLeft));
-//      stubDB[7].addRequirement(new RewardRequirement(_minutes, _times, _howManyTimesLeft));
-//      stubDB[7].addRequirement(new RewardRequirement(_minutes, _times, _howManyTimesLeft));
-//      stubDB[7].addRequirement(new RewardRequirement(_minutes, _times, _howManyTimesLeft));
+import 'package:http/http.dart' as http;
+import 'package:tubtrunk/Utils/globalSettings.dart';
+import 'dart:convert';
 
 class RewardMissionController {
   List<RewardMissionModel> stubDB;
+
+  List<RewardMissionModel> _availableMissions;
+  List<RewardMissionModel> get availableMissions => _availableMissions;
+
   int prizeMoney = 0;
 
   RewardMissionController() {
+    fetchAvailableMissions();
     stubDB = [];
 
     stubDB.add(new RewardMissionModel("Warm-up session", 150, "lock", 0));
@@ -57,6 +54,23 @@ class RewardMissionController {
     stubDB[5].addRequirement(new RewardRequirementModel(120, 2, 2));
   }
 
+  void fetchAvailableMissions() async {
+    var map = new Map<String, String>();
+    map["UserID"] = "1";
+
+    var response = await http.post(
+        GlobalSettings.serverAddress + "getAvailableMissions.php",
+        body: map
+    );
+
+    if (response.statusCode == 200) {
+      _availableMissions = List<RewardMissionModel>.from(json
+          .decode(response.body)
+          .map((tr) => RewardMissionModel.fromJson(tr))
+      );
+    }
+  }
+
   List<RewardMissionModel> getAvailableRewardMissions() {
     List<RewardMissionModel> availableMissions = []; //Querry by missionStatus attribute ("lock" for available missions, "in-progress" for In-progress missions, "achieved" for achieved missions)
     for (int i = 0; i < stubDB.length; i++) {
@@ -89,12 +103,11 @@ class RewardMissionController {
     return achievedMissions;
   }
 
-  List<RewardRequirementModel> getRewardMissionRequirements(
-      String missionName) {
+  List<RewardRequirementModel> getRewardMissionRequirements(String missionName) {
     //Querry by Mission name attribute (Foreign key) in reward requirement table
     List<RewardRequirementModel> missionRequirements = [];
     for (int i = 0; i < stubDB.length; i++) {
-      if (stubDB[i].missionName == missionName) {
+      if (stubDB[i].title == missionName) {
         missionRequirements = stubDB[i].requirementsList;
       }
     }
@@ -104,7 +117,7 @@ class RewardMissionController {
   void moveChallengeToInProgress(String missionName) {
     // update the status of the mission from "lock" to "in-progress"
     for (int i = 0; i < stubDB.length; i++) {
-      if (stubDB[i].missionName == missionName) {
+      if (stubDB[i].title == missionName) {
         stubDB[i].missionStatus = "in-progress";
       }
     }
@@ -114,7 +127,7 @@ class RewardMissionController {
   void moveInProgressToAchieved(String missionName) {
     // update the status of the mission from "in-progress" to "lock"
     for (int i = 0; i < stubDB.length; i++) {
-      if (stubDB[i].missionName == missionName) {
+      if (stubDB[i].title == missionName) {
         stubDB[i].missionStatus = "achieved";
       }
     }
@@ -125,7 +138,7 @@ class RewardMissionController {
     bool isCompleted = false;
     int completedRequirements = 0;
     for (int i = 0; i < stubDB.length; i++) {
-      if (stubDB[i].missionName == missionName) {
+      if (stubDB[i].title == missionName) {
         for (int j = 0; j < stubDB[i].requirementsList.length; i++) {
           if (stubDB[i].requirementsList[j].howManyTimesLeft == 0) {
             completedRequirements++;
@@ -159,7 +172,7 @@ class RewardMissionController {
   void addMoneyFromMissions() {
     for (int i = 0; i < stubDB.length; i++) {
       if (stubDB[i].missionStatus == "achieved") {
-        prizeMoney += stubDB[i].prizeMoney;
+        prizeMoney += stubDB[i].prize;
       }
     }
   }
