@@ -86,7 +86,7 @@ class TimerController {
 
   void onComplete() {
     print('Countdown Completed');
-    _rewardMissionController.updateRequirementProgress(_duration); // Send the duration to the missionController to calculate the money user receives
+    // _rewardMissionController.updateRequirementProgress(_duration); // Send the duration to the missionController to calculate the money user receives
     countDownController.restart(duration: _duration);
     countDownController.pause();
     _stopped = true;

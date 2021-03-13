@@ -23,14 +23,14 @@ class _MissionViewState extends State<MissionView> {
     rewardMissionController = widget._rewardMissionController;
   }
 
-  int requirementsProgress(RewardMissionModel mission) {
-    setState(() {
-      if (mission.completedRequirements == mission.requirementsList.length) {
-        rewardMissionController.moveInProgressToAchieved(mission.title);
-      }
-    });
-    return mission.completedRequirements;
-  }
+  // int requirementsProgress(RewardMissionModel mission) {
+  //   setState(() {
+  //     if (mission.completedRequirements == mission.requirementsList.length) {
+  //       rewardMissionController.moveInProgressToAchieved(mission.title);
+  //     }
+  //   });
+  //   return mission.completedRequirements;
+  // }
 
   @override
   Widget build(BuildContext context) {
