@@ -2,7 +2,6 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:tubtrunk/Models/couponModel.dart';
 import 'package:tubtrunk/Models/petModel.dart';
-import 'package:tubtrunk/Models/userModel.dart';
 import 'package:tubtrunk/Utils/globalSettings.dart';
 
 class StoreController {
@@ -13,7 +12,6 @@ class StoreController {
   //#region Properties
   List<PetModel> petList = new List<PetModel>();
   List<CouponModel> couponList = new List<CouponModel>();
-
 
   //#endregion
 
@@ -26,7 +24,6 @@ class StoreController {
   StoreController._initializerFunction(){
     stubPetList();
     getCouponList();
-    print("GET INITED ");
   }
   //#endregion
 
@@ -62,24 +59,6 @@ class StoreController {
     }
   }
 
-  Future<List<UserModel>> getUsers() async {
-    List<UserModel> userList = [];
-
-    var url = 'https://tubtrunk.tk/getUsers.php';
-    http.Response response = await http.get(url);
-    if (response.statusCode == 200) {
-      var data = jsonDecode(response.body);
-
-      for (var key in data) {
-        userList.add(UserModel.fromJson(key));
-      }
-      return userList;
-    } else {
-      print(response.statusCode);
-      throw Exception('Failed to load post');
-    }
-  }
-
   void removePetAtIndex(int index){
     petList.removeAt(index);
   }
@@ -93,9 +72,7 @@ class StoreController {
     if (response.statusCode == 200) {
       print("Successfully delete coupon item");
       getCouponList();
-
     }
-
     print("Coupon deleted");
   }
 
