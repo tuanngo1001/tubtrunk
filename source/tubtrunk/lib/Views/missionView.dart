@@ -35,8 +35,8 @@ class _MissionViewState extends State<MissionView> {
   @override
   Widget build(BuildContext context) {
     availableMissionsList = rewardMissionController.availableMissions;
-    inProgressMissionsList = rewardMissionController.getInProgressRewardMissions();
-    achievedMissionsList = rewardMissionController.getAchievedRewardMissions();
+    inProgressMissionsList = rewardMissionController.inProgressMissions;
+    achievedMissionsList = rewardMissionController.achievedMissions;
 
     return DefaultTabController(
       length: 3,
@@ -97,9 +97,9 @@ class _MissionViewState extends State<MissionView> {
   Widget _buildAvailableMissions() {
     List<Widget> missionWidgets = List.generate(availableMissionsList.length, (index) {
       List<Widget> missionComponents = _buildAvailableMissionComponents(
-          availableMissionsList[index].title,
-          availableMissionsList[index].prize,
-          availableMissionsList[index].toString()
+        availableMissionsList[index].title,
+        availableMissionsList[index].prize,
+        availableMissionsList[index].toString()
       );
       return _buildMission(missionComponents);
     });
@@ -110,9 +110,11 @@ class _MissionViewState extends State<MissionView> {
   Widget _buildInProgressMissions() {
     List<Widget> missionWidgets = List.generate(inProgressMissionsList.length, (index) {
       List<Widget> missionComponents = _buildInProgressMissionComponents(
-          inProgressMissionsList[index].title,
-          inProgressMissionsList[index].prize,
-          inProgressMissionsList[index].toString()
+        inProgressMissionsList[index].title,
+        inProgressMissionsList[index].prize,
+        inProgressMissionsList[index].toString(),
+        inProgressMissionsList[index].requirements.length,
+        inProgressMissionsList[index].completedRequirements,
       );
       return _buildMission(missionComponents);
     });
@@ -123,9 +125,10 @@ class _MissionViewState extends State<MissionView> {
   Widget _buildAchievedMissions() {
     List<Widget> missionWidgets = List.generate(achievedMissionsList.length, (index) {
       List<Widget> missionComponents = _buildAchievedMissionComponents(
-          achievedMissionsList[index].title,
-          achievedMissionsList[index].prize,
-          achievedMissionsList[index].toString()
+        achievedMissionsList[index].title,
+        achievedMissionsList[index].prize,
+        achievedMissionsList[index].toString(),
+        achievedMissionsList[index].requirements.length,
       );
       return _buildMission(missionComponents);
     });
@@ -171,19 +174,19 @@ class _MissionViewState extends State<MissionView> {
     ];
   }
 
-  List<Widget> _buildInProgressMissionComponents(String title, int prize, String requirements) {
+  List<Widget> _buildInProgressMissionComponents(String title, int prize, String requirements, int _totalRequirements, int _finishedRequirements) {
     return <Widget>[
       _buildMissionDescription(title, requirements),
       _buildMissionStatus(prize, "In-Progress"),
-      _buildProgressIndicator(totalRequirements: 4, finishedRequirements: 0)
+      _buildProgressIndicator(totalRequirements: _totalRequirements, finishedRequirements: _finishedRequirements)
     ];
   }
 
-  List<Widget> _buildAchievedMissionComponents(String title, int prize, String requirements) {
+  List<Widget> _buildAchievedMissionComponents(String title, int prize, String requirements, int _totalRequirements) {
     return <Widget>[
       _buildMissionDescription(title, requirements),
       _buildMissionStatus(prize, "Achieved"),
-      _buildProgressIndicator(totalRequirements: 4, finishedRequirements: 4)
+      _buildProgressIndicator(totalRequirements: _totalRequirements, finishedRequirements: _totalRequirements)
     ];
   }
   

@@ -10,10 +10,18 @@ class RewardMissionController {
   List<RewardMissionModel> _availableMissions;
   List<RewardMissionModel> get availableMissions => _availableMissions;
 
+  List<RewardMissionModel> _inProgressMissions;
+  List<RewardMissionModel> get inProgressMissions => _inProgressMissions;
+
+  List<RewardMissionModel> _achievedMissions;
+  List<RewardMissionModel> get achievedMissions => _achievedMissions;
+
   int prizeMoney = 0;
 
   RewardMissionController() {
     fetchAvailableMissions();
+    fetchAcceptedMissions();
+
     stubDB = [];
 
     stubDB.add(new RewardMissionModel("Warm-up session", 150, "lock", 0));
@@ -55,6 +63,8 @@ class RewardMissionController {
   }
 
   void fetchAvailableMissions() async {
+    _availableMissions = [];
+
     var map = new Map<String, String>();
     map["UserID"] = "1";
 
@@ -71,14 +81,30 @@ class RewardMissionController {
     }
   }
 
-  List<RewardMissionModel> getAvailableRewardMissions() {
-    List<RewardMissionModel> availableMissions = []; //Querry by missionStatus attribute ("lock" for available missions, "in-progress" for In-progress missions, "achieved" for achieved missions)
-    for (int i = 0; i < stubDB.length; i++) {
-      if (stubDB[i].missionStatus == "lock") {
-        availableMissions.add(stubDB[i]);
+  void fetchAcceptedMissions() async {
+    _inProgressMissions = [];
+    _achievedMissions = [];
+
+    var map = new Map<String, String>();
+    map["UserID"] = "1";
+
+    var response = await http.post(
+        GlobalSettings.serverAddress + "getAcceptedMissions.php",
+        body: map
+    );
+
+    if (response.statusCode == 200) {
+      var data = jsonDecode(response.body);
+      for (var key in data) {
+        RewardMissionModel mission = RewardMissionModel.fromJson(key);
+        if (mission.inProgress) {
+          inProgressMissions.add(mission);
+        }
+        else {
+          achievedMissions.add(mission);
+        }
       }
     }
-    return availableMissions;
   }
 
   List<RewardMissionModel> getInProgressRewardMissions() {

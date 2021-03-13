@@ -17,6 +17,9 @@ class RewardMissionModel {
   String title;
   int prize;
   List<dynamic> requirements;
+  bool inProgress;
+  List<int> progressTrack;
+
   List<RewardRequirementModel> requirementsList = [];
   String missionStatus;
   int completedRequirements;
@@ -26,7 +29,14 @@ class RewardMissionModel {
     requirementsList = [];
   }
 
-  RewardMissionModel._internal({this.title, this.prize, this.requirements}) {}
+  RewardMissionModel._internal({this.title, this.prize, this.requirements, this.inProgress, this.progressTrack}) {
+    completedRequirements = 0;
+    for (int i = 0; i < progressTrack.length; i++) {
+      if (requirements[i][_timesIndex] == progressTrack[i]) {
+        ++completedRequirements;
+      }
+    }
+  }
 
   void addRequirement(RewardRequirementModel requirement) {
     requirementsList.add(requirement);
@@ -34,19 +44,26 @@ class RewardMissionModel {
 
   factory RewardMissionModel.fromJson(Map<String, dynamic> json) {
     return RewardMissionModel._internal(
-        title: json['Title'],
-        prize: json['Prize'],
-        requirements: json['Requirements']
+      title: json['Title'],
+      prize: json['Prize'],
+      requirements: json['Requirements'],
+      inProgress: json['InProgress'],
+      progressTrack: json['ProgressTrack'].cast<int>()
     );
   }
 
   @override
   String toString() {
     String requirementDesc = "";
-    for (List<dynamic> requirement in requirements) {
-      int minutes = requirement[_minutesIndex];
-      int times = requirement[_timesIndex];
-      requirementDesc = requirementDesc + "\n-You have to focus $minutes minutes for $times time(s).\n";
+    for (int i = 0; i < requirements.length; i++) {
+      int minutes = requirements[i][_minutesIndex];
+      int times = requirements[i][_timesIndex];
+      if (progressTrack.length > 0 && times == progressTrack[i]) {
+        requirementDesc = requirementDesc + "\n-You have to focus $minutes minutes for $times time(s).[✓]\n";
+      }
+      else {
+        requirementDesc = requirementDesc + "\n-You have to focus $minutes minutes for $times time(s).\n";
+      }
     }
 
     return requirementDesc;
