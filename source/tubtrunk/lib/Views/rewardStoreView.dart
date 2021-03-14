@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:tubtrunk/Controllers/storeController.dart';
 import 'package:tubtrunk/Views/myCouponIcon.dart';
 import 'notificationView.dart';
+//import 'package:assets_audio_player/assets_audio_player.dart';
 
 class RewardStoreView extends StatefulWidget {
   @override
@@ -19,6 +20,7 @@ class _RewardStoreViewState extends State<RewardStoreView> {
 
   void rewardStoreViewSetState(int index){
     setState(() {
+      //For now only remove coupon at given index, add more functions if needed.
       controller.couponList.removeAt(index);
     });
   }
@@ -26,7 +28,7 @@ class _RewardStoreViewState extends State<RewardStoreView> {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: 4,
+      length: 3,
       child: Scaffold(
         appBar: PreferredSize(
           preferredSize: Size.fromHeight(50.0),
@@ -52,13 +54,6 @@ class _RewardStoreViewState extends State<RewardStoreView> {
                     color: Colors.blueGrey.shade800,
                   ),
                 ),
-                Tab(
-                  icon: Icon(
-                    Icons.palette_outlined,
-                    size: 30.0,
-                    color: Colors.blueGrey.shade800,
-                  ),
-                )
               ],
             ),
           ),
@@ -84,24 +79,26 @@ class _RewardStoreViewState extends State<RewardStoreView> {
                       crossAxisCount: 1,
                       // Generate 100 widgets that display their index in the List.
                       children: List.generate(controller.couponList.length, (index) {
-                        return Center(
+                        return Card(
+                          color: Colors.cyan.shade50,
                           child: InkWell(
                               splashColor: Colors.cyanAccent,
+                              hoverColor: Colors.lightBlue[100],
                               onTap: () {
-                                print("BEFORE SET STATE, list.length: "+controller.couponList.length.toString());
+                                //AssetsAudioPlayer.playAndForget(Audio("assets/musics/TheLongestTime.mp3"));
                                 setState(() {
                                   showDialog(
                                       context: context,
                                       builder: (_) => new NotificationView(rewardStoreViewSetState).purchasePopUp(context, controller.removeCouponAtIndex, index));
                                 });
                                 // Perform some action
-                                print("AFTER SET STATE, list.length: "+controller.couponList.length.toString());
                               },
                               child: Container(
                                   width: MediaQuery.of(context).size.width,
                                   child: Column(
                                     children: <Widget>[
                                       Padding(padding: EdgeInsets.all(18.0)),
+
                                       Text(
                                         controller.couponList[index].store + " Coupon",
                                         style: TextStyle(
@@ -132,14 +129,16 @@ class _RewardStoreViewState extends State<RewardStoreView> {
                       crossAxisSpacing: 0,
                       // Generate 100 widgets that display their index in the List.
                       children: List.generate(100, (index) {
-                        return Center(
+                        return Card(
+                            color: Colors.cyan.shade50,
                             child: InkWell(
                           splashColor: Colors.cyanAccent,
                           onTap: () {
-                          //   showDialog(
-                          //       context: context,
-                          //       builder: (_) => new NotificationView().purchasePopUp(context));
-                          //   // Perform some action
+                            // setState(() {
+                            //   showDialog(
+                            //       context: context,
+                            //       builder: (_) => new NotificationView(rewardStoreViewSetState).purchasePopUp(context, controller.removePetAtIndex, index));
+                            // });
                           },
                           child: Container(
                             width: MediaQuery.of(context).size.width,
@@ -177,7 +176,8 @@ class _RewardStoreViewState extends State<RewardStoreView> {
                       crossAxisCount: 1,
                       // Generate 100 widgets that display their index in the List.
                       children: List.generate(controller.petList.length, (index) {
-                        return Center(
+                        return Card(
+                          color: Colors.cyan.shade50,
                           child: InkWell(
                               splashColor: Colors.cyanAccent,
                               onTap: () {
@@ -185,7 +185,6 @@ class _RewardStoreViewState extends State<RewardStoreView> {
                                   showDialog(
                                       context: context,
                                       builder: (_) => new NotificationView(rewardStoreViewSetState).purchasePopUp(context, controller.removePetAtIndex, index));
-
                                 });
                                 // Perform some action
                               },
@@ -214,15 +213,6 @@ class _RewardStoreViewState extends State<RewardStoreView> {
                                       )
                                     ],
                                   ))),
-                        );
-                      }),
-                    ),
-                    GridView.count(
-                      crossAxisCount: 1,
-                      // Generate 100 widgets that display their index in the List.
-                      children: List.generate(100, (index) {
-                        return Center(
-                          child: Text('Reward $index'),
                         );
                       }),
                     ),
