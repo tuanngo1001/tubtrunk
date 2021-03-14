@@ -1,11 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:giffy_dialog/giffy_dialog.dart';
+import 'package:tubtrunk/Controllers/audioController.dart';
 import 'package:tubtrunk/Controllers/mainController.dart';
-import 'package:tubtrunk/Controllers/storeController.dart';
-import 'package:tubtrunk/Views/rewardStoreView.dart';
+
 
 class NotificationView extends StatefulWidget {
+
+  AudioController auController = new AudioController();
 
   Function rewardStoreViewSetState;
   MainController _mainController = MainController();
@@ -49,7 +51,7 @@ class NotificationView extends StatefulWidget {
       ),
       entryAnimation: EntryAnimation.TOP,
       onOkButtonPressed: () async {
-
+        auController.playByName('success-sfx.mp3');
         removeStoreItem(index);
         this.rewardStoreViewSetState(index);
         Navigator.of(context).pop();
