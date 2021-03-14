@@ -25,6 +25,8 @@ dependencies:
   flutter:
     sdk: flutter
 
+  audioplayers: ^0.17.4
+
   http: ^0.12.2
   step_progress_indicator: ^0.2.5+8
   giffy_dialog: 1.8.0
@@ -71,6 +73,7 @@ flutter:
 #        - asset: assets/MyCouponIcon.ttf
   assets:
     - assets/TrunkCoinIcon.png
+    - assets/musics/
 
   fonts:
     - family: MyCouponIcon
