@@ -94,7 +94,7 @@ class TimerController {
     _resumable = false;
     _finished = true;
     _stopStartButtonText = "Start";
-    saveTimerRecord(duration: _duration, completed: finished);
+    saveTimerRecord(duration: (_duration~/60), completed: finished);
   }
 
   void stopStart() {
