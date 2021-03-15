@@ -7,15 +7,18 @@ class StatisticController {
   int _failedFocusTimes;
   int _succeedFocusTimes;
   int _totalFocusTimes;
+  double _averageFocusTimes;
   List<TimerRecordModel> _timerRecords;
 
   StatisticController() {
     _failedFocusTimes = 0;
     _succeedFocusTimes = 0;
     _totalFocusTimes = 0;
+    _averageFocusTimes=0;
   }
 
   Future<int> fetchTimerRecord() async {
+    int completed=0;
     var map = new Map<String, String>();
     map["UserID"] = "1";
 
@@ -29,17 +32,31 @@ class StatisticController {
           .map((tr) => TimerRecordModel.fromJson(tr)));
       _totalFocusTimes = _timerRecords != null ? _timerRecords.length : 0;
 
-      _succeedFocusTimes = _failedFocusTimes = 0;
+      _succeedFocusTimes = _failedFocusTimes = 0;_averageFocusTimes=0;
       for (int i = 0; i < _timerRecords.length; i++) {
-        if (_timerRecords[i].completed == 1)
+        if (_timerRecords[i].completed == 1) {
+          completed++;
+          _averageFocusTimes += _timerRecords[i].duration;
+          if(i==_timerRecords.length-1){
+            _averageFocusTimes=_averageFocusTimes/completed;
+          }
           ++_succeedFocusTimes;
-        else
+        }else
           ++_failedFocusTimes;
       }
       return _totalFocusTimes;
     }
-
     return 0;
+  }
+
+
+
+  List<TimerRecordModel> getTimerRecords(){
+    return _timerRecords;
+  }
+
+  double getAverageFocusTimes(){
+    return _averageFocusTimes;
   }
 
   int getTotalFocusTimes() {
