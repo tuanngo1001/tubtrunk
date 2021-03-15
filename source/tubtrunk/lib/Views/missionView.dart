@@ -5,9 +5,15 @@ import 'package:step_progress_indicator/step_progress_indicator.dart';
 import 'package:tubtrunk/Views/challengeIcon.dart';
 
 class MissionView extends StatefulWidget {
+  final RewardMissionController _rewardMissionController = RewardMissionController();
+  Function(int) updateProgressCallback;
+
+  MissionView() {
+    updateProgressCallback = _rewardMissionController.updateRequirementProgress;
+  }
+
   @override
   _MissionViewState createState() => _MissionViewState();
-  final RewardMissionController _rewardMissionController = RewardMissionController();
 }
 
 class _MissionViewState extends State<MissionView> {
@@ -21,16 +27,8 @@ class _MissionViewState extends State<MissionView> {
     super.initState();
 
     rewardMissionController = widget._rewardMissionController;
+    rewardMissionController.setStateCallback = setState;
   }
-
-  // int requirementsProgress(RewardMissionModel mission) {
-  //   setState(() {
-  //     if (mission.completedRequirements == mission.requirementsList.length) {
-  //       rewardMissionController.moveInProgressToAchieved(mission.title);
-  //     }
-  //   });
-  //   return mission.completedRequirements;
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +49,7 @@ class _MissionViewState extends State<MissionView> {
     return PreferredSize(
       preferredSize: Size.fromHeight(50.0),
       child: AppBar(
-        backgroundColor: Colors.orangeAccent,
+        backgroundColor: Colors.indigo.shade100,
         bottom: _buildTabBar(),
       ),
     );
@@ -88,48 +86,24 @@ class _MissionViewState extends State<MissionView> {
     return TabBarView(
       children: [
         _buildAvailableMissions(),
-        _buildInProgressMissions(),
-        _buildAchievedMissions(),
+        _buildAcceptedMissions(inProgressMissionsList, "In-Progress"),
+        _buildAcceptedMissions(achievedMissionsList, "Achieved"),
       ],
     );
   }
 
   Widget _buildAvailableMissions() {
     List<Widget> missionWidgets = List.generate(availableMissionsList.length, (index) {
-      List<Widget> missionComponents = _buildAvailableMissionComponents(
-        availableMissionsList[index].title,
-        availableMissionsList[index].prize,
-        availableMissionsList[index].toString()
-      );
+      List<Widget> missionComponents = _buildAvailableMissionComponents(availableMissionsList[index]);
       return _buildMission(missionComponents);
     });
 
     return _buildMissions(missionWidgets);
   }
 
-  Widget _buildInProgressMissions() {
-    List<Widget> missionWidgets = List.generate(inProgressMissionsList.length, (index) {
-      List<Widget> missionComponents = _buildInProgressMissionComponents(
-        inProgressMissionsList[index].title,
-        inProgressMissionsList[index].prize,
-        inProgressMissionsList[index].toString(),
-        inProgressMissionsList[index].requirements.length,
-        inProgressMissionsList[index].completedRequirements,
-      );
-      return _buildMission(missionComponents);
-    });
-
-    return _buildMissions(missionWidgets);
-  }
-
-  Widget _buildAchievedMissions() {
-    List<Widget> missionWidgets = List.generate(achievedMissionsList.length, (index) {
-      List<Widget> missionComponents = _buildAchievedMissionComponents(
-        achievedMissionsList[index].title,
-        achievedMissionsList[index].prize,
-        achievedMissionsList[index].toString(),
-        achievedMissionsList[index].requirements.length,
-      );
+  Widget _buildAcceptedMissions(List<RewardMissionModel> missionList, String status) {
+    List<Widget> missionWidgets = List.generate(missionList.length, (index) {
+      List<Widget> missionComponents = _buildAcceptedMissionComponents(missionList[index], status);
       return _buildMission(missionComponents);
     });
 
@@ -154,18 +128,18 @@ class _MissionViewState extends State<MissionView> {
     );
   }
 
-  List<Widget> _buildAvailableMissionComponents(String title, int prize, String requirements) {
+  List<Widget> _buildAvailableMissionComponents(RewardMissionModel mission) {
     return <Widget>[
-      _buildMissionDescription(title, requirements),
+      _buildMissionDescription(mission.title, mission.toString()),
       Expanded(
         flex: 0,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.end,
           children: <Widget>[
-            _buildMissionPrize(prize),
+            _buildMissionPrize(mission.prize),
             const SizedBox(width: 2),
             Expanded(
-              child: _buildChallengeButton(title),
+              child: _buildChallengeButton(mission),
             ),
             const SizedBox(width: 3)
           ],
@@ -174,19 +148,11 @@ class _MissionViewState extends State<MissionView> {
     ];
   }
 
-  List<Widget> _buildInProgressMissionComponents(String title, int prize, String requirements, int _totalRequirements, int _finishedRequirements) {
+  List<Widget> _buildAcceptedMissionComponents(RewardMissionModel mission, String status) {
     return <Widget>[
-      _buildMissionDescription(title, requirements),
-      _buildMissionStatus(prize, "In-Progress"),
-      _buildProgressIndicator(totalRequirements: _totalRequirements, finishedRequirements: _finishedRequirements)
-    ];
-  }
-
-  List<Widget> _buildAchievedMissionComponents(String title, int prize, String requirements, int _totalRequirements) {
-    return <Widget>[
-      _buildMissionDescription(title, requirements),
-      _buildMissionStatus(prize, "Achieved"),
-      _buildProgressIndicator(totalRequirements: _totalRequirements, finishedRequirements: _totalRequirements)
+      _buildMissionDescription(mission.title, mission.toString()),
+      _buildMissionStatus(mission.prize, status),
+      _buildProgressIndicator(totalRequirements: mission.requirements.length, finishedRequirements: mission.completedRequirements)
     ];
   }
   
@@ -226,9 +192,9 @@ class _MissionViewState extends State<MissionView> {
     );
   }
 
-  Widget _buildChallengeButton(String title) {
+  Widget _buildChallengeButton(RewardMissionModel mission) {
     return ElevatedButton.icon(
-      onPressed: () => _challengeMissionPressed(title),
+      onPressed: () => rewardMissionController.moveMissionToInProgress(mission),
       style: ElevatedButton.styleFrom(
           primary: Colors.green.shade400,
           padding: EdgeInsets.symmetric(horizontal: 2),
@@ -249,12 +215,6 @@ class _MissionViewState extends State<MissionView> {
         ),
       ),
     );
-  }
-
-  void _challengeMissionPressed(String title) {
-    setState(() {
-      rewardMissionController.moveChallengeToInProgress(title);
-    });
   }
 
   Widget _buildMissionStatus(int prize, String status) {

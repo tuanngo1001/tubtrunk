@@ -7,9 +7,9 @@ import '../Controllers/notificationsController.dart';
 import './notificationView.dart';
 
 class TimerView extends StatefulWidget {
-  final mission;
+  final Function(int) updateProgressCallback;
 
-  TimerView({this.mission});
+  TimerView({this.updateProgressCallback});
 
   @override
   _TimerViewState createState() => _TimerViewState();
@@ -168,7 +168,7 @@ class _TimerViewState extends State<TimerView> with WidgetsBindingObserver, Auto
             },
             onComplete: () {
               setState(() {
-                _timerController.onComplete();
+                _timerController.onComplete(widget.updateProgressCallback);
               });
               Navigator.push(
                 context,

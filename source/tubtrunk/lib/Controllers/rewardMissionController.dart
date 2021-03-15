@@ -1,3 +1,5 @@
+import 'package:flutter/cupertino.dart';
+import 'package:tubtrunk/Controllers/mainController.dart';
 import 'package:tubtrunk/Models/rewardMissionModel.dart';
 import 'package:http/http.dart' as http;
 import 'package:tubtrunk/Utils/globalSettings.dart';
@@ -16,6 +18,8 @@ class RewardMissionController {
   List<RewardMissionModel> get achievedMissions => _achievedMissions;
 
   int prizeMoney = 0;
+
+  Function(VoidCallback) setStateCallback;
 
   RewardMissionController() {
     fetchAvailableMissions();
@@ -67,48 +71,30 @@ class RewardMissionController {
     }
   }
 
-  void moveChallengeToInProgress(String missionName) {
-    // update the status of the mission from "lock" to "in-progress"
-    // for (int i = 0; i < stubDB.length; i++) {
-    //   if (stubDB[i].title == missionName) {
-    //     stubDB[i].missionStatus = "in-progress";
-    //   }
-    // }
-//      String missionStatus = mission.missionStatus = "in-progress";
+  void moveMissionToInProgress(RewardMissionModel mission) {
+    setStateCallback(() {
+      availableMissions.remove(mission);
+      inProgressMissions.add(mission);
+    });
   }
 
-  void moveInProgressToAchieved(String missionName) {
-    // update the status of the mission from "in-progress" to "lock"
-    // for (int i = 0; i < stubDB.length; i++) {
-    //   if (stubDB[i].title == missionName) {
-    //     stubDB[i].missionStatus = "achieved";
-    //   }
-    // }
-//      String missionStatus = mission.missionStatus="achieved";
+  void updateRequirementProgress(int minutes) {
+    setStateCallback(() {
+      List<RewardMissionModel> completedMissions = [];
+      for (RewardMissionModel mission in inProgressMissions) {
+        mission.addMinutes(minutes);
+        if (mission.isCompleted()) {
+          completedMissions.add(mission);
+        }
+      }
+
+      for (RewardMissionModel mission in completedMissions) {
+        inProgressMissions.remove(mission);
+        ++mission.completedRequirements;
+        achievedMissions.add(mission);
+
+        MainController().addMoney(mission.prize);
+      }
+    });
   }
-
-  // Supposed we have the data each time the user use timer ( duration, times =1) and each requirement is unique
-  // Search for duration first to see if it matches one of the requirement, if it matches, the requirement's times - 1, if requirement's times = 0 => the requirement is completed
-
-  // void updateRequirementProgress(int minutes) {
-  //   // has to be called each time the user finish the countdown
-  //   for (int i = 0; i < stubDB.length; i++) {
-  //     for (int j = 0; j < stubDB[i].requirementsList.length; j++) {
-  //       if (stubDB[i].requirementsList[j].minutes == minutes &&
-  //           stubDB[i].requirementsList[j].howManyTimesLeft != 0) {
-  //         stubDB[i].requirementsList[j].howManyTimesLeft--;
-  //       } else {
-  //         prizeMoney += minutes;
-  //       }
-  //     }
-  //   }
-  // }
-  //
-  // void addMoneyFromMissions() {
-  //   for (int i = 0; i < stubDB.length; i++) {
-  //     if (stubDB[i].missionStatus == "achieved") {
-  //       prizeMoney += stubDB[i].prize;
-  //     }
-  //   }
-  // }
 }

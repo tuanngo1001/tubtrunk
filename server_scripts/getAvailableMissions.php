@@ -15,7 +15,7 @@ $missions = array();
 while ($row = mysqli_fetch_assoc($result))
 {
     $mission = new stdClass();
-    $mission->ID = $row['mID'];
+    $mission->ID = intval($row['mID']);
     $mission->Title = $row['mTitle'];
     $mission->Prize = intval($row['mPrize']);
     $mission->Requirements = json_decode($row['mRequirements']);
