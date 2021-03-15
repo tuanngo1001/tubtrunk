@@ -1,5 +1,5 @@
-import 'package:tubtrunk/Models/TimerRecordModel.dart';
-import 'package:tubtrunk/Utils/GlobalSettings.dart';
+import 'package:tubtrunk/Models/timerRecordModel.dart';
+import 'package:tubtrunk/Utils/globalSettings.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
@@ -32,7 +32,8 @@ class StatisticController {
           .map((tr) => TimerRecordModel.fromJson(tr)));
       _totalFocusTimes = _timerRecords != null ? _timerRecords.length : 0;
 
-      _succeedFocusTimes = _failedFocusTimes = 0;_averageFocusTimes=0;
+      _succeedFocusTimes = _failedFocusTimes = 0;
+      _averageFocusTimes=0;
       for (int i = 0; i < _timerRecords.length; i++) {
         if (_timerRecords[i].completed == 1) {
           completed++;

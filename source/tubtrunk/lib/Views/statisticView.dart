@@ -1,9 +1,9 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
-import 'package:tubtrunk/Controllers/StatisticController.dart';
+import 'package:tubtrunk/Controllers/statisticController.dart';
 import 'indicator.dart';
 import 'package:flutter/rendering.dart';
-import 'package:tubtrunk/Models/TimerRecordModel.dart';
+import 'package:tubtrunk/Models/timerRecordModel.dart';
 
 class StatisticView extends StatefulWidget {
   @override

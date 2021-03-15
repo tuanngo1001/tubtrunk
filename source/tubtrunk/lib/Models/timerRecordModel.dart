@@ -19,15 +19,15 @@ class TimerRecordModel {
         tag: json['Tag']);
   }
 
-String isCompleted(){
-    String result;
-    if(completed==1){
-      result= "Success!";
+  String isCompleted(){
+      String result;
+      if(completed==1){
+        result= "Success!";
 
-    }else{
-      result="Fail!";
-    }
-    return result;
-}
+      }else{
+        result="Fail!";
+      }
+      return result;
+  }
 
 }
