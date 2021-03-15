@@ -57,7 +57,7 @@ class _StatisticViewState extends State<StatisticView> {
 
   Future<TabBarView> _getDataAndReturnTabBarView() async {
     int totalTimes = await _statisticController.fetchTimerRecord();
-    double averageTimes =  double.parse((_statisticController.getAverageFocusTimes()/60).toStringAsFixed(2));
+    double averageTimes =  double.parse((_statisticController.getAverageFocusTimes()).toStringAsFixed(2));
     List<TimerRecordModel> recordsList = _statisticController.getTimerRecords();
     return TabBarView(
       children: [
@@ -111,7 +111,7 @@ class _StatisticViewState extends State<StatisticView> {
                          ListTile(
                           leading: Icon(Icons.date_range_outlined),
                           title: Text('Date: ${recordsList[totalTimes-index-1].date}      Time: ${recordsList[totalTimes-index-1].time}'),
-                          subtitle: Text('Duration: ${recordsList[totalTimes-index-1].duration} sec(s)\nStatus: ${recordsList[totalTimes-index-1].isCompleted()} '),
+                          subtitle: Text('Duration: ${recordsList[totalTimes-index-1].duration} min(s)\nStatus: ${recordsList[totalTimes-index-1].isCompleted()} '),
                         ),
                       ],
                     ),
@@ -122,9 +122,6 @@ class _StatisticViewState extends State<StatisticView> {
       ],
     );
   }
-
-
-
 
 
   List<PieChartSectionData> showingSections() {
