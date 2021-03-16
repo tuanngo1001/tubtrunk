@@ -6,7 +6,7 @@ class AudioController{
   static final AudioController theOnlyAudioController = AudioController._initializerFunction();
   static AudioPlayer advancedPlayer;
   static AudioCache audioCache;
-
+  static List<List<String>> musicList = new List<List<String>>();
 
   factory AudioController(){
     return theOnlyAudioController;
@@ -15,8 +15,8 @@ class AudioController{
   AudioController._initializerFunction(){
     advancedPlayer = new AudioPlayer();
     audioCache = new AudioCache(fixedPlayer: advancedPlayer, prefix:'assets/musics/');
+    loadMusics();
   }
-
   void playByName(String songName,[int duration]){
     advancedPlayer.setVolume(1.0);
     audioCache.play(songName,volume: 3.0);
@@ -36,6 +36,17 @@ class AudioController{
   void resumeCurrentSong(){
     advancedPlayer.resume();
   }
+
+  void loadMusics(){
+    musicList.add(["Lofi Soundtrack", "Naruto_lofi.mp3", "naruto-lofi.png"]);
+    musicList.add(["Relaxing Rain Soundtrack", "Relaxing-Rain.mp3","Relaxing-Rain.png"]);
+    musicList.add(["Billy Joel Song", "TheLongestTime.mp3","TheLongestTime.png"]);
+  }
+
+  List<List<String>> getMusics(){
+    return musicList;
+  }
+
 
 
 

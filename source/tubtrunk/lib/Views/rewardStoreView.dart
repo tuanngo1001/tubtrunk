@@ -2,19 +2,23 @@ import 'package:flutter/material.dart';
 import 'package:tubtrunk/Controllers/storeController.dart';
 import 'package:tubtrunk/Views/myCouponIcon.dart';
 import 'notificationView.dart';
-//import 'package:assets_audio_player/assets_audio_player.dart';
+import 'package:tubtrunk/Controllers/audioController.dart';
+
 
 class RewardStoreView extends StatefulWidget {
   @override
   _RewardStoreViewState createState() => _RewardStoreViewState();
+
 }
 
 class _RewardStoreViewState extends State<RewardStoreView> {
   StoreController controller;
+  AudioController auController;
 
   @override
   void initState() {
     controller = new StoreController();
+    auController = new AudioController();
     super.initState();
   }
 
@@ -123,49 +127,53 @@ class _RewardStoreViewState extends State<RewardStoreView> {
                       }),
                     ),
                     GridView.count(
-                      crossAxisCount: 1,
-                      childAspectRatio: 3,
+                      childAspectRatio: 4,
                       mainAxisSpacing: 0,
                       crossAxisSpacing: 0,
+                      crossAxisCount: 1,
                       // Generate 100 widgets that display their index in the List.
-                      children: List.generate(100, (index) {
+                      children: List.generate(auController.getMusics().length, (index) {
                         return Card(
                             color: Colors.cyan.shade50,
                             child: InkWell(
                           splashColor: Colors.cyanAccent,
                           onTap: () {
-                            // setState(() {
-                            //   showDialog(
-                            //       context: context,
-                            //       builder: (_) => new NotificationView(rewardStoreViewSetState).purchasePopUp(context, controller.removePetAtIndex, index));
-                            // });
+                            setState(() {
+                              showDialog(
+                                  context: context,
+                                  builder: (_) => new NotificationView(rewardStoreViewSetState).purchasePopUp(context, controller.removeCouponAtIndex, index));
+                            });
                           },
                           child: Container(
-                            width: MediaQuery.of(context).size.width,
-                            child: new Column(
-                              children: <Widget>[
-                                Padding(padding: EdgeInsets.all(18.0)),
-                                Text(
-                                  "AAA",
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 20),
-                                ),
-                                Text(
-                                  "Description",
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.w400,
-                                      fontSize: 18),
-                                ),
-                                Text(
-                                  "\$640",
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 16),
-                                )
-                              ],
-                            ),
-                          ),
+                              width: MediaQuery.of(context).size.width,
+                              child: Row(
+                                children: <Widget>[
+                                  Padding(padding: EdgeInsets.all(8.0)),
+                                  IconButton(
+                                    icon: const Icon(Icons.volume_up),
+                                    tooltip: 'Increase volume by 10',
+                                    onPressed: () {
+                                      setState(() {
+                                        auController.playByName((auController.getMusics()[index][1]),15);
+                                      });
+                                    },
+                                  ),
+                                  IconButton(
+                                      padding: EdgeInsets.all(2.0),
+                                      icon: Image.asset(
+                                        ('assets/musics/icons/'+(auController.getMusics())[index][2]),
+                                        width: 300,
+                                        height: 300,
+                                      ),
+                                      onPressed: () {}),
+                                  Text(
+                                      (auController.getMusics())[index][0],
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 20),
+                                  ),
+                                ],
+                              ))
                         ));
                       }),
                     ),

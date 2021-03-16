@@ -74,6 +74,7 @@ flutter:
   assets:
     - assets/TrunkCoinIcon.png
     - assets/musics/
+    - assets/musics/icons/
 
   fonts:
     - family: MyCouponIcon
