@@ -30,12 +30,20 @@ class RewardMissionModel {
     }
   }
 
-  void addMinutes(int minutes) {
+  bool addMinutes(int minutes) {
+    bool updated = false;
     for (int i = 0; i < requirements.length; i++) {
       if (requirements[i][_minutesIndex] == minutes && progressTrack[i] != requirements[i][_timesIndex]) {
+        updated = true;
         ++progressTrack[i];
+
+        if (progressTrack[i] == requirements[i][_timesIndex]) {
+          ++completedRequirements;
+        }
       }
     }
+
+    return updated;
   }
 
   bool isCompleted() {

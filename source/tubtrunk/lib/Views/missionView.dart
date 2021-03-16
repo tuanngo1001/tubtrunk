@@ -28,6 +28,8 @@ class _MissionViewState extends State<MissionView> {
 
     rewardMissionController = widget._rewardMissionController;
     rewardMissionController.setStateCallback = setState;
+    rewardMissionController.loadMissions();
+  }
   }
 
   @override

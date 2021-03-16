@@ -22,13 +22,23 @@ class RewardMissionController {
   Function(VoidCallback) setStateCallback;
 
   RewardMissionController() {
-    fetchAvailableMissions();
-    fetchAcceptedMissions();
+    loadMissions();
   }
 
-  void fetchAvailableMissions() async {
+  void loadMissions() async {
     _availableMissions = [];
+    _inProgressMissions = [];
+    _achievedMissions = [];
 
+    await fetchAvailableMissions();
+    await fetchAcceptedMissions();
+
+    if (setStateCallback != null) {
+      setStateCallback(() {});
+    }
+  }
+
+  Future fetchAvailableMissions() async {
     var map = new Map<String, String>();
     map["UserID"] = "1";
 
@@ -45,10 +55,7 @@ class RewardMissionController {
     }
   }
 
-  void fetchAcceptedMissions() async {
-    _inProgressMissions = [];
-    _achievedMissions = [];
-
+  Future fetchAcceptedMissions() async {
     var map = new Map<String, String>();
     map["UserID"] = "1";
 
@@ -62,39 +69,60 @@ class RewardMissionController {
       for (var key in data) {
         RewardMissionModel mission = RewardMissionModel.fromJson(key);
         if (mission.inProgress) {
-          inProgressMissions.add(mission);
+          _inProgressMissions.add(mission);
         }
         else {
-          achievedMissions.add(mission);
+          _achievedMissions.add(mission);
         }
       }
     }
   }
 
-  void moveMissionToInProgress(RewardMissionModel mission) {
-    setStateCallback(() {
-      availableMissions.remove(mission);
-      inProgressMissions.add(mission);
-    });
+  void moveMissionToInProgress(RewardMissionModel mission) async {
+    var map = new Map<String, String>();
+    map["UserID"] = "1";
+    map["MissionID"] = mission.id.toString();
+
+    await http.post(
+        GlobalSettings.serverAddress + "acceptMission.php",
+        body: map
+    );
+
+    loadMissions();
   }
 
-  void updateRequirementProgress(int minutes) {
-    setStateCallback(() {
-      List<RewardMissionModel> completedMissions = [];
-      for (RewardMissionModel mission in inProgressMissions) {
-        mission.addMinutes(minutes);
-        if (mission.isCompleted()) {
-          completedMissions.add(mission);
-        }
+  void updateRequirementProgress(int minutes) async {
+    List<RewardMissionModel> updatedMissions = [];
+    for (RewardMissionModel mission in inProgressMissions) {
+      if (mission.addMinutes(minutes)) {
+        updatedMissions.add(mission);
       }
+    }
 
-      for (RewardMissionModel mission in completedMissions) {
-        inProgressMissions.remove(mission);
-        ++mission.completedRequirements;
-        achievedMissions.add(mission);
+    for (RewardMissionModel mission in updatedMissions) {
+      bool isCompleted = mission.isCompleted();
+      bool successfulUpdated = await _updateMissionProgress(mission, isCompleted);
 
+      if (isCompleted && successfulUpdated) {
         MainController().addMoney(mission.prize);
       }
-    });
+    }
+
+    loadMissions();
+  }
+
+  Future<bool> _updateMissionProgress(RewardMissionModel mission, bool isCompleted) async {
+    var map = new Map<String, String>();
+    map["UserID"] = "1";
+    map["MissionID"] = mission.id.toString();
+    map["InProgress"] = isCompleted ? "0" : "1";
+    map["ProgressTrack"] = mission.progressTrack.toString();
+
+    var response = await http.post(
+        GlobalSettings.serverAddress + "updateMissionProgress.php",
+        body: map
+    );
+
+    return response.statusCode == 200;
   }
 }
