@@ -30,6 +30,12 @@ class _MissionViewState extends State<MissionView> {
     rewardMissionController.setStateCallback = setState;
     rewardMissionController.loadMissions();
   }
+
+  @override
+  void dispose() {
+    super.dispose();
+
+    rewardMissionController.setStateCallback = null;
   }
 
   @override
