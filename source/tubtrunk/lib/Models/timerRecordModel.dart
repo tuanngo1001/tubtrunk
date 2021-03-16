@@ -7,8 +7,7 @@ class TimerRecordModel {
   int completed;
   String tag;
 
-  TimerRecordModel(
-      {this.date, this.time, this.duration, this.completed, this.tag});
+  TimerRecordModel({this.date, this.time, this.duration, this.completed, this.tag});
 
   factory TimerRecordModel.fromJson(Map<String, dynamic> json) {
     return TimerRecordModel(

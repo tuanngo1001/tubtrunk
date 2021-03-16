@@ -4,8 +4,8 @@ class MainController {
   int _selectedIndex;
   int get selectedIndex => _selectedIndex;
 
-  double _money;
-  double get money => _money;
+  int _money;
+  int get money => _money;
 
   TabController tabController;
 
@@ -27,5 +27,9 @@ class MainController {
   void changeMainView(int index) {
     _selectedIndex = index;
     tabController.animateTo(index);
+  }
+
+  void addMoney(int amount) {
+    _money += amount;
   }
 }

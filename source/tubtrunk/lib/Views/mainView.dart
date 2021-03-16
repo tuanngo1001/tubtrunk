@@ -16,18 +16,28 @@ class MainView extends StatefulWidget {
 class _MainViewState extends State<MainView> with SingleTickerProviderStateMixin {
   MainController _mainController;
 
+  TimerView timerView;
+  MissionView missionView;
+  RewardStoreView rewardStoreView;
+  StatisticView statisticView;
+  AccountView accountView;
+
   static const double iconSize = 32.5;
 
   @override initState() {
     super.initState();
     _mainController = MainController();
     _mainController.tabController = TabController(length: 5, vsync: this);
+
+    missionView = MissionView();
+    timerView = TimerView(updateProgressCallback: missionView.updateProgressCallback);
+    rewardStoreView = RewardStoreView();
+    statisticView = StatisticView();
+    accountView = AccountView();
   }
 
   @override
   Widget build(BuildContext context) {
-    double money = _mainController.money;
-
     return Scaffold(
       appBar: AppBar(
         actions: [
@@ -40,10 +50,10 @@ class _MainViewState extends State<MainView> with SingleTickerProviderStateMixin
               ),
               onPressed: () {}),
           Padding(
-            padding: const EdgeInsets.only(left: 0.0, right: 1),
+            padding: const EdgeInsets.only(left: 0.0, right: 10),
             child: Center(
               child: Text(
-                "$money",
+                _mainController.money.toString(),
                 style: TextStyle(color: Colors.blueGrey[900], fontSize: 19.0),
               ),
             ),
@@ -58,11 +68,11 @@ class _MainViewState extends State<MainView> with SingleTickerProviderStateMixin
       body: TabBarView(
         controller: _mainController.tabController,
         children: <Widget> [
-          TimerView(mission: MissionView()),
-          MissionView(),
-          RewardStoreView(),
-          StatisticView(),
-          AccountView(),
+          timerView,
+          missionView,
+          rewardStoreView,
+          statisticView,
+          accountView,
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(
