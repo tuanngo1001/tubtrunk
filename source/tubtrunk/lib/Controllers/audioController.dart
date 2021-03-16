@@ -18,6 +18,7 @@ class AudioController{
     loadMusics();
   }
   void playByName(String songName,[int duration]){
+    stopCurrentSong();
     advancedPlayer.setVolume(1.0);
     audioCache.play(songName,volume: 3.0);
     if(duration !=null){
@@ -43,15 +44,10 @@ class AudioController{
     musicList.add(["Billy Joel Song", "TheLongestTime.mp3","TheLongestTime.png"]);
     musicList.add(["Hollow Knight Lo-Fi", "HollowKnight-lofi.mp3","HollowKnight.png"]);
     musicList.add(["Mosquito Soundtrack", "MosquitoSoundEffect.mp3","mosquito.png"]);
-
-
+    musicList.add(["Just Do It", "JustDoIt.mp3","JustDoIt.png"]);
   }
 
   List<List<String>> getMusics(){
     return musicList;
   }
-
-
-
-
 }

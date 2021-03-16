@@ -115,12 +115,29 @@ class _RewardStoreViewState extends State<RewardStoreView> {
                                             fontWeight: FontWeight.w400,
                                             fontSize: 18),
                                       ),
-                                      Text(
-                                        controller.couponList[index].price,
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 16),
-                                      )
+                                      Row(
+                                        mainAxisAlignment: MainAxisAlignment.center, //Center Row contents horizontally,
+                                        crossAxisAlignment: CrossAxisAlignment.center, //Center Row contents vertically,
+                                        children: <Widget>[
+                                          IconButton(
+                                              padding: EdgeInsets.all(0.0),
+                                              icon: Image.asset(
+                                                'assets/TrunkCoinIcon.png',
+                                                width: 30.0,
+                                                height: 30.0,
+                                              ),
+                                              onPressed: () {}),
+                                          Text(
+                                            controller.couponList[index].price,
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 16),
+                                          )
+
+                                        ],
+
+                                      ),
+
                                     ],
                                   ))),
                         );
@@ -151,7 +168,7 @@ class _RewardStoreViewState extends State<RewardStoreView> {
                                   Padding(padding: EdgeInsets.all(8.0)),
                                   IconButton(
                                     icon: const Icon(Icons.volume_up),
-                                    tooltip: 'Increase volume by 10',
+                                    tooltip: 'Press to hear preview',
                                     onPressed: () {
                                       setState(() {
                                         auController.playByName((auController.getMusics()[index][1]),15);
