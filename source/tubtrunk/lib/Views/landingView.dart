@@ -1,28 +1,11 @@
 import 'package:flutter/material.dart';
 import 'loginView.dart';
 
-class LandingView extends StatefulWidget {
-  @override
-  _LandingViewState createState() => _LandingViewState();
-}
-
-class _LandingViewState extends State<LandingView> {
-  String text = "";
-
-  void changeText(String text) {
-    setState(() {
-      this.text = text;
-    });
-  }
-
+class LandingView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         body: Container(
-            // decoration: BoxDecoration(
-            //     gradient: LinearGradient(
-            //         begin: Alignment.topLeft, end: Alignment.bottomRight,
-            //         colors: [Color(0xffFC575E), Color(0xff90D5EC)])),
             color: Color(0xfffffff0),
             child: Stack(children: <Widget>[
               Container(
@@ -52,33 +35,6 @@ class _LandingViewState extends State<LandingView> {
 class NavigateButtonWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    // return RaisedButton(
-    //     color: Color(0xfffc575e),
-    //     splashColor: Color(0xff90D5EC),
-    //     child: Padding(
-    //         padding: EdgeInsets.all(20.0),
-    //         child: Row(
-    //             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-    //             children: <Widget>[
-    //               Text('Get Started',
-    //                   style: TextStyle(
-    //                     // fontFamily: ,
-    //                     fontSize: 25,
-    //                     fontWeight: FontWeight.w700,
-    //                     color: Colors.white,
-    //                   )),
-    //               Icon(
-    //                 Icons.arrow_forward,
-    //                 color: Colors.white,
-    //               )
-    //             ])),
-    //     onPressed: () {
-    //       Navigator.push(
-    //         context,
-    //         MaterialPageRoute(builder: (context) => LoginView()),
-    //       );
-    //     })
-
     return Container(
         height: 60.0,
         width: 270.0,

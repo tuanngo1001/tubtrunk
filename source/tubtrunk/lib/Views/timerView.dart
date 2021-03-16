@@ -147,7 +147,7 @@ class _TimerViewState extends State<TimerView> with WidgetsBindingObserver {
             height: MediaQuery.of(context).size.height / 1.5,
             ringColor: Colors.grey[300],
             ringGradient: null,
-            fillColor: Colors.orange,
+            fillColor: Colors.yellow.shade200,
             fillGradient: null,
             backgroundColor: Color(0xfff97c7c),
             backgroundGradient: null,

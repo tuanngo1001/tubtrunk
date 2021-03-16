@@ -49,7 +49,7 @@ class _RewardStoreViewState extends State<RewardStoreView> {
         appBar: PreferredSize(
           preferredSize: Size.fromHeight(50.0),
           child: AppBar(
-            backgroundColor: Colors.orangeAccent,
+            backgroundColor: Colors.indigo.shade100,
             bottom: TabBar(
               tabs: [
                 Tab(
