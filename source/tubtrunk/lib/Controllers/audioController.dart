@@ -41,6 +41,10 @@ class AudioController{
     musicList.add(["Lofi Soundtrack", "Naruto_lofi.mp3", "naruto-lofi.png"]);
     musicList.add(["Relaxing Rain Soundtrack", "Relaxing-Rain.mp3","Relaxing-Rain.png"]);
     musicList.add(["Billy Joel Song", "TheLongestTime.mp3","TheLongestTime.png"]);
+    musicList.add(["Hollow Knight Lo-Fi", "HollowKnight-lofi.mp3","HollowKnight.png"]);
+    musicList.add(["Mosquito Soundtrack", "MosquitoSoundEffect.mp3","mosquito.png"]);
+
+
   }
 
   List<List<String>> getMusics(){
