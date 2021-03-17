@@ -40,4 +40,12 @@ class AuthenticationController {
       return res?.body;
     } finally {}
   }
+
+  void deleteToken(String uEmail) async{
+    var map = new Map<String,String>();
+    map["UserEmail"] = uEmail;
+
+    var response = await http.post(GlobalSettings.serverAddress+"logoutUser.php", body:map);
+    print(response.body);
+  }
 }
