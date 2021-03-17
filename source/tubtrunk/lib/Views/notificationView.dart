@@ -96,32 +96,6 @@ class NotificationView extends StatefulWidget {
       onlyOkButton: true,
       onlyCancelButton: true,
     );
-    // return Dialog(
-    //     backgroundColor: Colors.transparent,
-    //     insetPadding: EdgeInsets.all(10),
-    //     child: Stack(
-    //       clipBehavior: Clip.none, alignment: Alignment.center,
-    //       children: <Widget>[
-    //         Container(
-    //           width: 210,
-    //           height: 210,
-    //           decoration: BoxDecoration(
-    //               borderRadius: BorderRadius.circular(15),
-    //               color: Color(0xfff97c7c),
-    //           ),
-    //           padding: EdgeInsets.fromLTRB(20, 15, 20, 20),
-    //           child: Text("User Already Exist",
-    //               style: TextStyle(fontSize: 21),
-    //               textAlign: TextAlign.center
-    //           ),
-    //         ),
-    //         Positioned(
-    //             bottom: -22,
-    //             child: Image.network("https://media.giphy.com/media/Y08bx6Fea1BafzTlvc/giphy.gif", width: 200, height: 200)
-    //         )
-    //       ],
-    //     )
-    // );
   }
 
   Widget PasswordWarning(){
@@ -169,32 +143,6 @@ class NotificationView extends StatefulWidget {
       onlyOkButton: true,
       onlyCancelButton: true,
     );
-    // return Dialog(
-    //     // backgroundColor: Colors.transparent,
-    //     insetPadding: EdgeInsets.all(10),
-    //     child: Stack(
-    //       clipBehavior: Clip.none, alignment: Alignment.center,
-    //       children: <Widget>[
-    //         // Container(
-    //         //   // width: 210,
-    //         //   // height: 210,
-    //         //   decoration: BoxDecoration(
-    //         //     borderRadius: BorderRadius.circular(15),
-    //         //     color: Color(0xfff97c7c),
-    //         //   ),
-    //         //   padding: EdgeInsets.fromLTRB(20, 15, 20, 20),
-    //         //   child: Text("",
-    //         //       style: TextStyle(fontSize: 21),
-    //         //       textAlign: TextAlign.center
-    //         //   ),
-    //         // ),
-    //         Positioned(
-    //             bottom: -22,
-    //             child: Image.network("https://media.giphy.com/media/xUPGGDNsLvqsBOhuU0/giphy.gif", width: 200, height: 200)
-    //         )
-    //       ],
-    //     )
-    // );
   }
 
 

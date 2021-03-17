@@ -109,12 +109,6 @@ class _SignupViewState extends State<SignupView> {
                           elevation: 7.0,
                           onPressed: () {
                             signUpNewUSer(uEmail, uPassword);
-                            //print(uEmail);
-                            // Navigator.push(
-                            //   context,
-                            //   MaterialPageRoute(
-                            //       builder: (context) => MainView()),
-                            // );
                           },
                           child: Center(
                             child: Text('SIGN UP',
