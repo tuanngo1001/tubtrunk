@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:tubtrunk/Utils/globalSettings.dart';
 import 'mainView.dart';
 import 'loginView.dart';
+import 'displayNameView.dart';
 import 'package:http/http.dart' as http;
 
 import 'notificationView.dart';
@@ -13,15 +14,14 @@ class SignupView extends StatefulWidget {
 }
 
 class _SignupViewState extends State<SignupView> {
-
-  String uEmail = "";
-  String uPassword = "";
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         resizeToAvoidBottomInset: false,
-        body: Column(crossAxisAlignment: CrossAxisAlignment.start, children: <
-            Widget>[
+        body: Form(
+            child:
+                Column(crossAxisAlignment: CrossAxisAlignment.start, children: <
+                    Widget>[
           Container(
               child: Stack(
             children: <Widget>[
@@ -60,7 +60,7 @@ class _SignupViewState extends State<SignupView> {
                 children: <Widget>[
                   TextField(
                     onChanged: (text){
-                      uEmail = text;
+                      // uEmail = text;
                     },
                     decoration: InputDecoration(
                         labelText: "EMAIL",
@@ -74,7 +74,7 @@ class _SignupViewState extends State<SignupView> {
                   SizedBox(height: 10.0),
                   TextField(
                     onChanged: (text){
-                      uPassword = text;
+                      // uPassword = text;
                     },
                     decoration: InputDecoration(
                         labelText: "PASSWORD",
@@ -108,7 +108,12 @@ class _SignupViewState extends State<SignupView> {
                           color: Color(0xfff97c7c),
                           elevation: 7.0,
                           onPressed: () {
-                            signUpNewUSer(uEmail, uPassword);
+                            Navigator.pop(context);
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => DisplayNameView()),
+                            );
                           },
                           child: Center(
                             child: Text('SIGN UP',
@@ -129,6 +134,7 @@ class _SignupViewState extends State<SignupView> {
               SizedBox(width: 5.0),
               InkWell(
                   onTap: () {
+                    Navigator.pop(context);
                     Navigator.push(
                       context,
                       MaterialPageRoute(builder: (context) => LoginView()),
@@ -144,7 +150,7 @@ class _SignupViewState extends State<SignupView> {
                   ))
             ],
           )
-        ]));
+        ])));
   }
 
 
@@ -163,7 +169,7 @@ class _SignupViewState extends State<SignupView> {
     }else if(response.body == "Success"){
       showDialog(
           context: context,
-          builder: (_) => new NotificationView().successSignUpPopUp(context));
+          builder: (_) => new NotificationView().SuccessSignUpPopUp(context));
       await Future.delayed(const Duration(seconds: 3), (){
         Navigator.popUntil(context, (route) => false);
         Navigator.push(

@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'signupView.dart';
-import 'mainView.dart';
+import './mainView.dart';
+import '../Controllers/authenticationController.dart';
 
 class LoginView extends StatefulWidget {
   @override
   _LoginViewState createState() => _LoginViewState();
+  final authenticationController = new AuthenticationController();
 }
 
 class _LoginViewState extends State<LoginView> {
@@ -50,6 +52,8 @@ class _LoginViewState extends State<LoginView> {
                             color: Colors.grey),
                         focusedBorder: UnderlineInputBorder(
                             borderSide: BorderSide(color: Color(0xfff97c7c)))),
+                    onChanged: (text) =>
+                        widget.authenticationController.handleEmail(text),
                   ),
                   SizedBox(height: 20.0),
                   TextField(
@@ -62,6 +66,8 @@ class _LoginViewState extends State<LoginView> {
                         focusedBorder: UnderlineInputBorder(
                             borderSide: BorderSide(color: Color(0xfff97c7c)))),
                     obscureText: true,
+                    onChanged: (text) =>
+                        widget.authenticationController.handlePassword(text),
                   ),
                   SizedBox(height: 5.0),
                   Container(
@@ -86,11 +92,12 @@ class _LoginViewState extends State<LoginView> {
                           color: Color(0xfff97c7c),
                           elevation: 7.0,
                           onPressed: () {
+                            // widget.authenticationController.login();
+                            Navigator.pop(context);
                             Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => MainView()),
-                            );
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => MainView()));
                           },
                           child: Center(
                             child: Text('LOGIN',
@@ -113,10 +120,10 @@ class _LoginViewState extends State<LoginView> {
                               children: <Widget>[
                                 Center(
                                     child: ImageIcon(
-                                        AssetImage('assets/facebook.png'))),
+                                        AssetImage('assets/google_logo.png'))),
                                 SizedBox(width: 5.0),
                                 Center(
-                                  child: Text('Log in with facebook',
+                                  child: Text('Log in with Google',
                                       style: TextStyle(
                                           fontWeight: FontWeight.bold,
                                           fontFamily: 'Montserrat')),
@@ -134,6 +141,7 @@ class _LoginViewState extends State<LoginView> {
               SizedBox(width: 5.0),
               InkWell(
                   onTap: () {
+                    Navigator.pop(context);
                     Navigator.push(
                       context,
                       MaterialPageRoute(builder: (context) => SignupView()),

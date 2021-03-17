@@ -3,7 +3,7 @@ description: Tubtrunk is a focus application for mobile devices that lets the us
 
 # The following line prevents the package from being accidentally published to
 # pub.dev using `pub publish`. This is preferred for private packages.
-publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+publish_to: "none" # Remove this line if you wish to publish to pub.dev
 
 # The following defines the version and build number for your application.
 # A version number is three numbers separated by dots, like 1.2.43
@@ -19,7 +19,6 @@ version: 1.0.0+1
 
 environment:
   sdk: ">=2.7.0 <3.0.0"
-
 
 dependencies:
   flutter:
@@ -38,7 +37,6 @@ dependencies:
       ref: issue_#28_button_theme_bar
   intl: ^0.16.1
   fl_chart: ^0.12.3
-
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -60,25 +58,25 @@ flutter_icons:
 
 # The following section is specific to Flutter.
 flutter:
-
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.
   uses-material-design: true
-#  fonts:
-#    - family: MyCouponIcon
-#      fonts:
-#        - asset: assets/MyCouponIcon.ttf
+  #  fonts:
+  #    - family: MyCouponIcon
+  #      fonts:
+  #        - asset: assets/MyCouponIcon.ttf
   assets:
     - assets/TrunkCoinIcon.png
     - assets/facebook.png
+    - assets/google_logo.png
 
   fonts:
     - family: MyCouponIcon
       fonts:
         - asset: fonts/MyCouponIcon.ttf
 
-    - family:  Challenge
+    - family: Challenge
       fonts:
         - asset: fonts/ChallengeIcon.ttf
 
@@ -92,4 +90,3 @@ flutter:
         - asset: fonts/Montserrat-Regular.ttf
         - asset: fonts/Montserrat-Bold.ttf
           weight: 700
-

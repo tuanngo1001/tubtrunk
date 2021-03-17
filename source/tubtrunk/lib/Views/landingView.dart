@@ -45,6 +45,7 @@ class NavigateButtonWidget extends StatelessWidget {
             color: Color(0xfff97c7c),
             elevation: 7.0,
             onPressed: () {
+              Navigator.pop(context);
               Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) => LoginView()),
