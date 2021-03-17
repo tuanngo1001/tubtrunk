@@ -98,7 +98,7 @@ class NotificationView extends StatefulWidget {
     );
   }
 
-  Widget PasswordWarning(){
+  Widget passwordWarning(){
     return Dialog(
         backgroundColor: Colors.transparent,
         insetPadding: EdgeInsets.all(10),
@@ -127,7 +127,7 @@ class NotificationView extends StatefulWidget {
     );
   }
 
-  Widget SuccessSignUpPopUp(context){
+  Widget successSignUpPopUp(context){
     String gifURL = "https://media.giphy.com/media/xUPGGDNsLvqsBOhuU0/giphy.gif";
 
     return NetworkGiffyDialog(

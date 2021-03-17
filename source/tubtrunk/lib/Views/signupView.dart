@@ -163,7 +163,7 @@ class _SignupViewState extends State<SignupView> {
     }else if(response.body == "Success"){
       showDialog(
           context: context,
-          builder: (_) => new NotificationView().SuccessSignUpPopUp(context));
+          builder: (_) => new NotificationView().successSignUpPopUp(context));
       await Future.delayed(const Duration(seconds: 3), (){
         Navigator.popUntil(context, (route) => false);
         Navigator.push(
