@@ -1,171 +1,128 @@
-import 'package:tubtrunk/Models/RewardMissionModel.dart';
-import 'package:tubtrunk/Models/RewardRequirementModel.dart';
-
-//
-//      stubDB[6].addRequiremnt(new RewardRequirement(_minutes, _times, _howManyTimesLeft));
-//      stubDB[6].addRequiremnt(new RewardRequirement(_minutes, _times, _howManyTimesLeft));
-//      stubDB[6].addRequiremnt(new RewardRequirement(_minutes, _times, _howManyTimesLeft));
-//      stubDB[6].addRequiremnt(new RewardRequirement(_minutes, _times, _howManyTimesLeft));
-//
-//      stubDB[7].addRequiremnt(new RewardRequirement(_minutes, _times, _howManyTimesLeft));
-//      stubDB[7].addRequiremnt(new RewardRequirement(_minutes, _times, _howManyTimesLeft));
-//      stubDB[7].addRequiremnt(new RewardRequirement(_minutes, _times, _howManyTimesLeft));
-//      stubDB[7].addRequiremnt(new RewardRequirement(_minutes, _times, _howManyTimesLeft));
+import 'package:flutter/cupertino.dart';
+import 'package:tubtrunk/Controllers/mainController.dart';
+import 'package:tubtrunk/Models/rewardMissionModel.dart';
+import 'package:http/http.dart' as http;
+import 'package:tubtrunk/Utils/globalSettings.dart';
+import 'dart:convert';
 
 class RewardMissionController {
   List<RewardMissionModel> stubDB;
+
+  List<RewardMissionModel> _availableMissions;
+  List<RewardMissionModel> get availableMissions => _availableMissions;
+
+  List<RewardMissionModel> _inProgressMissions;
+  List<RewardMissionModel> get inProgressMissions => _inProgressMissions;
+
+  List<RewardMissionModel> _achievedMissions;
+  List<RewardMissionModel> get achievedMissions => _achievedMissions;
+
   int prizeMoney = 0;
 
+  Function(VoidCallback) setStateCallback;
+
   RewardMissionController() {
-    stubDB = List<RewardMissionModel>();
-
-    stubDB.add(new RewardMissionModel("Warm-up session", 150, "lock", 0));
-    stubDB.add(new RewardMissionModel("Dream big!", 300, "lock", 0));
-    stubDB.add(new RewardMissionModel("You can do it!", 450, "lock", 0));
-    stubDB.add(new RewardMissionModel("Dare to challenge?", 600, "lock", 0));
-    stubDB.add(
-        new RewardMissionModel("Make your life a mission", 750, "lock", 0));
-    stubDB.add(
-        new RewardMissionModel("Failure builds character!", 900, "lock", 0));
-
-    stubDB[0].addRequiremnt(new RewardRequirementModel(5, 1, 1));
-    stubDB[0].addRequiremnt(new RewardRequirementModel(10, 1, 1));
-    stubDB[0].addRequiremnt(new RewardRequirementModel(15, 2, 1));
-    stubDB[0].addRequiremnt(new RewardRequirementModel(20, 2, 1));
-
-    stubDB[1].addRequiremnt(new RewardRequirementModel(25, 1, 1));
-    stubDB[1].addRequiremnt(new RewardRequirementModel(30, 2, 2));
-    stubDB[1].addRequiremnt(new RewardRequirementModel(35, 1, 1));
-    stubDB[1].addRequiremnt(new RewardRequirementModel(40, 2, 2));
-
-    stubDB[2].addRequiremnt(new RewardRequirementModel(45, 1, 1));
-    stubDB[2].addRequiremnt(new RewardRequirementModel(50, 1, 1));
-    stubDB[2].addRequiremnt(new RewardRequirementModel(55, 1, 1));
-    stubDB[2].addRequiremnt(new RewardRequirementModel(60, 1, 1));
-
-    stubDB[3].addRequiremnt(new RewardRequirementModel(65, 1, 1));
-    stubDB[3].addRequiremnt(new RewardRequirementModel(70, 2, 2));
-    stubDB[3].addRequiremnt(new RewardRequirementModel(75, 3, 3));
-    stubDB[3].addRequiremnt(new RewardRequirementModel(80, 2, 2));
-
-    stubDB[4].addRequiremnt(new RewardRequirementModel(85, 1, 1));
-    stubDB[4].addRequiremnt(new RewardRequirementModel(90, 2, 2));
-    stubDB[4].addRequiremnt(new RewardRequirementModel(95, 2, 2));
-    stubDB[4].addRequiremnt(new RewardRequirementModel(100, 3, 3));
-
-    stubDB[5].addRequiremnt(new RewardRequirementModel(90, 2, 2));
-    stubDB[5].addRequiremnt(new RewardRequirementModel(100, 2, 2));
-    stubDB[5].addRequiremnt(new RewardRequirementModel(115, 2, 2));
-    stubDB[5].addRequiremnt(new RewardRequirementModel(120, 2, 2));
+    loadMissions();
   }
 
-  List<RewardMissionModel> getAvailableRewardMissions() {
-    List<RewardMissionModel> availableMissions = new List<
-        RewardMissionModel>(); //Querry by missionStatus attribute ("lock" for available missions, "in-progress" for In-progress missions, "achieved" for achieved missions)
-    for (int i = 0; i < stubDB.length; i++) {
-      if (stubDB[i].missionStatus == "lock") {
-        availableMissions.add(stubDB[i]);
-      }
+  void loadMissions() async {
+    _availableMissions = [];
+    _inProgressMissions = [];
+    _achievedMissions = [];
+
+    await fetchAvailableMissions();
+    await fetchAcceptedMissions();
+
+    if (setStateCallback != null) {
+      setStateCallback(() {});
     }
-    return availableMissions;
   }
 
-  List<RewardMissionModel> getInProgressRewardMissions() {
-    //Querry by missionStatus attribute ("lock" for available missions, "in-progress" for In-progress missions, "achieved" for achieved missions)
-    List<RewardMissionModel> inProgressMissions =
-        new List<RewardMissionModel>();
-    for (int i = 0; i < stubDB.length; i++) {
-      if (stubDB[i].missionStatus == "in-progress") {
-        inProgressMissions.add(stubDB[i]);
-      }
+  Future fetchAvailableMissions() async {
+    var map = new Map<String, String>();
+    map["UserID"] = "1";
+
+    var response = await http.post(
+        GlobalSettings.serverAddress + "getAvailableMissions.php",
+        body: map
+    );
+
+    if (response.statusCode == 200) {
+      _availableMissions = List<RewardMissionModel>.from(json
+          .decode(response.body)
+          .map((tr) => RewardMissionModel.fromJson(tr))
+      );
     }
-    return inProgressMissions;
   }
 
-  List<RewardMissionModel> getAchievedRewardMissions() {
-    //Querry by missionStatus attribute ("lock" for available missions, "in-progress" for In-progress missions, "achieved" for achieved missions)
-    List<RewardMissionModel> achievedMissions = new List<RewardMissionModel>();
-    for (int i = 0; i < stubDB.length; i++) {
-      if (stubDB[i].missionStatus == "achieved") {
-        achievedMissions.add(stubDB[i]);
-      }
-    }
-    return achievedMissions;
-  }
+  Future fetchAcceptedMissions() async {
+    var map = new Map<String, String>();
+    map["UserID"] = "1";
 
-  List<RewardRequirementModel> getRewardMissionRequirements(
-      String missionName) {
-    //Querry by Mission name attribute (Foreign key) in reward requirement table
-    List<RewardRequirementModel> missionRequirements =
-        new List<RewardRequirementModel>();
-    for (int i = 0; i < stubDB.length; i++) {
-      if (stubDB[i].missionName == missionName) {
-        missionRequirements = stubDB[i].requirementsList;
-      }
-    }
-    return missionRequirements;
-  }
+    var response = await http.post(
+        GlobalSettings.serverAddress + "getAcceptedMissions.php",
+        body: map
+    );
 
-  void moveChallengeToInProgress(String missionName) {
-    // update the status of the mission from "lock" to "in-progress"
-    for (int i = 0; i < stubDB.length; i++) {
-      if (stubDB[i].missionName == missionName) {
-        stubDB[i].missionStatus = "in-progress";
-      }
-    }
-//      String missionStatus = mission.missionStatus = "in-progress";
-  }
-
-  void moveInProgressToAchieved(String missionName) {
-    // update the status of the mission from "in-progress" to "lock"
-    for (int i = 0; i < stubDB.length; i++) {
-      if (stubDB[i].missionName == missionName) {
-        stubDB[i].missionStatus = "achieved";
-      }
-    }
-//      String missionStatus = mission.missionStatus="achieved";
-  }
-
-  bool isMissionCompleted(String missionName) {
-    bool isCompleted = false;
-    int completedRequirements = 0;
-    for (int i = 0; i < stubDB.length; i++) {
-      if (stubDB[i].missionName == missionName) {
-        for (int j = 0; j < stubDB[i].requirementsList.length; i++) {
-          if (stubDB[i].requirementsList[j].howManyTimesLeft == 0) {
-            completedRequirements++;
-            if (completedRequirements == stubDB[i].requirementsList.length) {
-              isCompleted = true;
-            }
-          }
+    if (response.statusCode == 200) {
+      var data = jsonDecode(response.body);
+      for (var key in data) {
+        RewardMissionModel mission = RewardMissionModel.fromJson(key);
+        if (mission.inProgress) {
+          _inProgressMissions.add(mission);
         }
-      }
-    }
-    return isCompleted;
-  }
-
-  // Supposed we have the data each time the user use timer ( duration, times =1) and each requirement is unique
-  // Search for duration first to see if it matches one of the requirement, if it matches, the requirement's times - 1, if requirement's times = 0 => the requirement is completed
-
-  void updateRequirementProgress(int minutes) {
-    // has to be called each time the user finish the countdown
-    for (int i = 0; i < stubDB.length; i++) {
-      for (int j = 0; j < stubDB[i].requirementsList.length; j++) {
-        if (stubDB[i].requirementsList[j].minutes == minutes &&
-            stubDB[i].requirementsList[j].howManyTimesLeft != 0) {
-          stubDB[i].requirementsList[j].howManyTimesLeft--;
-        } else {
-          prizeMoney += minutes;
+        else {
+          _achievedMissions.add(mission);
         }
       }
     }
   }
 
-  void addMoneyFromMissions() {
-    for (int i = 0; i < stubDB.length; i++) {
-      if (stubDB[i].missionStatus == "achieved") {
-        prizeMoney += stubDB[i].prizeMoney;
+  void moveMissionToInProgress(RewardMissionModel mission) async {
+    var map = new Map<String, String>();
+    map["UserID"] = "1";
+    map["MissionID"] = mission.id.toString();
+
+    await http.post(
+        GlobalSettings.serverAddress + "acceptMission.php",
+        body: map
+    );
+
+    loadMissions();
+  }
+
+  void updateRequirementProgress(int minutes) async {
+    List<RewardMissionModel> updatedMissions = [];
+    for (RewardMissionModel mission in inProgressMissions) {
+      if (mission.addMinutes(minutes)) {
+        updatedMissions.add(mission);
       }
     }
+
+    for (RewardMissionModel mission in updatedMissions) {
+      bool isCompleted = mission.isCompleted();
+      bool successfulUpdated = await _updateMissionProgress(mission, isCompleted);
+
+      if (isCompleted && successfulUpdated) {
+        MainController().addMoney(mission.prize);
+      }
+    }
+
+    loadMissions();
+  }
+
+  Future<bool> _updateMissionProgress(RewardMissionModel mission, bool isCompleted) async {
+    var map = new Map<String, String>();
+    map["UserID"] = "1";
+    map["MissionID"] = mission.id.toString();
+    map["InProgress"] = isCompleted ? "0" : "1";
+    map["ProgressTrack"] = mission.progressTrack.toString();
+
+    var response = await http.post(
+        GlobalSettings.serverAddress + "updateMissionProgress.php",
+        body: map
+    );
+
+    return response.statusCode == 200;
   }
 }

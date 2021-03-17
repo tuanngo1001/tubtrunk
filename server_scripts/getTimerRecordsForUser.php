@@ -3,9 +3,6 @@ include('connectDB.php');
 
 $userID = $_POST['UserID'];
 
-$debug = "INSERT INTO Debug (dDesc) VALUES ('ID = {$userID}')";
-mysqli_query($con, $debug);
-
 $getQuery = "SELECT * FROM TimerRecord WHERE uID = '$userID'";
 $result = mysqli_query($con, $getQuery) or die(mysqli_error($con));
 

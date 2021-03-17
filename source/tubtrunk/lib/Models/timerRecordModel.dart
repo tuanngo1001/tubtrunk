@@ -7,8 +7,7 @@ class TimerRecordModel {
   int completed;
   String tag;
 
-  TimerRecordModel(
-      {this.date, this.time, this.duration, this.completed, this.tag});
+  TimerRecordModel({this.date, this.time, this.duration, this.completed, this.tag});
 
   factory TimerRecordModel.fromJson(Map<String, dynamic> json) {
     return TimerRecordModel(
@@ -18,4 +17,16 @@ class TimerRecordModel {
         completed: int.parse(json['Completed']),
         tag: json['Tag']);
   }
+
+  String isCompleted(){
+      String result;
+      if(completed==1){
+        result= "Success!";
+
+      }else{
+        result="Fail!";
+      }
+      return result;
+  }
+
 }
