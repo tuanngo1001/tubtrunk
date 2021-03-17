@@ -5,27 +5,46 @@ import 'package:http/http.dart' as http;
 import '../Controllers/rewardMissionController.dart';
 
 class TimerController {
-  RewardMissionController _rewardMissionController = RewardMissionController();
+  RewardMissionController _rewardMissionController;
 
-  CountDownController _countDownController = CountDownController();
+  CountDownController _countDownController;
   CountDownController get countDownController => _countDownController;
 
-  int _duration = 5;
+  int _duration;
   int get duration => _duration;
 
-  bool _stopped = true;
+  bool _stopped;
   bool get stopped => _stopped;
 
-  bool _resumable = false;
+  bool _resumable;
   bool get resumable => _resumable;
 
-  bool _finished = false;
+  bool _finished;
   bool get finished => _finished;
 
-  String _stopStartButtonText = "Start";
+  String _stopStartButtonText;
   String get stopStartButtonText => _stopStartButtonText;
 
   DateTime _startDateTime;
+
+  // Private constructor
+  TimerController._internal() {
+    _countDownController = CountDownController();
+    _duration = 5;
+    _stopped = true;
+    _resumable = false;
+    _finished = false;
+    _stopStartButtonText = "Start";
+  }
+
+  //Singleton
+  static TimerController _instance;
+  factory TimerController() {
+    if (_instance == null) {
+      _instance = TimerController._internal();
+    }
+    return _instance;
+  }
 
   void updateStartDateTime() {
     _startDateTime = DateTime.now();
@@ -64,17 +83,19 @@ class TimerController {
     updateStartDateTime();
   }
 
-  void onComplete() {
+  void onComplete(Function(int) updateProgressCallback) {
     print('Countdown Completed');
-    _rewardMissionController.updateRequirementProgress(
-        _duration); // Send the duration to the missionController to calculate the money user receives
+    int minutes = _duration ~/ 60;
+    updateProgressCallback(minutes);
+
     countDownController.restart(duration: _duration);
     countDownController.pause();
     _stopped = true;
     _resumable = false;
     _finished = true;
     _stopStartButtonText = "Start";
-    saveTimerRecord(duration: _duration, completed: finished);
+    
+    saveTimerRecord(duration: minutes, completed: finished);
   }
 
   void stopStart() {
