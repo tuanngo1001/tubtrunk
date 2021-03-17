@@ -32,7 +32,7 @@ class _RewardStoreViewState extends State<RewardStoreView> {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: 3,
+      length: 2,
       child: Scaffold(
         appBar: PreferredSize(
           preferredSize: Size.fromHeight(50.0),
@@ -47,13 +47,6 @@ class _RewardStoreViewState extends State<RewardStoreView> {
                 Tab(
                   icon: Icon(
                     Icons.my_library_music_outlined,
-                    size: 30.0,
-                    color: Colors.blueGrey.shade800,
-                  ),
-                ),
-                Tab(
-                  icon: Icon(
-                    Icons.pets_outlined,
                     size: 30.0,
                     color: Colors.blueGrey.shade800,
                   ),
@@ -144,7 +137,7 @@ class _RewardStoreViewState extends State<RewardStoreView> {
                       }),
                     ),
                     GridView.count(
-                      childAspectRatio: 4,
+                      childAspectRatio: 5,
                       mainAxisSpacing: 0,
                       crossAxisSpacing: 0,
                       crossAxisCount: 1,
@@ -194,53 +187,7 @@ class _RewardStoreViewState extends State<RewardStoreView> {
                         ));
                       }),
                     ),
-                    GridView.count(
-                      childAspectRatio: 3,
-                      mainAxisSpacing: 0,
-                      crossAxisSpacing: 0,
-                      crossAxisCount: 1,
-                      // Generate 100 widgets that display their index in the List.
-                      children: List.generate(controller.petList.length, (index) {
-                        return Card(
-                          color: Colors.cyan.shade50,
-                          child: InkWell(
-                              splashColor: Colors.cyanAccent,
-                              onTap: () {
-                                setState(() {
-                                  showDialog(
-                                      context: context,
-                                      builder: (_) => new NotificationView(rewardStoreViewSetState).purchasePopUp(context, controller.removePetAtIndex, index));
-                                });
-                                // Perform some action
-                              },
-                              child: Container(
-                                  width: MediaQuery.of(context).size.width,
-                                  child: Column(
-                                    children: <Widget>[
-                                      Padding(padding: EdgeInsets.all(18.0)),
-                                      Text(
-                                        controller.petList[index].name,
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 20),
-                                      ),
-                                      Text(
-                                        controller.petList[index].description,
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.w400,
-                                            fontSize: 18),
-                                      ),
-                                      Text(
-                                        controller.petList[index].price,
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 16),
-                                      )
-                                    ],
-                                  ))),
-                        );
-                      }),
-                    ),
+
                   ],
                 );
               }),

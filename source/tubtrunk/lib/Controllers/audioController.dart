@@ -19,8 +19,8 @@ class AudioController{
   }
   void playByName(String songName,[int duration]){
     stopCurrentSong();
-    advancedPlayer.setVolume(1.0);
-    audioCache.play(songName,volume: 3.0);
+    advancedPlayer.setVolume(100.0);
+    audioCache.play(songName,volume: 100.0);
     if(duration !=null){
       Future.delayed(Duration(seconds: duration), () => advancedPlayer.stop());
     }
