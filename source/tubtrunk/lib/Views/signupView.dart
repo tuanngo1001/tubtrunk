@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'mainView.dart';
 import 'loginView.dart';
+import 'displayNameView.dart';
 
 class SignupView extends StatefulWidget {
   @override
@@ -8,12 +9,20 @@ class SignupView extends StatefulWidget {
 }
 
 class _SignupViewState extends State<SignupView> {
+  // String _email;
+  // TextEditingController _password = TextEditingController();
+  // TextEditingController _confirmPassword = TextEditingController();
+
+  // final GlobalKey<FormState> _formkey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         resizeToAvoidBottomPadding: false,
-        body: Column(crossAxisAlignment: CrossAxisAlignment.start, children: <
-            Widget>[
+        body: Form(
+            child:
+                Column(crossAxisAlignment: CrossAxisAlignment.start, children: <
+                    Widget>[
           Container(
               child: Stack(
             children: <Widget>[
@@ -94,10 +103,11 @@ class _SignupViewState extends State<SignupView> {
                           color: Color(0xfff97c7c),
                           elevation: 7.0,
                           onPressed: () {
+                            Navigator.pop(context);
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => MainView()),
+                                  builder: (context) => DisplayNameView()),
                             );
                           },
                           child: Center(
@@ -119,6 +129,7 @@ class _SignupViewState extends State<SignupView> {
               SizedBox(width: 5.0),
               InkWell(
                   onTap: () {
+                    Navigator.pop(context);
                     Navigator.push(
                       context,
                       MaterialPageRoute(builder: (context) => LoginView()),
@@ -134,6 +145,6 @@ class _SignupViewState extends State<SignupView> {
                   ))
             ],
           )
-        ]));
+        ])));
   }
 }
