@@ -8,12 +8,22 @@ $con = $GLOBALS['con'];
 $userEmail = $_POST['UserEmail'];
 $userName = $_POST['UserName'];
 
-if (checkUser($userEmail))
+
+$getQuery = "SELECT * FROM User WHERE uEmail = '$userEmail'" ;
+
+$result = mysqli_query($con, $getQuery);
+
+while ($row = mysqli_fetch_assoc($result)) 
 {
     $updateQuery = "UPDATE User SET uUserName = '$userName' WHERE uEmail = '$userEmail'";
     $result = mysqli_query($con, $updateQuery);
     
-    die($result);
+    if($result)
+    {
+        die("Success");
+    }
+    die("Error");
 }
+
 die("Not found");
 ?>
