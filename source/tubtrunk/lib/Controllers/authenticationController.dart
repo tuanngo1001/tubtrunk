@@ -1,43 +1,164 @@
-import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import "../Views/mainView.dart";
 import 'package:tubtrunk/Utils/globalSettings.dart';
+import '../Views/notificationView.dart';
 
 class AuthenticationController {
-  String email = "";
-  String password = "";
+  Future<dynamic> login(context, String email, String password) async {
+    if (email == "" || password == ""){
+      showDialog(
+        context: context,
+        builder: (_) => new NotificationView().emailPasswordWarning(context));
+    }
+    else {
+      var map = new Map<String, String>();
+      map['UserEmail'] = email;
+      map['UserPassword'] = password;
 
-  void handleEmail(String input) {
-    email = input;
+      await http.post(GlobalSettings.serverAddress + "loginUser.php", body: map)
+        .then((response) => {
+          if (response.statusCode == 200){
+            if(response.body == "Not found"){
+            showDialog(
+              context: context,
+              builder: (_) => new NotificationView().emailPasswordWarning(context))
+            }
+            else if(response.body == "Error"){
+              showDialog(
+                context: context,
+                builder: (_) => new NotificationView().errorWarning(context))
+            }
+            else {
+              showDialog(
+                context: context,
+                builder: (_) => new NotificationView().successLoginPopUp(context, email, response.body))
+            }
+          }
+          else { //status code == 404
+            showDialog(
+              context: context,
+              builder: (_) => new NotificationView().errorWarning(context))
+          }
+        });
+    }
   }
 
-  void handlePassword(String input) {
-    password = input;
+  Future<dynamic> signup(context, String email, String password) async {
+    if (email == "" || password == ""){
+      showDialog(
+        context: context,
+        builder: (_) => new NotificationView().emailPasswordWarning(context));
+      }
+    else {
+      var map = new Map<String,String>();
+      map["UserEmail"] = email;
+      map["UserPassword"] = password;
+      map["UserName"] = "User"; //Default name, they can change it later.
+
+      await http.post(GlobalSettings.serverAddress+"addNewUser.php", body:map)
+        .then((response) => {
+          if (response.statusCode == 200) {
+            if(response.body == "Already Exist"){
+              showDialog(
+                  context: context,
+                  builder: (_) => new NotificationView().userAlreadyExistWarning(context))
+            }
+            else if(response.body == "Success"){
+              loginAfterSignup(context, email, password)
+            }         
+          }
+          else { //status code == 404
+              showDialog(
+                context: context,
+                builder: (_) => new NotificationView().errorWarning(context))
+          }
+        });
+    }
   }
 
-  void login() async {
+  Future<dynamic> loginAfterSignup(context, String email, String password) async {
     var map = new Map<String, String>();
     map['UserEmail'] = email;
     map['UserPassword'] = password;
 
-    await http
-        .post(GlobalSettings.serverAddress + "loginUser.php", body: map)
-        .then((response) => {
-              if (response.statusCode == 200)
-                {
-                  print("loginUser: " + response.body)
-                }
-            });
+    await http.post(GlobalSettings.serverAddress + "loginUser.php", body: map)
+      .then((response) => {
+        if (response.statusCode == 200){
+          if(response.body == "Not found"){
+          showDialog(
+            context: context,
+            builder: (_) => new NotificationView().emailPasswordWarning(context))
+          }
+          else if(response.body == "Error"){
+            showDialog(
+              context: context,
+              builder: (_) => new NotificationView().errorWarning(context))
+          }
+          else {
+            showDialog(
+                context: context,
+                builder: (_) => new NotificationView().successSignUpPopUp(context, email, response.body))
+          }
+        }
+        else { //status code == 404
+          showDialog(
+            context: context,
+            builder: (_) => new NotificationView().errorWarning(context))
+        }
+      });
   }
 
-  Future<dynamic> signup(String email, String password) async {
-    try {
-      var res = await http.post('', body: {
-        'email': email,
-        'password': password,
-      });
-      return res?.body;
-    } finally {}
+  Future<dynamic> changeName(context, String userName) async {
+    if (userName == "" || GlobalSettings.email == ""){
+      showDialog(
+        context: context,
+        builder: (_) => new NotificationView().missingName(context));
+      }
+    else {
+      var map = new Map<String, String>();
+      map["UserEmail"] = GlobalSettings.email;
+      map["UserName"] = userName;
+
+      await http.post(GlobalSettings.serverAddress+"updateUserName.php", body:map)
+        .then((response) => {
+          if (response.statusCode == 200) {
+            if (response.body == "Success"){
+              NotificationView().changeNameSuccess(context, userName)
+            }
+            else if (response.body == "false"){
+              showDialog(
+                context: context,
+                builder: (_) => new NotificationView().missingName(context))
+            } 
+            else {
+              showDialog(
+                context: context,
+                builder: (_) => new NotificationView().missingName(context))
+            }
+          }
+          else { //status code == 404
+              showDialog(
+                context: context,
+                builder: (_) => new NotificationView().errorWarning(context))
+          }
+        });
+    }
+  }
+
+  Future<dynamic> logout(context) async {
+      var map = new Map<String, String>();
+      map["UserEmail"] = GlobalSettings.email;
+
+      await http.post(GlobalSettings.serverAddress+"updateUserName.php", body:map)
+        .then((response) => {
+          if (response.body == "Success"){
+            NotificationView().logoutSuccess(context)
+          }
+          else {
+            showDialog(
+                context: context,
+                builder: (_) => new NotificationView().logoutFail(context))
+          }
+        });
   }
 }

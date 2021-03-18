@@ -2,10 +2,15 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:giffy_dialog/giffy_dialog.dart';
 import 'package:tubtrunk/Controllers/mainController.dart';
+import 'package:tubtrunk/Views/mainView.dart';
+import './displayNameView.dart';
+import './loginView.dart';
+import './signupView.dart';
+import '../Utils/globalSettings.dart';
 
 class NotificationView extends StatefulWidget {
 
-  MainController _mainController = MainController();
+  final MainController _mainController = MainController();
 
   NetworkGiffyDialog giftReceivePopUp(context) {
     String gifURL = "https://media.giphy.com/media/5Y2bU7FqLOuzK/giphy.gif";
@@ -93,110 +98,176 @@ class NotificationView extends StatefulWidget {
         textAlign: TextAlign.center,
       ),
       entryAnimation: EntryAnimation.TOP,
-      onlyOkButton: true,
       onlyCancelButton: true,
-    );
-    // return Dialog(
-    //     backgroundColor: Colors.transparent,
-    //     insetPadding: EdgeInsets.all(10),
-    //     child: Stack(
-    //       clipBehavior: Clip.none, alignment: Alignment.center,
-    //       children: <Widget>[
-    //         Container(
-    //           width: 210,
-    //           height: 210,
-    //           decoration: BoxDecoration(
-    //               borderRadius: BorderRadius.circular(15),
-    //               color: Color(0xfff97c7c),
-    //           ),
-    //           padding: EdgeInsets.fromLTRB(20, 15, 20, 20),
-    //           child: Text("User Already Exist",
-    //               style: TextStyle(fontSize: 21),
-    //               textAlign: TextAlign.center
-    //           ),
-    //         ),
-    //         Positioned(
-    //             bottom: -22,
-    //             child: Image.network("https://media.giphy.com/media/Y08bx6Fea1BafzTlvc/giphy.gif", width: 200, height: 200)
-    //         )
-    //       ],
-    //     )
-    // );
-  }
-
-  Widget PasswordWarning(){
-    return Dialog(
-        backgroundColor: Colors.transparent,
-        insetPadding: EdgeInsets.all(10),
-        child: Stack(
-          clipBehavior: Clip.none, alignment: Alignment.center,
-          children: <Widget>[
-            Container(
-              width: 210,
-              height: 210,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(15),
-                color: Color(0xfff97c7c),
-              ),
-              padding: EdgeInsets.fromLTRB(20, 15, 20, 20),
-              child: Text("Invalid Password. Please Try Again",
-                  style: TextStyle(fontSize: 21),
-                  textAlign: TextAlign.center
-              ),
-            ),
-            Positioned(
-                bottom: -22,
-                child: Image.network("https://media.giphy.com/media/IgLIVXrBcID9cExa6r/giphy.gif", width: 200, height: 200)
-            )
-          ],
-        )
+      onCancelButtonPressed: () {
+        Navigator.pop(context);
+        SignupView().clearTextInput();
+      },
     );
   }
 
-  Widget SuccessSignUpPopUp(context){
-    String gifURL = "https://media.giphy.com/media/xUPGGDNsLvqsBOhuU0/giphy.gif";
+  Widget errorWarning(context){
+    String gifURL = "https://media.giphy.com/media/8L0Pky6C83SzkzU55a/source.gif";
 
     return NetworkGiffyDialog(
+      image: Image.network(gifURL),
+      title: Text('Sorry...',
+          textAlign: TextAlign.center,
+          style: TextStyle(fontSize: 22.0, fontWeight: FontWeight.w600)),
+      description: Text(
+        'Connecting to server failled...\nPlease try again later!',
+        textAlign: TextAlign.center,
+      ),
+      entryAnimation: EntryAnimation.TOP,
+      onlyCancelButton: true,
+      onCancelButtonPressed: () {
+        Navigator.pop(context);
+        LoginView().clearTextInput();
+      },
+    );
+  }
+
+  Widget emailPasswordWarning(context){
+    String gifURL = "https://media.giphy.com/media/IgLIVXrBcID9cExa6r/giphy.gif";
+
+    return NetworkGiffyDialog(
+      image: Image.network(gifURL),
+      title: Text('Oops...',
+          textAlign: TextAlign.center,
+          style: TextStyle(fontSize: 22.0, fontWeight: FontWeight.w600)),
+      description: Text(
+        'Invalid Email or Password. Try Again!',
+        textAlign: TextAlign.center,
+      ),
+      entryAnimation: EntryAnimation.TOP,
+      onlyCancelButton: true,
+      onCancelButtonPressed: () {
+        Navigator.pop(context);
+        LoginView().clearTextInput();
+      },
+    );
+  }
+
+  Widget successLoginPopUp(context, String email, String token){
+    String gifURL = "https://media.giphy.com/media/xUPGGDNsLvqsBOhuU0/giphy.gif";
+
+    return (
+      NetworkGiffyDialog(
+      image: Image.network(gifURL),
+      title: Text('Welcome back!',
+          textAlign: TextAlign.center,
+          style: TextStyle(fontSize: 22.0, fontWeight: FontWeight.w600)),
+      description: Text(
+        'You have successfully logged in!',
+        textAlign: TextAlign.center,
+      ),
+      entryAnimation: EntryAnimation.TOP,
+      onlyOkButton: true,
+      onOkButtonPressed: () {
+        GlobalSettings.email = email;
+        GlobalSettings.token = token;
+        Navigator.pop(context);
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => MainView()),
+        );
+        LoginView().clearTextInput();
+      },
+    )
+    );
+  }
+
+  Widget successSignUpPopUp(context, String email, String token){
+    String gifURL = "https://media.giphy.com/media/xUPGGDNsLvqsBOhuU0/giphy.gif";
+
+    return (
+      NetworkGiffyDialog(
       image: Image.network(gifURL),
       title: Text('CONGRATULATION!',
           textAlign: TextAlign.center,
           style: TextStyle(fontSize: 22.0, fontWeight: FontWeight.w600)),
       description: Text(
-        'You have successfully signed up. Login!',
+        'You have successfully signed up!',
         textAlign: TextAlign.center,
       ),
       entryAnimation: EntryAnimation.TOP,
       onlyOkButton: true,
-      onlyCancelButton: true,
+      onOkButtonPressed: () {
+        GlobalSettings.email = email;
+        GlobalSettings.token = token;
+        Navigator.pop(context);
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => DisplayNameView()),
+        );
+        SignupView().clearTextInput();
+      },
+    )
     );
-    // return Dialog(
-    //     // backgroundColor: Colors.transparent,
-    //     insetPadding: EdgeInsets.all(10),
-    //     child: Stack(
-    //       clipBehavior: Clip.none, alignment: Alignment.center,
-    //       children: <Widget>[
-    //         // Container(
-    //         //   // width: 210,
-    //         //   // height: 210,
-    //         //   decoration: BoxDecoration(
-    //         //     borderRadius: BorderRadius.circular(15),
-    //         //     color: Color(0xfff97c7c),
-    //         //   ),
-    //         //   padding: EdgeInsets.fromLTRB(20, 15, 20, 20),
-    //         //   child: Text("",
-    //         //       style: TextStyle(fontSize: 21),
-    //         //       textAlign: TextAlign.center
-    //         //   ),
-    //         // ),
-    //         Positioned(
-    //             bottom: -22,
-    //             child: Image.network("https://media.giphy.com/media/xUPGGDNsLvqsBOhuU0/giphy.gif", width: 200, height: 200)
-    //         )
-    //       ],
-    //     )
-    // );
   }
 
+  Widget missingName(context){
+    String gifURL = "https://media.giphy.com/media/l2JegQCAItyUA5Lpu/source.gif";
+
+    return NetworkGiffyDialog(
+      image: Image.network(gifURL),
+      title: Text('What\'s your name?',
+          textAlign: TextAlign.center,
+          style: TextStyle(fontSize: 22.0, fontWeight: FontWeight.w600)),
+      description: Text(
+        'Looks like there is some mistake.\nTry Again!',
+        textAlign: TextAlign.center,
+      ),
+      entryAnimation: EntryAnimation.TOP,
+      onlyCancelButton: true,
+      onCancelButtonPressed: () {
+        Navigator.pop(context);
+        DisplayNameView().clearTextInput();
+      },
+    );
+  }
+
+  void changeNameSuccess(context, String username) {
+    GlobalSettings.username = username;
+    Navigator.pop(context);
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => MainView()),
+    );
+    DisplayNameView().clearTextInput();
+  }
+
+  void logoutSuccess(context) {
+    GlobalSettings.username = "";
+    GlobalSettings.email = "";
+    GlobalSettings.token = "";
+
+    Navigator.pop(context);
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => LoginView()),
+    );
+  }
+
+  Widget logoutFail(context){
+    String gifURL = "https://media.giphy.com/media/cMVgEhDeKzPwI/source.gif";
+
+    return NetworkGiffyDialog(
+      image: Image.network(gifURL),
+      title: Text('Oops...',
+          textAlign: TextAlign.center,
+          style: TextStyle(fontSize: 22.0, fontWeight: FontWeight.w600)),
+      description: Text(
+        'There\'s something wrong.\nTry Again!',
+        textAlign: TextAlign.center,
+      ),
+      entryAnimation: EntryAnimation.TOP,
+      onlyCancelButton: true,
+      onCancelButtonPressed: () {
+        Navigator.pop(context);
+      },
+    );
+  }
 
   @override
   State<StatefulWidget> createState() {
