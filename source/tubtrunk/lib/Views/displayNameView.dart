@@ -1,10 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:tubtrunk/Controllers/authenticationController.dart';
 import 'mainView.dart';
 
-class DisplayNameView extends StatelessWidget {
+class DisplayNameView extends StatefulWidget {
+  @override
+  _DisplayNameViewState createState() => _DisplayNameViewState();
+  final authenticationController = new AuthenticationController();
+  final username = new TextEditingController();
+
+  clearTextInput() {
+    username.clear();
+  }
+}
+
+class _DisplayNameViewState extends State<DisplayNameView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: Center(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start, 
@@ -44,6 +57,8 @@ class DisplayNameView extends StatelessWidget {
               child: Column(
                 children: <Widget>[
                   TextField(
+                    
+                    controller: widget.username,
                     decoration: InputDecoration(
                         hintText: "Ex: John Doe",
                         labelStyle: TextStyle(
@@ -63,12 +78,7 @@ class DisplayNameView extends StatelessWidget {
                           color: Color(0xfff97c7c),
                           elevation: 7.0,
                           onPressed: () {
-                            Navigator.pop(context);
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => MainView()),
-                            );
+                            widget.authenticationController.changeName(context, widget.username.text);
                           },
                           child: Center(
                             child: Text('LET\'S GO!',
@@ -77,7 +87,27 @@ class DisplayNameView extends StatelessWidget {
                                     fontWeight: FontWeight.bold,
                                     fontFamily: 'Montserrat')),
                     ))),
-
+                  SizedBox(height: 20.0),
+                  Container(
+                      height: 40.0,
+                      child: OutlineButton(
+                          highlightedBorderColor: Color(0xfff97c7c),
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20.0)),
+                          color: Colors.transparent,
+                          onPressed: () {
+                            Navigator.popUntil(context, (route) => false);
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => MainView()),
+                            );
+                          },
+                          child: Center(
+                                  child: Text('Skip for now!',
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontFamily: 'Montserrat')),
+                            ))),
                 ]
               ))
           ]))

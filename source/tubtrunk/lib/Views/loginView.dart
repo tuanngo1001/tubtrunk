@@ -1,12 +1,18 @@
 import 'package:flutter/material.dart';
 import 'signupView.dart';
-import './mainView.dart';
 import '../Controllers/authenticationController.dart';
 
 class LoginView extends StatefulWidget {
   @override
   _LoginViewState createState() => _LoginViewState();
   final authenticationController = new AuthenticationController();
+  final email = TextEditingController();
+  final password = TextEditingController();
+
+  clearTextInput() {
+    email.clear();
+    password.clear();
+  }
 }
 
 class _LoginViewState extends State<LoginView> {
@@ -52,8 +58,7 @@ class _LoginViewState extends State<LoginView> {
                             color: Colors.grey),
                         focusedBorder: UnderlineInputBorder(
                             borderSide: BorderSide(color: Color(0xfff97c7c)))),
-                    onChanged: (text) =>
-                        widget.authenticationController.handleEmail(text),
+                    controller: widget.email,
                   ),
                   SizedBox(height: 20.0),
                   TextField(
@@ -66,8 +71,7 @@ class _LoginViewState extends State<LoginView> {
                         focusedBorder: UnderlineInputBorder(
                             borderSide: BorderSide(color: Color(0xfff97c7c)))),
                     obscureText: true,
-                    onChanged: (text) =>
-                        widget.authenticationController.handlePassword(text),
+                    controller: widget.password,
                   ),
                   SizedBox(height: 5.0),
                   Container(
@@ -92,12 +96,8 @@ class _LoginViewState extends State<LoginView> {
                           color: Color(0xfff97c7c),
                           elevation: 7.0,
                           onPressed: () {
-                            // widget.authenticationController.login();
-                            Navigator.pop(context);
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => MainView()));
+                            widget.authenticationController.login(context, widget.email.text, widget.password.text);
+                            widget.clearTextInput();
                           },
                           child: Center(
                             child: Text('LOGIN',

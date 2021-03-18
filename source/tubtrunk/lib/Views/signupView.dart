@@ -1,16 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:tubtrunk/Utils/globalSettings.dart';
-import 'mainView.dart';
 import 'loginView.dart';
-import 'displayNameView.dart';
-import 'package:http/http.dart' as http;
-
-import 'notificationView.dart';
+import '../Controllers/authenticationController.dart';
 
 
 class SignupView extends StatefulWidget {
   @override
   _SignupViewState createState() => _SignupViewState();
+  final authenticationController = new AuthenticationController();
+  final email = TextEditingController();
+  final password = TextEditingController();
+
+  clearTextInput() {
+    email.clear();
+    password.clear();
+  }
 }
 
 class _SignupViewState extends State<SignupView> {
@@ -59,9 +62,7 @@ class _SignupViewState extends State<SignupView> {
               child: Column(
                 children: <Widget>[
                   TextField(
-                    onChanged: (text){
-                      // uEmail = text;
-                    },
+                    controller: widget.email,
                     decoration: InputDecoration(
                         labelText: "EMAIL",
                         labelStyle: TextStyle(
@@ -73,23 +74,9 @@ class _SignupViewState extends State<SignupView> {
                   ),
                   SizedBox(height: 10.0),
                   TextField(
-                    onChanged: (text){
-                      // uPassword = text;
-                    },
+                    controller: widget.password,
                     decoration: InputDecoration(
                         labelText: "PASSWORD",
-                        labelStyle: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontFamily: 'Montserrat',
-                            color: Colors.grey),
-                        focusedBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(color: Color(0xfff97c7c)))),
-                    obscureText: true,
-                  ),
-                  SizedBox(height: 10.0),
-                  TextField(
-                    decoration: InputDecoration(
-                        labelText: "CONFIRM PASSWORD",
                         labelStyle: TextStyle(
                             fontWeight: FontWeight.bold,
                             fontFamily: 'Montserrat',
@@ -108,12 +95,7 @@ class _SignupViewState extends State<SignupView> {
                           color: Color(0xfff97c7c),
                           elevation: 7.0,
                           onPressed: () {
-                            Navigator.pop(context);
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => DisplayNameView()),
-                            );
+                            widget.authenticationController.signup(context, widget.email.text, widget.password.text);  
                           },
                           child: Center(
                             child: Text('SIGN UP',
@@ -151,34 +133,5 @@ class _SignupViewState extends State<SignupView> {
             ],
           )
         ])));
-  }
-
-
-  void signUpNewUSer(String uEmail, String uPassword) async{
-    var map = new Map<String,String>();
-    map["UserEmail"] = uEmail;
-    map["UserPassword"] = uPassword;
-    map["UserName"] = "User"; //Default name, they can change it later.
-
-    var response = await http.post(GlobalSettings.serverAddress+"addNewUser.php", body:map);
-    print(response.body);
-    if(response.body =="Already Exist"){
-      showDialog(
-          context: context,
-          builder: (_) => new NotificationView().userAlreadyExistWarning(context));
-    }else if(response.body == "Success"){
-      showDialog(
-          context: context,
-          builder: (_) => new NotificationView().successSignUpPopUp(context));
-      await Future.delayed(const Duration(seconds: 3), (){
-        Navigator.popUntil(context, (route) => false);
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (context) => MainView()),
-        );
-      });
-
-    }
   }
 }
