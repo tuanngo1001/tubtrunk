@@ -149,7 +149,7 @@ class AuthenticationController {
       var map = new Map<String, String>();
       map["UserEmail"] = GlobalSettings.email;
 
-      await http.post(GlobalSettings.serverAddress+"updateUserName.php", body:map)
+      await http.post(GlobalSettings.serverAddress+"logoutUser.php", body:map)
         .then((response) => {
           if (response.body == "Success"){
             NotificationView().logoutSuccess(context)

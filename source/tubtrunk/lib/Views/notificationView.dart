@@ -166,7 +166,7 @@ class NotificationView extends StatefulWidget {
       onOkButtonPressed: () {
         GlobalSettings.email = email;
         GlobalSettings.token = token;
-        Navigator.pop(context);
+        Navigator.popUntil(context, (route) => false);
         Navigator.push(
           context,
           MaterialPageRoute(builder: (context) => MainView()),
@@ -195,7 +195,7 @@ class NotificationView extends StatefulWidget {
       onOkButtonPressed: () {
         GlobalSettings.email = email;
         GlobalSettings.token = token;
-        Navigator.pop(context);
+        Navigator.popUntil(context, (route) => false);
         Navigator.push(
           context,
           MaterialPageRoute(builder: (context) => DisplayNameView()),
