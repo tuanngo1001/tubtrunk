@@ -65,6 +65,7 @@ class _SignupViewState extends State<SignupView> {
                     controller: widget.email,
                     decoration: InputDecoration(
                         labelText: "EMAIL",
+                        hintText: "Ex: example@gmail.com",
                         labelStyle: TextStyle(
                             fontWeight: FontWeight.bold,
                             fontFamily: 'Montserrat',
@@ -77,6 +78,7 @@ class _SignupViewState extends State<SignupView> {
                     controller: widget.password,
                     decoration: InputDecoration(
                         labelText: "PASSWORD",
+                        hintText: "At least 4 characters",
                         labelStyle: TextStyle(
                             fontWeight: FontWeight.bold,
                             fontFamily: 'Montserrat',
@@ -95,7 +97,7 @@ class _SignupViewState extends State<SignupView> {
                           color: Color(0xfff97c7c),
                           elevation: 7.0,
                           onPressed: () {
-                            widget.authenticationController.signup(context, widget.email.text, widget.password.text);  
+                            widget.authenticationController.signup(context, widget.email.text.trim(), widget.password.text.trim());  
                           },
                           child: Center(
                             child: Text('SIGN UP',

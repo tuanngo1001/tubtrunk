@@ -96,7 +96,7 @@ class _LoginViewState extends State<LoginView> {
                           color: Color(0xfff97c7c),
                           elevation: 7.0,
                           onPressed: () {
-                            widget.authenticationController.login(context, widget.email.text, widget.password.text);
+                            widget.authenticationController.login(context, widget.email.text.trim(), widget.password.text.trim());
                             widget.clearTextInput();
                           },
                           child: Center(

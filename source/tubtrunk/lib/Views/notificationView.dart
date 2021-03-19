@@ -6,7 +6,6 @@ import 'package:tubtrunk/Views/mainView.dart';
 import './displayNameView.dart';
 import './loginView.dart';
 import './signupView.dart';
-import '../Utils/globalSettings.dart';
 
 class NotificationView extends StatefulWidget {
 
@@ -148,7 +147,7 @@ class NotificationView extends StatefulWidget {
     );
   }
 
-  Widget successLoginPopUp(context, String email, String token){
+  Widget successLoginPopUp(context){
     String gifURL = "https://media.giphy.com/media/xUPGGDNsLvqsBOhuU0/giphy.gif";
 
     return (
@@ -164,8 +163,6 @@ class NotificationView extends StatefulWidget {
       entryAnimation: EntryAnimation.TOP,
       onlyOkButton: true,
       onOkButtonPressed: () {
-        GlobalSettings.email = email;
-        GlobalSettings.token = token;
         Navigator.popUntil(context, (route) => false);
         Navigator.push(
           context,
@@ -177,7 +174,7 @@ class NotificationView extends StatefulWidget {
     );
   }
 
-  Widget successSignUpPopUp(context, String email, String token){
+  Widget successSignUpPopUp(context){
     String gifURL = "https://media.giphy.com/media/xUPGGDNsLvqsBOhuU0/giphy.gif";
 
     return (
@@ -193,8 +190,6 @@ class NotificationView extends StatefulWidget {
       entryAnimation: EntryAnimation.TOP,
       onlyOkButton: true,
       onOkButtonPressed: () {
-        GlobalSettings.email = email;
-        GlobalSettings.token = token;
         Navigator.popUntil(context, (route) => false);
         Navigator.push(
           context,
@@ -227,8 +222,7 @@ class NotificationView extends StatefulWidget {
     );
   }
 
-  void changeNameSuccess(context, String username) {
-    GlobalSettings.username = username;
+  void changeNameSuccess(context) {
     Navigator.pop(context);
     Navigator.push(
       context,
@@ -238,11 +232,7 @@ class NotificationView extends StatefulWidget {
   }
 
   void logoutSuccess(context) {
-    GlobalSettings.username = "";
-    GlobalSettings.email = "";
-    GlobalSettings.token = "";
-
-    Navigator.pop(context);
+    Navigator.popUntil(context, (route) => false);
     Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => LoginView()),

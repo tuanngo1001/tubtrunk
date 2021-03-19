@@ -78,7 +78,7 @@ class _DisplayNameViewState extends State<DisplayNameView> {
                           color: Color(0xfff97c7c),
                           elevation: 7.0,
                           onPressed: () {
-                            widget.authenticationController.changeName(context, widget.username.text);
+                            widget.authenticationController.changeName(context, widget.username.text.trim());
                           },
                           child: Center(
                             child: Text('LET\'S GO!',
