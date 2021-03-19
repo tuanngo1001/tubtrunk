@@ -7,7 +7,7 @@ import 'package:email_validator/email_validator.dart';
 
 class AuthenticationController {
   Future<dynamic> login(context, String email, String password) async {
-    if (validateEmail(email) && validatePassword(password)){
+    if (!validateEmail(email) || !validatePassword(password)){
       showDialog(
         context: context,
         builder: (_) => new NotificationView().emailPasswordWarning(context));
@@ -49,7 +49,9 @@ class AuthenticationController {
   }
 
   Future<dynamic> signup(context, String email, String password) async {
-    if (validateEmail(email) && validatePassword(password)){
+    print(validateEmail(email));
+    print(validatePassword(password));
+    if (!validateEmail(email) || !validatePassword(password)){
       showDialog(
         context: context,
         builder: (_) => new NotificationView().emailPasswordWarning(context));
@@ -132,6 +134,7 @@ class AuthenticationController {
 
       await http.post(GlobalSettings.serverAddress+"updateUserName.php", body:map)
         .then((response) {
+          print(response.body);
           if (response.statusCode == 200) {
             if (response.body == "Success"){
               save('username', userName);
@@ -215,8 +218,9 @@ class AuthenticationController {
 
   void remove(String inputKey) async {
     await SharedPreferences.getInstance().then((prefs) {
-      prefs.remove(inputKey);
-      print('removed $inputKey.');
+      // prefs.remove(inputKey);
+      prefs.clear();
+      print('cleared local memory.');
     });
   }
 }
