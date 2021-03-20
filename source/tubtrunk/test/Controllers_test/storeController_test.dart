@@ -1,13 +1,10 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:tubtrunk/Controllers/storeController.dart';
 import 'package:tubtrunk/Models/couponModel.dart';
-import 'package:tubtrunk/Views/myCouponIcon.dart';
-
 
 void main() {
 
   group('storeController Tests',(){
-
     group('Initialization Test',(){
       test("The storeController instance should be not null", () {
         //Arrange
@@ -38,12 +35,44 @@ void main() {
         });
       });
 
-      test("couponList variable shouldn't be null", () {
+      test("removeCouponAtIndex should remove the correct item", () {
         //Arrange
         StoreController testStoreController = new StoreController();
+        CouponModel testCoupon = new CouponModel();
+        Future<List<CouponModel>> testCouponList = testStoreController.getCouponList();
         //Act
+        testCouponList.then((value){
+          int currentSize = (testCouponList as List<CouponModel>).length;
+          (testCouponList as List<CouponModel>).add(testCoupon);
+          testStoreController.removeCouponAtIndex(currentSize-1);
+
         //Assert
-        //expect(testStoreController.couponList, isNotNull);
+          expect((testCouponList as List<CouponModel>).length, currentSize-1);
+        });
+      });
+
+      test("remove invalid index does not affect CouponList", () {
+        //Arrange
+        StoreController testStoreController = new StoreController();
+        CouponModel testCoupon = new CouponModel();
+        Future<List<CouponModel>> testCouponList = testStoreController.getCouponList();
+        //Act
+        testCouponList.then((value){
+          int currentSize = (testCouponList as List<CouponModel>).length;
+          List<CouponModel> beforeList1 = testCouponList as List<CouponModel>;
+          (testCouponList as List<CouponModel>).add(testCoupon);
+          testStoreController.removeCouponAtIndex(currentSize+10);
+
+          //Assert
+          expect((testCouponList as List<CouponModel>), beforeList1);
+
+          //Act test negative index
+          List<CouponModel> beforeList2 = testCouponList as List<CouponModel>;
+          testStoreController.removeCouponAtIndex(-100);
+          //Assert
+          expect((testCouponList as List<CouponModel>), beforeList2);
+
+        });
       });
     });
   });

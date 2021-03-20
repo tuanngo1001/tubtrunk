@@ -1,7 +1,6 @@
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:tubtrunk/Models/couponModel.dart';
-import 'package:tubtrunk/Models/petModel.dart';
 import 'package:tubtrunk/Utils/globalSettings.dart';
 
 class StoreController {
