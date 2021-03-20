@@ -15,7 +15,7 @@ class AudioController{
   AudioController._initializerFunction(){
     advancedPlayer = new AudioPlayer();
     audioCache = new AudioCache(fixedPlayer: advancedPlayer, prefix:'assets/musics/');
-    loadMusics();
+    _loadMusics();
   }
 
   void playByName(String songName,[int duration]){
@@ -39,7 +39,7 @@ class AudioController{
     advancedPlayer.resume();
   }
 
-  void loadMusics(){
+  void _loadMusics(){
     musicList.add(["Lofi Soundtrack", "Naruto_lofi.mp3", "naruto-lofi.png"]);
     musicList.add(["Relaxing Rain Soundtrack", "Relaxing-Rain.mp3","Relaxing-Rain.png"]);
     musicList.add(["Billy Joel Song", "TheLongestTime.mp3","TheLongestTime.png"]);
