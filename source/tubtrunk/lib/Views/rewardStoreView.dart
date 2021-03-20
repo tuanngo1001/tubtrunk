@@ -133,11 +133,8 @@ class _RewardStoreViewState extends State<RewardStoreView> {
                                                 fontWeight: FontWeight.bold,
                                                 fontSize: 16),
                                           )
-
                                         ],
-
                                       ),
-
                                     ],
                                   ))),
                         );
@@ -192,7 +189,6 @@ class _RewardStoreViewState extends State<RewardStoreView> {
                                             fontWeight: FontWeight.bold,
                                             fontSize: 20),
                                       ),
-
                                     ],
                                   ),
                                   Row(
@@ -213,18 +209,14 @@ class _RewardStoreViewState extends State<RewardStoreView> {
                                             fontWeight: FontWeight.bold,
                                             fontSize: 16),
                                       )
-
                                     ],
-
                                   ),
                                 ],
                               )
-
                           )
                         ));
                       }),
                     ),
-
                   ],
                 );
               }),

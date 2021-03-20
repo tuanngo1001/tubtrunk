@@ -27,11 +27,11 @@ class StoreController {
 
   //#region Methods
   Future<List<CouponModel>> getCouponList() async {
-    couponList = await getCoupons();
+    couponList = await _getCoupons();
     return couponList;
   }
 
-  Future<List<CouponModel>> getCoupons() async {
+  Future<List<CouponModel>> _getCoupons() async {
     List<CouponModel> couponList = [];
 
     var url = GlobalSettings.serverAddress + "getCoupons.php";
