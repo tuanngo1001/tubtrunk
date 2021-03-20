@@ -31,17 +31,6 @@ void main(){
         //Assert
         expect(actualPrice, expectPrice);
       });
-
-      test("playByName plays the correct song", () {
-        //Arrange
-        AudioController testAudioController = new AudioController();
-        String songName = "Naruto_lofi.mp3";
-        //Act
-        testAudioController.playByName(songName);
-        //Assert
-        expect(AudioController.audioCache.);
-      });
-
     });
   });
   }
