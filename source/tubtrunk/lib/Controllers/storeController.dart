@@ -10,8 +10,7 @@ class StoreController {
   static final StoreController theOnlyStoreController = StoreController._initializerFunction();
 
   //#region Properties
-  List<PetModel> petList = new List<PetModel>();
-  List<CouponModel> couponList = new List<CouponModel>();
+  List<CouponModel> couponList = <CouponModel>[];
 
   //#endregion
 
@@ -22,19 +21,11 @@ class StoreController {
   }
 
   StoreController._initializerFunction(){
-    stubPetList();
     getCouponList();
   }
   //#endregion
 
   //#region Methods
-  void stubPetList() {
-    petList.add(new PetModel("Mocha", "regular", "fat cat with some level of retard"));
-    petList.add(new PetModel("Candace", "Wild", "young and wild"));
-    petList.add(new PetModel("Kiko", "Rare", "Fat but old and wise"));
-    petList.add(new PetModel("Pink Guy", "Ultra Rare", "Cosmic level of disturbance"));
-  }
-
   Future<List<CouponModel>> getCouponList() async {
     couponList = await getCoupons();
     return couponList;
@@ -57,10 +48,6 @@ class StoreController {
       print(response.statusCode);
       throw Exception('Failed to load post');
     }
-  }
-
-  void removePetAtIndex(int index){
-    petList.removeAt(index);
   }
 
   Future<void> removeCouponAtIndex(int index) async{

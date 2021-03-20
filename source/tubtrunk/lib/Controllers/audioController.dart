@@ -6,7 +6,7 @@ class AudioController{
   static final AudioController theOnlyAudioController = AudioController._initializerFunction();
   static AudioPlayer advancedPlayer;
   static AudioCache audioCache;
-  static List<List<String>> musicList = new List<List<String>>();
+  static List<List<String>> musicList = [];
 
   factory AudioController(){
     return theOnlyAudioController;
@@ -17,6 +17,7 @@ class AudioController{
     audioCache = new AudioCache(fixedPlayer: advancedPlayer, prefix:'assets/musics/');
     loadMusics();
   }
+
   void playByName(String songName,[int duration]){
     stopCurrentSong();
     advancedPlayer.setVolume(100.0);
@@ -49,5 +50,13 @@ class AudioController{
 
   List<List<String>> getMusics(){
     return musicList;
+  }
+
+  void removeMusicAtIndex(int index){
+    musicList.removeAt(index);
+  }
+
+  int getMusicPrice(){
+    return 99;
   }
 }

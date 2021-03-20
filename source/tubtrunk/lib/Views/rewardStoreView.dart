@@ -22,10 +22,17 @@ class _RewardStoreViewState extends State<RewardStoreView> {
     super.initState();
   }
 
-  void rewardStoreViewSetState(int index){
+  void removeCouponSetState(int index){
     setState(() {
       //For now only remove coupon at given index, add more functions if needed.
       controller.couponList.removeAt(index);
+    });
+  }
+
+  void removeMusicSetState(int index){
+    setState(() {
+      //For now only remove coupon at given index, add more functions if needed.
+      auController.removeMusicAtIndex(index);
     });
   }
 
@@ -86,7 +93,7 @@ class _RewardStoreViewState extends State<RewardStoreView> {
                                 setState(() {
                                   showDialog(
                                       context: context,
-                                      builder: (_) => new NotificationView(rewardStoreViewSetState).purchasePopUp(context, controller.removeCouponAtIndex, index));
+                                      builder: (_) => new NotificationView(removeCouponSetState).purchasePopUp(context, controller.removeCouponAtIndex, index));
                                 });
                                 // Perform some action
                               },
@@ -137,7 +144,7 @@ class _RewardStoreViewState extends State<RewardStoreView> {
                       }),
                     ),
                     GridView.count(
-                      childAspectRatio: 5,
+                      childAspectRatio: 3.5,
                       mainAxisSpacing: 0,
                       crossAxisSpacing: 0,
                       crossAxisCount: 1,
@@ -151,39 +158,69 @@ class _RewardStoreViewState extends State<RewardStoreView> {
                             setState(() {
                               showDialog(
                                   context: context,
-                                  builder: (_) => new NotificationView(rewardStoreViewSetState).purchasePopUp(context, controller.removeCouponAtIndex, index));
+                                  builder: (_) => new NotificationView(removeMusicSetState).purchasePopUp(context, controller.removeCouponAtIndex, index));
                             });
                           },
                           child: Container(
                               width: MediaQuery.of(context).size.width,
-                              child: Row(
-                                children: <Widget>[
-                                  Padding(padding: EdgeInsets.all(8.0)),
-                                  IconButton(
-                                    icon: const Icon(Icons.volume_up),
-                                    tooltip: 'Press to hear preview',
-                                    onPressed: () {
-                                      setState(() {
-                                        auController.playByName((auController.getMusics()[index][1]),15);
-                                      });
-                                    },
-                                  ),
-                                  IconButton(
-                                      padding: EdgeInsets.all(2.0),
-                                      icon: Image.asset(
-                                        ('assets/musics/icons/'+(auController.getMusics())[index][2]),
-                                        width: 300,
-                                        height: 300,
+                              child: Column(
+                                children: [
+                                  Row(
+
+                                    children: <Widget>[
+                                      Padding(padding: EdgeInsets.all(8.0)),
+                                      IconButton(
+                                        icon: const Icon(Icons.volume_up),
+                                        tooltip: 'Press to hear preview',
+                                        onPressed: () {
+                                          setState(() {
+                                            auController.playByName((auController.getMusics()[index][1]),15);
+                                          });
+                                        },
                                       ),
-                                      onPressed: () {}),
-                                  Text(
-                                      (auController.getMusics())[index][0],
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 20),
+                                      IconButton(
+                                          padding: EdgeInsets.all(2.0),
+                                          icon: Image.asset(
+                                            ('assets/musics/icons/'+(auController.getMusics())[index][2]),
+                                            width: 300,
+                                            height: 300,
+                                          ),
+                                          onPressed: () {}),
+                                      Text(
+                                          (auController.getMusics())[index][0],
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 20),
+                                      ),
+
+                                    ],
+                                  ),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.center, //Center Row contents horizontally,
+                                    crossAxisAlignment: CrossAxisAlignment.center, //Center Row contents vertically,
+                                    children: <Widget>[
+                                      IconButton(
+                                          padding: EdgeInsets.all(0.0),
+                                          icon: Image.asset(
+                                            'assets/TrunkCoinIcon.png',
+                                            width: 30.0,
+                                            height: 30.0,
+                                          ),
+                                          onPressed: () {}),
+                                      Text(
+                                        auController.getMusicPrice().toString(),
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 16),
+                                      )
+
+                                    ],
+
                                   ),
                                 ],
-                              ))
+                              )
+
+                          )
                         ));
                       }),
                     ),
