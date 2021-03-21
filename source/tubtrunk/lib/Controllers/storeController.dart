@@ -1,14 +1,36 @@
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-import 'package:tubtrunk/Models/CouponModel.dart';
-import 'package:tubtrunk/Models/UserModel.dart';
+import 'package:tubtrunk/Models/couponModel.dart';
 import 'package:tubtrunk/Utils/globalSettings.dart';
 
 class StoreController {
-  StoreController();
+
+  //Singleton instance
+  static final StoreController theOnlyStoreController = StoreController._initializerFunction();
+
+  //#region Properties
+  List<CouponModel> couponList = <CouponModel>[];
+
+  //#endregion
+
+  //#region Constructor
+
+  factory StoreController(){
+    return theOnlyStoreController;
+  }
+
+  StoreController._initializerFunction(){
+    getCouponList();
+  }
+  //#endregion
 
   //#region Methods
-  Future<List<CouponModel>> getCoupons() async {
+  Future<List<CouponModel>> getCouponList() async {
+    couponList = await _getCoupons();
+    return couponList;
+  }
+
+  Future<List<CouponModel>> _getCoupons() async {
     List<CouponModel> couponList = [];
 
     var url = GlobalSettings.serverAddress + "getCoupons.php";
@@ -27,22 +49,17 @@ class StoreController {
     }
   }
 
-  Future<List<UserModel>> getUsers() async {
-    List<UserModel> userList = [];
+  Future<void> removeCouponAtIndex(int index) async{
+    var map = new Map<String, String>();
+    map["couponID"] = couponList[index].id.toString();
 
-    var url = 'https://tubtrunk.tk/getUsers.php';
-    http.Response response = await http.get(url);
+    var response = await http.post(GlobalSettings.serverAddress + "removeCouponByID.php", body: map);
+
     if (response.statusCode == 200) {
-      var data = jsonDecode(response.body);
-
-      for (var key in data) {
-        userList.add(UserModel.fromJson(key));
-      }
-      return userList;
-    } else {
-      print(response.statusCode);
-      throw Exception('Failed to load post');
+      print("Successfully delete coupon item");
+      getCouponList();
     }
+    print("Coupon deleted");
   }
 
 //#endregion
