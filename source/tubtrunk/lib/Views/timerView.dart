@@ -78,13 +78,17 @@ class _TimerViewState extends State<TimerView> with WidgetsBindingObserver, Auto
         ),
         onPressed: onPressed,
         style: ElevatedButton.styleFrom(
-          primary: Color(0xfffc575e),
+          primary: Color(0xfff97c7c),
         ),
       ),
     );
   }
 
-  Widget _confirmationDialog({Text text, VoidCallback cancelOnPressed, VoidCallback okOnPressed,}) {
+  Widget _confirmationDialog({
+    Text text,
+    VoidCallback cancelOnPressed,
+    VoidCallback okOnPressed,
+  }) {
     return new AlertDialog(
       title: Text("Confirmation"),
       content: text,
@@ -119,7 +123,8 @@ class _TimerViewState extends State<TimerView> with WidgetsBindingObserver, Auto
                 context: context,
                 builder: (BuildContext context) {
                   return _confirmationDialog(
-                    text: Text("Changing the duration now would result in a failure for this session, are you sure?"),
+                    text: Text(
+                        "Changing the duration now would result in a failure for this session, are you sure?"),
                     cancelOnPressed: () {
                       Navigator.of(context).pop();
                     },
@@ -145,9 +150,9 @@ class _TimerViewState extends State<TimerView> with WidgetsBindingObserver, Auto
             height: MediaQuery.of(context).size.height / 1.5,
             ringColor: Colors.grey[300],
             ringGradient: null,
-            fillColor: Colors.orange,
+            fillColor: Colors.yellow.shade200,
             fillGradient: null,
-            backgroundColor: Color(0xfffc575e),
+            backgroundColor: Color(0xfff97c7c),
             backgroundGradient: null,
             strokeWidth: 20.0,
             strokeCap: StrokeCap.round,
@@ -211,7 +216,8 @@ class _TimerViewState extends State<TimerView> with WidgetsBindingObserver, Auto
                   context: context,
                   builder: (BuildContext context) {
                     return _confirmationDialog(
-                      text: Text("Resetting now would result in a failure for this session, are you sure?"),
+                      text: Text(
+                          "Resetting now would result in a failure for this session, are you sure?"),
                       cancelOnPressed: () {
                         Navigator.of(context).pop();
                       },

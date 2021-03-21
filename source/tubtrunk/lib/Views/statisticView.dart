@@ -1,9 +1,12 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:screenshot/screenshot.dart';
 import 'package:tubtrunk/Controllers/statisticController.dart';
 import 'indicator.dart';
 import 'package:flutter/rendering.dart';
 import 'package:tubtrunk/Models/timerRecordModel.dart';
+import 'package:share/share.dart';
+
 
 class StatisticView extends StatefulWidget {
   @override
@@ -12,6 +15,7 @@ class StatisticView extends StatefulWidget {
 
 class _StatisticViewState extends State<StatisticView> {
   final StatisticController _statisticController = StatisticController();
+  final _screenshotController = ScreenshotController();
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +25,7 @@ class _StatisticViewState extends State<StatisticView> {
         appBar: PreferredSize(
           preferredSize: Size.fromHeight(50.0),
           child: AppBar(
-            backgroundColor: Colors.orangeAccent,
+            backgroundColor: Colors.indigo.shade100,
             bottom: TabBar(
               tabs: [
                 Tab(
@@ -39,16 +43,19 @@ class _StatisticViewState extends State<StatisticView> {
           ),
         ),
         body: SafeArea(
-          child: FutureBuilder<TabBarView>(
-            future: _getDataAndReturnTabBarView(),
-            builder:
-                (BuildContext context, AsyncSnapshot<TabBarView> snapshot) {
-              if (snapshot.hasData) {
-                return snapshot.data;
-              } else {
-                return Container(width: 0.0, height: 0.0);
-              }
-            },
+          child: Screenshot(
+            controller: _screenshotController,
+            child: FutureBuilder<TabBarView>(
+              future: _getDataAndReturnTabBarView(),
+              builder:
+                  (BuildContext context, AsyncSnapshot<TabBarView> snapshot) {
+                if (snapshot.hasData) {
+                  return snapshot.data;
+                } else {
+                  return Container(width: 0.0, height: 0.0);
+                }
+              },
+            ),
           ),
         ),
       ),
@@ -96,6 +103,16 @@ class _StatisticViewState extends State<StatisticView> {
               text: 'Failed',
               isSquare: false,
             ),
+
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(
+                  Icons.share_outlined,
+                ),
+                TextButton(onPressed: _takeScreenshot, child: Text("Share", style:TextStyle(fontSize: 25)))
+              ],
+            )
           ],
         ),
 
@@ -122,7 +139,6 @@ class _StatisticViewState extends State<StatisticView> {
       ],
     );
   }
-
 
   List<PieChartSectionData> showingSections() {
     int succeedPercentage = _statisticController.getSucceedPercentage();
@@ -160,5 +176,10 @@ class _StatisticViewState extends State<StatisticView> {
           return null;
       }
     });
+  }
+
+  void _takeScreenshot() async{
+    final imageFile = await _screenshotController.capture();
+    Share.shareFiles([imageFile.path]);
   }
 }

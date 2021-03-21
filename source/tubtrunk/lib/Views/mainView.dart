@@ -59,10 +59,10 @@ class _MainViewState extends State<MainView> with SingleTickerProviderStateMixin
             ),
           )
         ],
-        backgroundColor: Colors.red,
+        backgroundColor: Color(0xfff97c7c),
         title: Text(
           'Tubtrunk',
-          style: TextStyle(color: Colors.blueGrey[900]),
+          style: TextStyle(color: Colors.white),
         ),
       ),
       body: TabBarView(
@@ -103,7 +103,7 @@ class _MainViewState extends State<MainView> with SingleTickerProviderStateMixin
           ),
         ],
         currentIndex: _mainController.selectedIndex,
-        selectedItemColor: Colors.orange,
+        selectedItemColor: Color(0xfff97c7c),
         onTap: (int index) {
           setState(() {
             _mainController.changeMainView(index);
