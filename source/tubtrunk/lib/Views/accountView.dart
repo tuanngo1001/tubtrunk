@@ -17,13 +17,19 @@ class _AccountViewState extends State<AccountView> {
             child: Container(
             height: 50.0,
             width: 150.0,
-            child: RaisedButton(
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(14.0),
-                    side: BorderSide(color: Colors.grey)),
-                splashColor: Color(0xfff97c7c),
-                color: Colors.transparent,
-                elevation: 0.0,
+            child: ElevatedButton(
+                style: ButtonStyle(
+                  shape: MaterialStateProperty.all(
+                    RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(14.0),
+                        side: BorderSide(color: Colors.grey)),
+                  ),
+                  backgroundColor: MaterialStateProperty.resolveWith((states) {
+                    if (states.contains(MaterialState.pressed))
+                      return Color(0xfff97c7c);
+                    return Colors.transparent;
+                  }),
+                ),
                 onPressed: () {
                   widget.authenticationController.logout(context);
                 },

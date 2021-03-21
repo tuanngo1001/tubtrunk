@@ -7,6 +7,8 @@ import 'package:email_validator/email_validator.dart';
 
 class AuthenticationController {
   Future<dynamic> login(context, String email, String password) async {
+    email = email.trim();
+    password = password.trim();
     if (!validateEmail(email) || !validatePassword(password)){
       showDialog(
         context: context,
@@ -49,8 +51,8 @@ class AuthenticationController {
   }
 
   Future<dynamic> signup(context, String email, String password) async {
-    print(validateEmail(email));
-    print(validatePassword(password));
+    email = email.trim();
+    password = password.trim();
     if (!validateEmail(email) || !validatePassword(password)){
       showDialog(
         context: context,
