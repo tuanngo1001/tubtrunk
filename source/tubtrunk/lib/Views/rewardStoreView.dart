@@ -1,55 +1,50 @@
 import 'package:flutter/material.dart';
-import 'package:tubtrunk/Controllers/StoreController.dart';
-import 'package:tubtrunk/Models/CouponModel.dart';
-import 'package:tubtrunk/Models/PetModel.dart';
-import 'package:tubtrunk/Views/MyCouponIcon.dart';
-
+import 'package:tubtrunk/Controllers/storeController.dart';
+import 'package:tubtrunk/Views/myCouponIcon.dart';
 import 'notificationView.dart';
+import 'package:tubtrunk/Controllers/audioController.dart';
+
 
 class RewardStoreView extends StatefulWidget {
   @override
   _RewardStoreViewState createState() => _RewardStoreViewState();
+
 }
 
 class _RewardStoreViewState extends State<RewardStoreView> {
-  StoreController controller = new StoreController();
-  List<PetModel> petList = new List<PetModel>();
-  List<CouponModel> couponList = new List<CouponModel>();
+  StoreController controller;
+  AudioController auController;
 
   @override
   void initState() {
-    getCouponList();
-    stubPetList();
+    controller = new StoreController();
+    auController = new AudioController();
     super.initState();
   }
 
-  void stubPetList() {
-    petList.add(
-        new PetModel("Mocha", "regular", "fat cat with some level of retard"));
-    petList.add(new PetModel("Candace", "Wild", "young and wild"));
-    petList.add(new PetModel("Kiko", "Rare", "Fat but old and wise"));
-    petList.add(
-        new PetModel("Pink Guy", "Ultra Rare", "Cosmic level of disturbance"));
+  void removeCouponSetState(int index){
+    setState(() {
+      //For now only remove coupon at given index, add more functions if needed.
+      controller.couponList.removeAt(index);
+    });
   }
 
-  Future<List<CouponModel>> getCouponList() async {
-    couponList = await controller.getCoupons();
-    return couponList;
-  }
-
-  void testing() {
-    print("Pressed");
+  void removeMusicSetState(int index){
+    setState(() {
+      //For now only remove coupon at given index, add more functions if needed.
+      auController.removeMusicAtIndex(index);
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: 4,
+      length: 2,
       child: Scaffold(
         appBar: PreferredSize(
           preferredSize: Size.fromHeight(50.0),
           child: AppBar(
-            backgroundColor: Colors.orangeAccent,
+            backgroundColor: Colors.indigo.shade100,
             bottom: TabBar(
               tabs: [
                 Tab(
@@ -63,27 +58,13 @@ class _RewardStoreViewState extends State<RewardStoreView> {
                     color: Colors.blueGrey.shade800,
                   ),
                 ),
-                Tab(
-                  icon: Icon(
-                    Icons.pets_outlined,
-                    size: 30.0,
-                    color: Colors.blueGrey.shade800,
-                  ),
-                ),
-                Tab(
-                  icon: Icon(
-                    Icons.palette_outlined,
-                    size: 30.0,
-                    color: Colors.blueGrey.shade800,
-                  ),
-                )
               ],
             ),
           ),
         ),
         body: SafeArea(
-          child: FutureBuilder<List<CouponModel>>(
-              future: getCouponList(),
+          child: FutureBuilder(
+              future: controller.getCouponList(),
               builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
                 if (snapshot.hasError) {
                   return Center(
@@ -101,15 +82,19 @@ class _RewardStoreViewState extends State<RewardStoreView> {
                       crossAxisSpacing: 0,
                       crossAxisCount: 1,
                       // Generate 100 widgets that display their index in the List.
-                      children: List.generate(couponList.length, (index) {
-                        return Center(
+                      children: List.generate(controller.couponList.length, (index) {
+                        return Card(
+                          color: Colors.cyan.shade50,
                           child: InkWell(
                               splashColor: Colors.cyanAccent,
+                              hoverColor: Colors.lightBlue[100],
                               onTap: () {
-                                showDialog(
-                                    context: context,
-                                    builder: (_) => new NotificationView()
-                                        .purchasePopUp(context));
+                                //AssetsAudioPlayer.playAndForget(Audio("assets/musics/TheLongestTime.mp3"));
+                                setState(() {
+                                  showDialog(
+                                      context: context,
+                                      builder: (_) => new NotificationView(removeCouponSetState).purchasePopUp(context, controller.removeCouponAtIndex, index));
+                                });
                                 // Perform some action
                               },
                               child: Container(
@@ -117,127 +102,119 @@ class _RewardStoreViewState extends State<RewardStoreView> {
                                   child: Column(
                                     children: <Widget>[
                                       Padding(padding: EdgeInsets.all(18.0)),
+
                                       Text(
-                                        couponList[index].store + " Coupon",
+                                        controller.couponList[index].store + " Coupon",
                                         style: TextStyle(
                                             fontWeight: FontWeight.bold,
                                             fontSize: 20),
                                       ),
                                       Text(
-                                        couponList[index].description,
+                                        controller.couponList[index].description,
                                         style: TextStyle(
                                             fontWeight: FontWeight.w400,
                                             fontSize: 18),
                                       ),
-                                      Text(
-                                        couponList[index].price,
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 16),
-                                      )
+                                      Row(
+                                        mainAxisAlignment: MainAxisAlignment.center, //Center Row contents horizontally,
+                                        crossAxisAlignment: CrossAxisAlignment.center, //Center Row contents vertically,
+                                        children: <Widget>[
+                                          IconButton(
+                                              padding: EdgeInsets.all(0.0),
+                                              icon: Image.asset(
+                                                'assets/TrunkCoinIcon.png',
+                                                width: 30.0,
+                                                height: 30.0,
+                                              ),
+                                              onPressed: () {}),
+                                          Text(
+                                            controller.couponList[index].price,
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 16),
+                                          )
+                                        ],
+                                      ),
                                     ],
                                   ))),
                         );
                       }),
                     ),
                     GridView.count(
-                      crossAxisCount: 1,
-                      childAspectRatio: 3,
+                      childAspectRatio: 3.5,
                       mainAxisSpacing: 0,
                       crossAxisSpacing: 0,
+                      crossAxisCount: 1,
                       // Generate 100 widgets that display their index in the List.
-                      children: List.generate(100, (index) {
-                        return Center(
+                      children: List.generate(auController.getMusics().length, (index) {
+                        return Card(
+                            color: Colors.cyan.shade50,
                             child: InkWell(
                           splashColor: Colors.cyanAccent,
                           onTap: () {
-                            showDialog(
-                                context: context,
-                                builder: (_) => new NotificationView()
-                                    .purchasePopUp(context));
-                            // Perform some action
+                            setState(() {
+                              showDialog(
+                                  context: context,
+                                  builder: (_) => new NotificationView(removeMusicSetState).purchasePopUp(context, controller.removeCouponAtIndex, index));
+                            });
                           },
                           child: Container(
-                            width: MediaQuery.of(context).size.width,
-                            child: new Column(
-                              children: <Widget>[
-                                Padding(padding: EdgeInsets.all(18.0)),
-                                Text(
-                                  "AAA",
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 20),
-                                ),
-                                Text(
-                                  "Description",
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.w400,
-                                      fontSize: 18),
-                                ),
-                                Text(
-                                  "\$640",
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 16),
-                                )
-                              ],
-                            ),
-                          ),
-                        ));
-                      }),
-                    ),
-                    GridView.count(
-                      childAspectRatio: 3,
-                      mainAxisSpacing: 0,
-                      crossAxisSpacing: 0,
-                      crossAxisCount: 1,
-                      // Generate 100 widgets that display their index in the List.
-                      children: List.generate(petList.length, (index) {
-                        return Center(
-                          child: InkWell(
-                              splashColor: Colors.cyanAccent,
-                              onTap: () {
-                                showDialog(
-                                    context: context,
-                                    builder: (_) => new NotificationView()
-                                        .purchasePopUp(context));
-                                // Perform some action
-                              },
-                              child: Container(
-                                  width: MediaQuery.of(context).size.width,
-                                  child: Column(
+                              width: MediaQuery.of(context).size.width,
+                              child: Column(
+                                children: [
+                                  Row(
+
                                     children: <Widget>[
-                                      Padding(padding: EdgeInsets.all(18.0)),
+                                      Padding(padding: EdgeInsets.all(8.0)),
+                                      IconButton(
+                                        icon: const Icon(Icons.volume_up),
+                                        tooltip: 'Press to hear preview',
+                                        onPressed: () {
+                                          setState(() {
+                                            auController.playByName((auController.getMusics()[index][1]),15);
+                                          });
+                                        },
+                                      ),
+                                      IconButton(
+                                          padding: EdgeInsets.all(2.0),
+                                          icon: Image.asset(
+                                            ('assets/musics/icons/'+(auController.getMusics())[index][2]),
+                                            width: 300,
+                                            height: 300,
+                                          ),
+                                          onPressed: () {}),
                                       Text(
-                                        petList[index].name,
+                                          (auController.getMusics())[index][0],
                                         style: TextStyle(
                                             fontWeight: FontWeight.bold,
                                             fontSize: 20),
                                       ),
+                                    ],
+                                  ),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.center, //Center Row contents horizontally,
+                                    crossAxisAlignment: CrossAxisAlignment.center, //Center Row contents vertically,
+                                    children: <Widget>[
+                                      IconButton(
+                                          padding: EdgeInsets.all(0.0),
+                                          icon: Image.asset(
+                                            'assets/TrunkCoinIcon.png',
+                                            width: 30.0,
+                                            height: 30.0,
+                                          ),
+                                          onPressed: () {}),
                                       Text(
-                                        petList[index].description,
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.w400,
-                                            fontSize: 18),
-                                      ),
-                                      Text(
-                                        petList[index].price,
+                                        auController.getMusicPrice().toString(),
                                         style: TextStyle(
                                             fontWeight: FontWeight.bold,
                                             fontSize: 16),
                                       )
                                     ],
-                                  ))),
-                        );
-                      }),
-                    ),
-                    GridView.count(
-                      crossAxisCount: 1,
-                      // Generate 100 widgets that display their index in the List.
-                      children: List.generate(100, (index) {
-                        return Center(
-                          child: Text('Reward $index'),
-                        );
+                                  ),
+                                ],
+                              )
+                          )
+                        ));
                       }),
                     ),
                   ],

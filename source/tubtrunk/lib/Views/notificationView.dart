@@ -1,12 +1,21 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:giffy_dialog/giffy_dialog.dart';
+import 'package:tubtrunk/Controllers/audioController.dart';
 import 'package:tubtrunk/Controllers/mainController.dart';
 
+
 class NotificationView extends StatefulWidget {
+
+  AudioController auController = new AudioController();
+
+  Function rewardStoreViewSetState;
   MainController _mainController = MainController();
 
-  NetworkGiffyDialog giftReceivePopUp(context) {
+  NotificationView([this.rewardStoreViewSetState]);
+
+
+  NetworkGiffyDialog giftRecievePopUp(context) {
     String gifURL = "https://media.giphy.com/media/5Y2bU7FqLOuzK/giphy.gif";
 
     return NetworkGiffyDialog(
@@ -28,9 +37,8 @@ class NotificationView extends StatefulWidget {
     );
   }
 
-  NetworkGiffyDialog purchasePopUp(context) {
-    String gifURL =
-        "https://media.giphy.com/media/d906FK91VCXsbDxBu6/giphy.gif";
+  NetworkGiffyDialog purchasePopUp(context,void Function(int) removeStoreItem, int index) {
+    String gifURL = "https://media.giphy.com/media/d906FK91VCXsbDxBu6/giphy.gif";
 
     return NetworkGiffyDialog(
       image: Image.network(gifURL),
@@ -42,11 +50,14 @@ class NotificationView extends StatefulWidget {
         textAlign: TextAlign.center,
       ),
       entryAnimation: EntryAnimation.TOP,
-      onOkButtonPressed: () {
+      onOkButtonPressed: () async {
+        auController.playByName('success-sfx.mp3');
+        removeStoreItem(index);
+        this.rewardStoreViewSetState(index);
         Navigator.of(context).pop();
         showDialog(
             context: context,
-            builder: (_) => new NotificationView().giftReceivePopUp(context));
+            builder: (_) => new NotificationView(rewardStoreViewSetState).giftRecievePopUp(context));
         // Perform some action
       },
       buttonOkText: Text("Hell Yeah"),
