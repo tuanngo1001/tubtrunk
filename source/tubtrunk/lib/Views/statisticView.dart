@@ -1,8 +1,9 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
-import 'package:tubtrunk/Controllers/StatisticController.dart';
+import 'package:tubtrunk/Controllers/statisticController.dart';
 import 'indicator.dart';
 import 'package:flutter/rendering.dart';
+import 'package:tubtrunk/Models/timerRecordModel.dart';
 
 class StatisticView extends StatefulWidget {
   @override
@@ -29,7 +30,7 @@ class _StatisticViewState extends State<StatisticView> {
                           fontSize: 18.0, color: Colors.blueGrey.shade900)),
                 ),
                 Tab(
-                  child: Text("Details",
+                  child: Text("History",
                       style: TextStyle(
                           fontSize: 18.0, color: Colors.blueGrey.shade900)),
                 )
@@ -56,7 +57,8 @@ class _StatisticViewState extends State<StatisticView> {
 
   Future<TabBarView> _getDataAndReturnTabBarView() async {
     int totalTimes = await _statisticController.fetchTimerRecord();
-
+    double averageTimes =  double.parse((_statisticController.getAverageFocusTimes()).toStringAsFixed(2));
+    List<TimerRecordModel> recordsList = _statisticController.getTimerRecords();
     return TabBarView(
       children: [
         ListView(
@@ -66,7 +68,8 @@ class _StatisticViewState extends State<StatisticView> {
               height: 20,
             ),
             Center(
-                child: Text('Total focus times: $totalTimes',
+                child: Text('Total focus times: $totalTimes \nAverage focus times: $averageTimes min(s)',
+                    maxLines: 3,
                     style: TextStyle(fontSize: 25))),
             AspectRatio(
               aspectRatio: 1,
@@ -95,10 +98,31 @@ class _StatisticViewState extends State<StatisticView> {
             ),
           ],
         ),
-        Center(child: Text('Timer Record Details'))
+
+        ListView.builder(
+          padding: const EdgeInsets.all(8),
+          itemCount: totalTimes,
+          itemBuilder: (BuildContext context, int index) {
+              return Container(
+                  child: Card(
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: <Widget>[
+                         ListTile(
+                          leading: Icon(Icons.date_range_outlined),
+                          title: Text('Date: ${recordsList[totalTimes-index-1].date}      Time: ${recordsList[totalTimes-index-1].time}'),
+                          subtitle: Text('Duration: ${recordsList[totalTimes-index-1].duration} min(s)\nStatus: ${recordsList[totalTimes-index-1].isCompleted()} '),
+                        ),
+                      ],
+                    ),
+                  ),
+              );
+          }
+    )
       ],
     );
   }
+
 
   List<PieChartSectionData> showingSections() {
     int succeedPercentage = _statisticController.getSucceedPercentage();

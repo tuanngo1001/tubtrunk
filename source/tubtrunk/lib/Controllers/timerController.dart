@@ -29,7 +29,6 @@ class TimerController {
 
   // Private constructor
   TimerController._internal() {
-    _rewardMissionController = RewardMissionController();
     _countDownController = CountDownController();
     _duration = 5;
     _stopped = true;
@@ -84,17 +83,19 @@ class TimerController {
     updateStartDateTime();
   }
 
-  void onComplete() {
+  void onComplete(Function(int) updateProgressCallback) {
     print('Countdown Completed');
-    _rewardMissionController.updateRequirementProgress(
-        _duration); // Send the duration to the missionController to calculate the money user receives
+    int minutes = _duration ~/ 60;
+    updateProgressCallback(minutes);
+
     countDownController.restart(duration: _duration);
     countDownController.pause();
     _stopped = true;
     _resumable = false;
     _finished = true;
     _stopStartButtonText = "Start";
-    saveTimerRecord(duration: _duration, completed: finished);
+    
+    saveTimerRecord(duration: minutes, completed: finished);
   }
 
   void stopStart() {
