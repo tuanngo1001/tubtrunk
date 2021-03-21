@@ -171,10 +171,7 @@ class AuthenticationController {
       await http.post(GlobalSettings.serverAddress+"logoutUser.php", body:map)
         .then((response) {
           if (response.body == "Success"){
-            remove('email');
-            remove('password');
-            remove('token');
-            remove('username');
+            remove();
             NotificationView().logoutSuccess(context);
           }
           else {
@@ -218,7 +215,7 @@ class AuthenticationController {
     return value;
   }
 
-  void remove(String inputKey) async {
+  void remove() async {
     await SharedPreferences.getInstance().then((prefs) {
       // prefs.remove(inputKey);
       prefs.clear();
