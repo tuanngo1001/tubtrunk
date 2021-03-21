@@ -1,39 +1,40 @@
 import 'package:flutter/material.dart';
-import 'package:tubtrunk/Models/RewardMission.dart';
-import 'missionPage.dart';
-import 'accountPage.dart';
-import 'TimerView.dart';
-import 'statisticPage.dart';
-import 'rewardStorePage.dart';
+import 'missionView.dart';
+import 'accountView.dart';
+import 'timerView.dart';
+import 'statisticView.dart';
+import 'rewardStoreView.dart';
+import '../Controllers/mainController.dart';
 
-class MainPage extends StatefulWidget {
-  MainPage({Key key}) : super(key: key);
+class MainView extends StatefulWidget {
+  MainView({Key key}) : super(key: key);
 
   @override
-  _MainPageState createState() => _MainPageState();
+  _MainViewState createState() => _MainViewState();
 }
 
-class _MainPageState extends State<MainPage> {
+class _MainViewState extends State<MainView> with SingleTickerProviderStateMixin {
+  MainController _mainController;
 
-  int _selectedIndex = 0;
-//  MissionPage missionPage= new MissionPage();
-  final _pageOptions = [
-    TimerPage(mission: MissionPage()),
-    MissionPage(),
-    RewardStorePage(),
-    StatisticPage(),
-    AccountPage()
-  ];
+  TimerView timerView;
+  MissionView missionView;
+  RewardStoreView rewardStoreView;
+  StatisticView statisticView;
+  AccountView accountView;
 
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
-  }
-
-
-  double money = 3000.0;
   static const double iconSize = 32.5;
+
+  @override initState() {
+    super.initState();
+    _mainController = MainController();
+    _mainController.tabController = TabController(length: 5, vsync: this);
+
+    missionView = MissionView();
+    timerView = TimerView(updateProgressCallback: missionView.updateProgressCallback);
+    rewardStoreView = RewardStoreView();
+    statisticView = StatisticView();
+    accountView = AccountView();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -41,34 +42,38 @@ class _MainPageState extends State<MainPage> {
       appBar: AppBar(
         actions: [
           IconButton(
-
               padding: EdgeInsets.all(0.0),
               icon: Image.asset(
                 'assets/TrunkCoinIcon.png',
                 width: 35.0,
                 height: 35.0,
-
               ),
               onPressed: () {}),
           Padding(
-            padding: const EdgeInsets.only(left: 0.0, right: 1),
+            padding: const EdgeInsets.only(left: 0.0, right: 10),
             child: Center(
               child: Text(
-                "$money",
+                _mainController.money.toString(),
                 style: TextStyle(color: Colors.blueGrey[900], fontSize: 19.0),
               ),
-
             ),
           )
         ],
-        backgroundColor: Colors.red,
+        backgroundColor: Color(0xfff97c7c),
         title: Text(
           'Tubtrunk',
-          style: TextStyle(color: Colors.blueGrey[900]),
+          style: TextStyle(color: Colors.white),
         ),
       ),
-      body: Center(
-        child: _pageOptions.elementAt(_selectedIndex),
+      body: TabBarView(
+        controller: _mainController.tabController,
+        children: <Widget> [
+          timerView,
+          missionView,
+          rewardStoreView,
+          statisticView,
+          accountView,
+        ],
       ),
       bottomNavigationBar: BottomNavigationBar(
         selectedFontSize: 15.0,
@@ -77,7 +82,6 @@ class _MainPageState extends State<MainPage> {
         type: BottomNavigationBarType.fixed,
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-
             icon: Icon(Icons.timer, size: iconSize),
             label: 'Timer',
           ),
@@ -98,9 +102,13 @@ class _MainPageState extends State<MainPage> {
             label: 'Account',
           ),
         ],
-        currentIndex: _selectedIndex,
-        selectedItemColor: Colors.orange,
-        onTap: _onItemTapped,
+        currentIndex: _mainController.selectedIndex,
+        selectedItemColor: Color(0xfff97c7c),
+        onTap: (int index) {
+          setState(() {
+            _mainController.changeMainView(index);
+          });
+        },
       ),
     );
   }
