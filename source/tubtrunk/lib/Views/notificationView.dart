@@ -5,7 +5,7 @@ import 'package:tubtrunk/Controllers/mainController.dart';
 import 'package:tubtrunk/Views/mainView.dart';
 import './displayNameView.dart';
 import './loginView.dart';
-import './signupView.dart';
+import './signUpView.dart';
 
 class NotificationView extends StatefulWidget {
 
@@ -100,7 +100,7 @@ class NotificationView extends StatefulWidget {
       onlyCancelButton: true,
       onCancelButtonPressed: () {
         Navigator.pop(context);
-        SignupView().clearTextInput();
+        SignUpView().clearTextInput();
       },
     );
   }
@@ -195,7 +195,7 @@ class NotificationView extends StatefulWidget {
           context,
           MaterialPageRoute(builder: (context) => DisplayNameView()),
         );
-        SignupView().clearTextInput();
+        SignUpView().clearTextInput();
       },
     )
     );
