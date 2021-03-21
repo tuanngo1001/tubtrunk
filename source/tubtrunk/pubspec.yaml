@@ -29,7 +29,7 @@ dependencies:
   step_progress_indicator: ^0.2.5+8
   giffy_dialog: 1.8.0
   condition: ^0.0.8
-  flutter_local_notifications: ^4.0.1+1
+  flutter_local_notifications: ^5.0.0
   rxdart: ^0.25.0
   circular_countdown_timer: ^0.1.0
   flutter_duration_picker:
@@ -38,7 +38,7 @@ dependencies:
       ref: issue_#28_button_theme_bar
   intl: ^0.16.1
   fl_chart: ^0.12.3
-  email_validator: "^1.0.6"
+  email_validator: ^2.0.1
   shared_preferences: ^2.0.5
 
   # The following adds the Cupertino Icons font to your application.

@@ -38,12 +38,18 @@ class NavigateButtonWidget extends StatelessWidget {
     return Container(
         height: 60.0,
         width: 270.0,
-        child: RaisedButton(
-            shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(20.0)),
-            splashColor: Color(0xffee6969),
-            color: Color(0xfff97c7c),
-            elevation: 7.0,
+        child: ElevatedButton(
+            style: ButtonStyle(
+              shape: MaterialStateProperty.all(
+              RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(20.0)),
+            ),
+            backgroundColor: MaterialStateProperty.resolveWith((states) {
+                if (states.contains(MaterialState.pressed))
+                  return Color(0xffee6969);
+                return Color(0xfff97c7c);
+              }),
+            ),
             onPressed: () {
               Navigator.pop(context);
               Navigator.push(
