@@ -15,6 +15,12 @@ $token = "";
 while ($row = mysqli_fetch_assoc($result)) 
 {
     //Generate a random unique token for "remember me functionality"
+    $user->uID = $row['uID'];
+    $user->uEmail = $row['uEmail'];
+    $user->uUserName = $row['uSerName'];
+    $user->uPassword = $row['uPassword'];
+    $user->uToken = $row['uToken'];
+    $user->uMoney = $row['uMoney'];
 
     if ($row['uToken'] == null || $row['uToken'] == '')
     {
@@ -24,15 +30,14 @@ while ($row = mysqli_fetch_assoc($result))
         //If successfully insert new token, return it
         if (mysqli_query($con, $insertQuery))
         {
-            die($token);
+            $user->uToken = $token;
         }else
         {
             die(mysqli_error($con));
         }
-    }else
-    {
-        die($row['uToken']);
-    }
+    } 
+    $myUser = json_decode($user);
+    die($myUser);
 }
 
 die("Not found");
