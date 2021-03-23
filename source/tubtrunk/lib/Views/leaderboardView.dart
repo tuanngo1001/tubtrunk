@@ -5,31 +5,90 @@ import 'package:tubtrunk/Models/userModel.dart';
 import 'package:tubtrunk/Views/rankingIcon.dart';
 
 class LeaderboardView extends StatefulWidget {
+  final LeaderboardController _leaderboardController = LeaderboardController();
   @override
   _LeaderboardViewState createState() => _LeaderboardViewState();
 }
 
 class _LeaderboardViewState extends State<LeaderboardView> {
-  final LeaderboardController _leaderboardController = LeaderboardController();
-  Future<void> _showMyDialog() async {
+  Future<void> _showMyDialog(int index, List<UserModel> usersList) async {
     return showDialog<void>(
       context: context,
       barrierDismissible: true,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Player Achievement'),
+          backgroundColor: Colors.orange.shade300,
+          insetPadding: EdgeInsets.all(0),
+          title: Text("${usersList[index].name}'s Achievement"),
           content: SingleChildScrollView(
-            child: ListBody(
-              children: <Widget>[
-                Text('Completed missions'),
-                Text("Minutes of focus and Avg time"),
-                Text("Success/fail pie chart")
-              ],
-            ),
+            child:
+                ListBody(children: _generateUserAchievements(index, usersList)),
           ),
         );
       },
     );
+  }
+
+  List<Widget> _generateUserAchievements(int index, List<UserModel> usersList) {
+    return <Widget>[
+      Text(
+          "Average focus time: ${double.parse(usersList[index].avgFocusTime.toStringAsFixed(2))} min(s)",
+          style: TextStyle(color: Colors.black87, fontSize: 19.0)),
+      SizedBox(height: 1.5),
+      Text("Total focus time: ${usersList[index].totalFocusTime} min(s)",
+          style: TextStyle(color: Colors.black87, fontSize: 19.0)),
+      SizedBox(height: 1.5),
+      Text("Successful focus sessions: ${usersList[index].totalTimes} time(s)",
+          style: TextStyle(color: Colors.black87, fontSize: 19.0)),
+      SizedBox(height: 1.5),
+      RichText(
+        text: TextSpan(
+          style: Theme.of(context).textTheme.bodyText2,
+          children: [
+            TextSpan(
+                text: "Prize money from mission(s): ",
+                style: TextStyle(color: Colors.black87, fontSize: 19.0)),
+            WidgetSpan(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 2.0),
+                child: Image.asset(
+                  'assets/TrunkCoinIcon.png',
+                  width: 17.0,
+                  height: 17.0,
+                ),
+              ),
+            ),
+            TextSpan(
+                text: "${usersList[index].totalPrize}",
+                style: TextStyle(color: Colors.black87, fontSize: 19.0)),
+          ],
+        ),
+      ),
+      SizedBox(height: 1.5),
+      RichText(
+        text: TextSpan(
+          style: Theme.of(context).textTheme.bodyText2,
+          children: [
+            TextSpan(
+                text: "Current money amount: ",
+                style: TextStyle(color: Colors.black87, fontSize: 19.0)),
+            WidgetSpan(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 2.0),
+                child: Image.asset(
+                  'assets/TrunkCoinIcon.png',
+                  width: 18.0,
+                  height: 18.0,
+                ),
+              ),
+            ),
+            TextSpan(
+                text: '${usersList[index].prize}',
+                style: TextStyle(color: Colors.black87, fontSize: 19.0))
+          ],
+        ),
+      )
+    ];
   }
 
   @override
@@ -53,27 +112,74 @@ class _LeaderboardViewState extends State<LeaderboardView> {
     );
   }
 
+  BoxDecoration _highLightTopThree(int index) {
+    if (index == 0) {
+      return BoxDecoration(
+          borderRadius: new BorderRadius.circular(12.0),
+          color: Colors.yellow.shade700);
+    } else if (index == 1) {
+      return new BoxDecoration(
+          borderRadius: new BorderRadius.circular(12.0),
+          color: Colors.grey.shade500);
+    } else if (index == 2) {
+      return new BoxDecoration(
+          borderRadius: new BorderRadius.circular(12.0),
+          color: Colors.brown.shade700);
+    } else {
+      return new BoxDecoration(
+          borderRadius: new BorderRadius.circular(12.0),
+          color: Colors.grey.shade300);
+    }
+  }
+
+  Icon _highlightTopThreeBadges(int index) {
+    if (index == 0) {
+      return Icon(
+        RankIcon.ribbon_award_with_star_shape,
+        size: 30.0,
+        color: Colors.yellowAccent.shade400,
+      );
+    } else if (index == 1) {
+      return Icon(
+        RankIcon.ribbon_award_with_star_shape,
+        size: 30.0,
+        color: Colors.grey,
+      );
+    } else if (index == 2) {
+      return Icon(
+        RankIcon.ribbon_award_with_star_shape,
+        size: 30.0,
+        color: Colors.brown,
+      );
+    } else {
+      return Icon(
+        RankIcon.ribbon_award_with_star_shape,
+        size: 30.0,
+        color: Colors.black54,
+      );
+    }
+  }
+
   Future<ListView> _getDataAndReturnListView() async {
-    List<UserModel> usersList = await _leaderboardController.fetchAllUsers();
+    List<UserModel> usersList =
+        await widget._leaderboardController.fetchAllUsers();
     return ListView.builder(
-        padding: const EdgeInsets.all(8),
+        padding: const EdgeInsets.all(2),
         itemCount: usersList.length,
         itemBuilder: (BuildContext context, int index) {
           return Container(
+            decoration: _highLightTopThree(index),
             child: GestureDetector(
-              onTap: _showMyDialog,
+              onTap: () => _showMyDialog(index, usersList),
               child: Card(
+                color: Colors.green.shade300,
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: <Widget>[
                     Expanded(
-                        flex: 1,
+                        flex: 3,
                         child: ListTile(
-                          leading: Icon(
-                            RankIcon.ribbon_award_with_star_shape,
-                            size: 30.0,
-                            color: Colors.black54,
-                          ),
+                          leading: _highlightTopThreeBadges(index),
                           title: Transform.translate(
                             offset: Offset(-25, 0),
                             child: Text(
@@ -83,7 +189,7 @@ class _LeaderboardViewState extends State<LeaderboardView> {
                           ),
                         )),
                     Expanded(
-                        flex: 3,
+                        flex: 4,
                         child: ListTile(
                           title: Text(
                             "${usersList[index].name}",
@@ -91,14 +197,16 @@ class _LeaderboardViewState extends State<LeaderboardView> {
                           ),
                         )),
                     Expanded(
-                        flex: 2,
+                        flex: 3,
                         child: ListTile(
-                          trailing: Text('${usersList[index].prize}',
+                          trailing: Text('${usersList[index].totalFocusTime}',
                               style: TextStyle(fontSize: 18)),
                           title: Transform.translate(
-                            offset: Offset(22, 0),
-                            child: Image.asset('assets/TrunkCoinIcon.png',
-                                width: 20.0, height: 20.0),
+                            offset: Offset(15, 0),
+                            child: Icon(
+                              Icons.av_timer_outlined,
+                              size: 25.0,
+                            ),
                           ),
                         ))
                   ],
