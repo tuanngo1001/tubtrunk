@@ -23,4 +23,6 @@ class LeaderboardController {
       throw Exception('Failed to load post');
     }
   }
+
+  List<UserModel> get usersList => _usersList;
 }
