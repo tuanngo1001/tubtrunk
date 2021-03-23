@@ -1,7 +1,7 @@
 import 'package:tubtrunk/Models/userModel.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-main() {
+void main() {
   group('Initialization Test', () {
     test("The userModel instance should display all attributes correctly", () {
       UserModel firstTestUserModel = new UserModel("Duc Anh", "1234", "hot@hot", 100);

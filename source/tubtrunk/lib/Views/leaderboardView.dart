@@ -157,8 +157,7 @@ class _LeaderboardViewState extends State<LeaderboardView> {
   }
 
   Future<ListView> _getDataAndReturnListView() async {
-    List<UserModel> usersList =
-        await widget._leaderboardController.fetchAllUsers();
+    List<UserModel> usersList = await widget._leaderboardController.fetchAllUsers();
     return ListView.builder(
         padding: const EdgeInsets.all(2),
         itemCount: usersList.length,
@@ -173,7 +172,6 @@ class _LeaderboardViewState extends State<LeaderboardView> {
                   mainAxisSize: MainAxisSize.min,
                   children: <Widget>[
                     Expanded(
-                        flex: 3,
                         child: ListTile(
                           leading: _highlightTopThreeBadges(index),
                           title: Transform.translate(
@@ -185,15 +183,13 @@ class _LeaderboardViewState extends State<LeaderboardView> {
                           ),
                         )),
                     Expanded(
-                        flex: 4,
                         child: ListTile(
                           title: Text(
                             "${usersList[index].name}",
-                            style: TextStyle(fontSize: 18.0),
+                            style: TextStyle(fontSize: 15.0),
                           ),
                         )),
                     Expanded(
-                        flex: 3,
                         child: ListTile(
                           trailing: Text('${usersList[index].totalFocusTime}',
                               style: TextStyle(fontSize: 18)),
