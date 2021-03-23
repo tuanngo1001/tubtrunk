@@ -5,7 +5,7 @@ $con = $GLOBALS['con'];
 
 //get the posted user's info
 $userEmail = $_POST['UserEmail'];
-$userToken = $_POST['UserPassword'];
+$userToken = $_POST['UserToken'];
 
 
 $getQuery = "SELECT * FROM User WHERE uToken = '$userToken' AND uEmail = '$userEmail'" ;
