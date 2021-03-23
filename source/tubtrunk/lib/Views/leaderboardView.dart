@@ -31,11 +31,11 @@ class _LeaderboardViewState extends State<LeaderboardView> {
 
   List<Widget> _generateUserAchievements(int index, List<UserModel> usersList) {
     return <Widget>[
-      Text("Average focus time: ${double.parse(usersList[index].avgFocusTime.toStringAsFixed(2))} min(s)", style: TextStyle(color: Colors.black87, fontSize: 19.0)),
+      Text("Average focus time: ${double.parse(usersList[index].avgFocusTime.toStringAsFixed(2))} min(s)", style: TextStyle(color: Colors.black87, fontSize: 17.0)),
       SizedBox(height: 1.5),
-      Text("Total focus time: ${usersList[index].totalFocusTime} min(s)", style: TextStyle(color: Colors.black87, fontSize: 19.0)),
+      Text("Total focus time: ${usersList[index].totalFocusTime} min(s)", style: TextStyle(color: Colors.black87, fontSize: 17.0)),
       SizedBox(height: 1.5),
-      Text("Successful focus sessions: ${usersList[index].totalTimes} time(s)", style: TextStyle(color: Colors.black87, fontSize: 19.0)),
+      Text("Successful focus sessions: ${usersList[index].totalTimes} time(s)", style: TextStyle(color: Colors.black87, fontSize: 17.0)),
       SizedBox(height: 1.5),
       RichText(
         text: TextSpan(
@@ -43,7 +43,7 @@ class _LeaderboardViewState extends State<LeaderboardView> {
           children: [
             TextSpan(
                 text: "Prize money from mission(s): ",
-                style: TextStyle(color: Colors.black87, fontSize: 19.0)),
+                style: TextStyle(color: Colors.black87, fontSize: 17.0)),
             WidgetSpan(
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 2.0),
@@ -56,7 +56,7 @@ class _LeaderboardViewState extends State<LeaderboardView> {
             ),
             TextSpan(
                 text: "${usersList[index].totalPrize}",
-                style: TextStyle(color: Colors.black87, fontSize: 19.0)),
+                style: TextStyle(color: Colors.black87, fontSize: 17.0)),
           ],
         ),
       ),
@@ -67,7 +67,7 @@ class _LeaderboardViewState extends State<LeaderboardView> {
           children: [
             TextSpan(
                 text: "Current money amount: ",
-                style: TextStyle(color: Colors.black87, fontSize: 19.0)),
+                style: TextStyle(color: Colors.black87, fontSize: 17.0)),
             WidgetSpan(
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 2.0),
@@ -80,7 +80,7 @@ class _LeaderboardViewState extends State<LeaderboardView> {
             ),
             TextSpan(
                 text: '${usersList[index].prize}',
-                style: TextStyle(color: Colors.black87, fontSize: 19.0))
+                style: TextStyle(color: Colors.black87, fontSize: 17.0))
           ],
         ),
       )
