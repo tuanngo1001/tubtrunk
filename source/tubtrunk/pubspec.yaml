@@ -3,7 +3,7 @@ description: Tubtrunk is a focus application for mobile devices that lets the us
 
 # The following line prevents the package from being accidentally published to
 # pub.dev using `pub publish`. This is preferred for private packages.
-publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+publish_to: "none" # Remove this line if you wish to publish to pub.dev
 
 # The following defines the version and build number for your application.
 # A version number is three numbers separated by dots, like 1.2.43
@@ -20,18 +20,17 @@ version: 1.0.0+1
 environment:
   sdk: ">=2.7.0 <3.0.0"
 
-
 dependencies:
   flutter:
     sdk: flutter
-
-  audioplayers: ^0.17.4
-
+  share: ^2.0.1
+  screenshot: 0.2.0
+  # audioplayers: ^0.17.4
   http: ^0.12.2
   step_progress_indicator: ^0.2.5+8
   giffy_dialog: 1.8.0
   condition: ^0.0.8
-  flutter_local_notifications: ^4.0.1+1
+  flutter_local_notifications: 4.0.1
   rxdart: ^0.25.0
   circular_countdown_timer: ^0.1.0
   flutter_duration_picker:
@@ -40,7 +39,8 @@ dependencies:
       ref: issue_#28_button_theme_bar
   intl: ^0.16.1
   fl_chart: ^0.12.3
-
+  email_validator: ^2.0.1
+  shared_preferences: 2.0.5
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -62,17 +62,18 @@ flutter_icons:
 
 # The following section is specific to Flutter.
 flutter:
-
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.
   uses-material-design: true
-#  fonts:
-#    - family: MyCouponIcon
-#      fonts:
-#        - asset: assets/MyCouponIcon.ttf
+  #  fonts:
+  #    - family: MyCouponIcon
+  #      fonts:
+  #        - asset: assets/MyCouponIcon.ttf
   assets:
     - assets/TrunkCoinIcon.png
+    - assets/facebook.png
+    - assets/google_logo.png
     - assets/musics/
     - assets/musics/icons/
 
@@ -81,7 +82,7 @@ flutter:
       fonts:
         - asset: fonts/MyCouponIcon.ttf
 
-    - family:  Challenge
+    - family: Challenge
       fonts:
         - asset: fonts/ChallengeIcon.ttf
 
@@ -94,3 +95,8 @@ flutter:
         - asset: fonts/StalinistOne-Regular.ttf
           weight: 400
 
+    - family: Montserrat
+      fonts:
+        - asset: fonts/Montserrat-Regular.ttf
+        - asset: fonts/Montserrat-Bold.ttf
+          weight: 700

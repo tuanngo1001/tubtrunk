@@ -13,12 +13,12 @@ class RewardStoreView extends StatefulWidget {
 
 class _RewardStoreViewState extends State<RewardStoreView> {
   StoreController controller;
-  AudioController auController;
+  // AudioController auController;
 
   @override
   void initState() {
     controller = new StoreController();
-    auController = new AudioController();
+    // auController = new AudioController();
     super.initState();
   }
 
@@ -32,14 +32,14 @@ class _RewardStoreViewState extends State<RewardStoreView> {
   void removeMusicSetState(int index){
     setState(() {
       //For now only remove coupon at given index, add more functions if needed.
-      auController.removeMusicAtIndex(index);
+      // auController.removeMusicAtIndex(index);
     });
   }
 
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: 2,
+      length: 1,
       child: Scaffold(
         appBar: PreferredSize(
           preferredSize: Size.fromHeight(50.0),
@@ -51,13 +51,13 @@ class _RewardStoreViewState extends State<RewardStoreView> {
                   icon: Icon(MyCouponIcon.coupon,
                       size: 30.0, color: Colors.blueGrey.shade800),
                 ),
-                Tab(
-                  icon: Icon(
-                    Icons.my_library_music_outlined,
-                    size: 30.0,
-                    color: Colors.blueGrey.shade800,
-                  ),
-                ),
+                // Tab(
+                //   icon: Icon(
+                //     Icons.my_library_music_outlined,
+                //     size: 30.0,
+                //     color: Colors.blueGrey.shade800,
+                //   ),
+                // ),
               ],
             ),
           ),
@@ -140,83 +140,83 @@ class _RewardStoreViewState extends State<RewardStoreView> {
                         );
                       }),
                     ),
-                    GridView.count(
-                      childAspectRatio: 3.5,
-                      mainAxisSpacing: 0,
-                      crossAxisSpacing: 0,
-                      crossAxisCount: 1,
-                      // Generate 100 widgets that display their index in the List.
-                      children: List.generate(auController.getMusics().length, (index) {
-                        return Card(
-                            color: Colors.cyan.shade50,
-                            child: InkWell(
-                          splashColor: Colors.cyanAccent,
-                          onTap: () {
-                            setState(() {
-                              showDialog(
-                                  context: context,
-                                  builder: (_) => new NotificationView(removeMusicSetState).purchasePopUp(context, controller.removeCouponAtIndex, index));
-                            });
-                          },
-                          child: Container(
-                              width: MediaQuery.of(context).size.width,
-                              child: Column(
-                                children: [
-                                  Row(
+                    // GridView.count(
+                    //   childAspectRatio: 3.5,
+                    //   mainAxisSpacing: 0,
+                    //   crossAxisSpacing: 0,
+                    //   crossAxisCount: 1,
+                    //   // Generate 100 widgets that display their index in the List.
+                    //   children: List.generate(auController.getMusics().length, (index) {
+                    //     return Card(
+                    //         color: Colors.cyan.shade50,
+                    //         child: InkWell(
+                    //       splashColor: Colors.cyanAccent,
+                    //       onTap: () {
+                    //         setState(() {
+                    //           showDialog(
+                    //               context: context,
+                    //               builder: (_) => new NotificationView(removeMusicSetState).purchasePopUp(context, controller.removeCouponAtIndex, index));
+                    //         });
+                    //       },
+                    //       child: Container(
+                    //           width: MediaQuery.of(context).size.width,
+                    //           child: Column(
+                    //             children: [
+                    //               Row(
 
-                                    children: <Widget>[
-                                      Padding(padding: EdgeInsets.all(8.0)),
-                                      IconButton(
-                                        icon: const Icon(Icons.volume_up),
-                                        tooltip: 'Press to hear preview',
-                                        onPressed: () {
-                                          setState(() {
-                                            auController.playByName((auController.getMusics()[index][1]),15);
-                                          });
-                                        },
-                                      ),
-                                      IconButton(
-                                          padding: EdgeInsets.all(2.0),
-                                          icon: Image.asset(
-                                            ('assets/musics/icons/'+(auController.getMusics())[index][2]),
-                                            width: 300,
-                                            height: 300,
-                                          ),
-                                          onPressed: () {}),
-                                      Text(
-                                          (auController.getMusics())[index][0],
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 20),
-                                      ),
-                                    ],
-                                  ),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.center, //Center Row contents horizontally,
-                                    crossAxisAlignment: CrossAxisAlignment.center, //Center Row contents vertically,
-                                    children: <Widget>[
-                                      IconButton(
-                                          padding: EdgeInsets.all(0.0),
-                                          icon: Image.asset(
-                                            'assets/TrunkCoinIcon.png',
-                                            width: 30.0,
-                                            height: 30.0,
-                                          ),
-                                          onPressed: () {}),
-                                      Text(
-                                        auController.getMusicPrice().toString(),
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 16),
-                                      )
-                                    ],
-                                  ),
-                                ],
-                              )
-                          )
-                        ));
-                      }),
-                    ),
+                    //                 children: <Widget>[
+                    //                   Padding(padding: EdgeInsets.all(8.0)),
+                    //                   IconButton(
+                    //                     icon: const Icon(Icons.volume_up),
+                    //                     tooltip: 'Press to hear preview',
+                    //                     onPressed: () {
+                    //                       setState(() {
+                    //                         // auController.playByName((auController.getMusics()[index][1]),15);
+                    //                       });
+                    //                     },
+                    //                   ),
+                    //                   IconButton(
+                    //                       padding: EdgeInsets.all(2.0),
+                    //                       icon: Image.asset(
+                    //                         ('assets/musics/icons/'+(auController.getMusics())[index][2]),
+                    //                         width: 300,
+                    //                         height: 300,
+                    //                       ),
+                    //                       onPressed: () {}),
+                    //                   Text(
+                    //                       (auController.getMusics())[index][0],
+                    //                     style: TextStyle(
+                    //                         fontWeight: FontWeight.bold,
+                    //                         fontSize: 20),
+                    //                   ),
+                    //                 ],
+                    //               ),
+                    //               Row(
+                    //                 mainAxisAlignment: MainAxisAlignment.center, //Center Row contents horizontally,
+                    //                 crossAxisAlignment: CrossAxisAlignment.center, //Center Row contents vertically,
+                    //                 children: <Widget>[
+                    //                   IconButton(
+                    //                       padding: EdgeInsets.all(0.0),
+                    //                       icon: Image.asset(
+                    //                         'assets/TrunkCoinIcon.png',
+                    //                         width: 30.0,
+                    //                         height: 30.0,
+                    //                       ),
+                    //                       onPressed: () {}),
+                    //                   Text(
+                    //                     auController.getMusicPrice().toString(),
+                    //                     style: TextStyle(
+                    //                         fontWeight: FontWeight.bold,
+                    //                         fontSize: 16),
+                    //                   )
+                    //                 ],
+                    //               ),
+                    //             ],
+                    //           )
+                    //       )
+                    //     ));
+                    //   }),
+                    // ),
                   ],
                 );
               }),

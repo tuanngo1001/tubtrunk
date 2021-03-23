@@ -1,37 +1,30 @@
 import 'package:flutter/material.dart';
-import 'mainView.dart';
+import 'loginView.dart';
 
-class LandingView extends StatefulWidget {
-  @override
-  _LandingViewState createState() => _LandingViewState();
-}
-
-class _LandingViewState extends State<LandingView> {
-  String text = "";
-
-  void changeText(String text) {
-    setState(() {
-      this.text = text;
-    });
-  }
-
+class LandingView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         body: Container(
-            decoration: BoxDecoration(
-                gradient: LinearGradient(
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                    colors: [Color(0xffFC575E), Color(0xff90D5EC)])),
+            color: Color(0xfffffff0),
             child: Stack(children: <Widget>[
-              Center(
-                  child: Text('tubtrunk',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontFamily: 'Stalinist One',
-                          fontSize: 40))),
+              Container(
+                  child: Stack(
+                children: <Widget>[
+                  Container(
+                      padding: EdgeInsets.fromLTRB(15.0, 210.0, 0.0, 0.0),
+                      child: Text('tub',
+                          style: TextStyle(
+                              fontSize: 80.0, fontWeight: FontWeight.bold))),
+                  Container(
+                      padding: EdgeInsets.fromLTRB(135.0, 210.0, 0.0, 0.0),
+                      child: Text('trunk',
+                          style: TextStyle(
+                              fontSize: 80.0,
+                              fontWeight: FontWeight.bold,
+                              color: Color(0xfff97c7c)))),
+                ],
+              )),
               Align(
                   alignment: Alignment(0.00, 0.75),
                   child: NavigateButtonWidget())
@@ -42,17 +35,34 @@ class _LandingViewState extends State<LandingView> {
 class NavigateButtonWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return RaisedButton(
-        color: Color(0xfffc575e),
-        splashColor: Color(0xff90D5EC),
-        child: Padding(
-            padding: EdgeInsets.all(20.0),
+    return Container(
+        height: 60.0,
+        width: 270.0,
+        child: ElevatedButton(
+            style: ButtonStyle(
+              shape: MaterialStateProperty.all(
+              RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(20.0)),
+            ),
+            backgroundColor: MaterialStateProperty.resolveWith((states) {
+                if (states.contains(MaterialState.pressed))
+                  return Color(0xffee6969);
+                return Color(0xfff97c7c);
+              }),
+            ),
+            onPressed: () {
+              Navigator.pop(context);
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => LoginView()),
+              );
+            },
             child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
                   Text('Get Started',
                       style: TextStyle(
-                        // fontFamily: ,
+                        fontFamily: 'Montserrat',
                         fontSize: 25,
                         fontWeight: FontWeight.w700,
                         color: Colors.white,
@@ -61,12 +71,6 @@ class NavigateButtonWidget extends StatelessWidget {
                     Icons.arrow_forward,
                     color: Colors.white,
                   )
-                ])),
-        onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => MainView()),
-          );
-        });
+                ])));
   }
 }
