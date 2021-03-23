@@ -16,6 +16,7 @@ $token = "";
 while ($row = mysqli_fetch_assoc($result)) 
 {
     //Generate a random unique token for "remember me functionality"
+    $user = new stdClass();
     $user->uID = $row['uID'];
     $user->uEmail = $row['uEmail'];
     $user->uUserName = $row['uSerName'];
