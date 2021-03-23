@@ -24,7 +24,7 @@ while ($row = mysqli_fetch_assoc($result))
     $user->uToken = $row['uToken'];
     $user->uMoney = $row['uMoney'];
 
-    $myUser = json_decode($user);
+    $myUser = json_encode($user);
     die($myUser);
 }
 die("Not found");

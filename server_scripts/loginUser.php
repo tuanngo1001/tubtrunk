@@ -37,7 +37,7 @@ while ($row = mysqli_fetch_assoc($result))
             die(mysqli_error($con));
         }
     } 
-    $myUser = json_decode($user);
+    $myUser = json_encode($user);
     die($myUser);
 }
 
