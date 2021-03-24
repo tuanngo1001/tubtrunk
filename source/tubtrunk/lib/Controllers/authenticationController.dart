@@ -185,6 +185,7 @@ class AuthenticationController {
           if (response.body == "Success") {
             await MemoryController.removeKey('username');
             await MemoryController.save('username', userName);
+            GlobalSettings.user.username = userName;
             NotificationView().changeNameSuccess(context);
           } else if (response.body == "Existed") {
             showDialog(

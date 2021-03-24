@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tubtrunk/Utils/globalSettings.dart';
+import 'displayNameView.dart';
 import 'leaderboardView.dart';
 import 'package:tubtrunk/Controllers/authenticationController.dart';
 
@@ -55,7 +56,7 @@ class _AccountViewState extends State<AccountView> {
                           elevation: 5.0,
                           child: Padding(
                             padding: const EdgeInsets.symmetric(
-                                horizontal: 8.0, vertical: 22.0),
+                                horizontal: 20.0, vertical: 22.0),
                             child: Expanded(
                               child: Column(
                                 children: <Widget>[
@@ -74,10 +75,9 @@ class _AccountViewState extends State<AccountView> {
                                   Text(
                                     GlobalSettings.user.email,
                                     style: TextStyle(
-                                      fontFamily: 'Montserrat',
-                                      fontSize: 20.0,
-                                      color: Colors.pinkAccent,
-                                    ),
+                                        fontFamily: 'Montserrat',
+                                        fontSize: 20.0,
+                                        color: Colors.pinkAccent),
                                   )
                                 ],
                               ),
@@ -86,30 +86,72 @@ class _AccountViewState extends State<AccountView> {
                       SizedBox(
                         height: 20.0,
                       ),
-                      Container(
-                        child: ElevatedButton(
-                            style: ButtonStyle(
-                              shape: MaterialStateProperty.all(
-                                RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(14.0)),
-                              ),
-                              backgroundColor:
-                                  MaterialStateProperty.resolveWith((states) {
-                                if (states.contains(MaterialState.pressed))
-                                  return Colors.pinkAccent;
-                                return Colors.white;
-                              }),
-                            ),
-                            onPressed: () {
-                              widget.authenticationController.logout(context);
-                            },
-                            child: Text('Log out',
-                                style: TextStyle(
-                                  fontFamily: 'Montserrat',
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.w700,
-                                  color: Colors.redAccent,
-                                ))),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: <Widget>[
+                          Container(
+                            child: ElevatedButton(
+                                style: ButtonStyle(
+                                  shape: MaterialStateProperty.all(
+                                    RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(14.0)),
+                                  ),
+                                  backgroundColor:
+                                      MaterialStateProperty.resolveWith(
+                                          (states) {
+                                    if (states.contains(MaterialState.pressed))
+                                      return Colors.indigo.shade100;
+                                    return Colors.white;
+                                  }),
+                                ),
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            DisplayNameView()),
+                                  );
+                                },
+                                child: Text('Change your name',
+                                    style: TextStyle(
+                                      fontFamily: 'Montserrat',
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.w700,
+                                      color: Colors.redAccent,
+                                    ))),
+                          ),
+                          // SizedBox(width: 10.0),
+                          Container(
+                            child: ElevatedButton(
+                                style: ButtonStyle(
+                                  shape: MaterialStateProperty.all(
+                                    RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(14.0)),
+                                  ),
+                                  backgroundColor:
+                                      MaterialStateProperty.resolveWith(
+                                          (states) {
+                                    if (states.contains(MaterialState.pressed))
+                                      return Colors.indigo.shade100;
+                                    return Colors.white;
+                                  }),
+                                ),
+                                onPressed: () {
+                                  widget.authenticationController
+                                      .logout(context);
+                                },
+                                child: Text('Log out',
+                                    style: TextStyle(
+                                      fontFamily: 'Montserrat',
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.w700,
+                                      color: Colors.redAccent,
+                                    ))),
+                          ),
+                        ],
                       )
                     ],
                   ),
