@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:tubtrunk/Controllers/rewardMissionController.dart';
 import 'package:tubtrunk/Models/rewardMissionModel.dart';
 import 'package:step_progress_indicator/step_progress_indicator.dart';
-import 'package:tubtrunk/Views/challengeIcon.dart';
+import 'package:tubtrunk/Views/Icons/challengeIcon.dart';
 
 class MissionView extends StatefulWidget {
   final RewardMissionController _rewardMissionController = RewardMissionController();

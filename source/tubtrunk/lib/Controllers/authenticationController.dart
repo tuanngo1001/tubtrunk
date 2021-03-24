@@ -8,8 +8,6 @@ import 'package:tubtrunk/Models/userModel.dart';
 import 'memoryController.dart';
 
 class AuthenticationController {
-  static UserModel user;
-
   Future<dynamic> login(context, String email, String password) async {
     email = email.trim();
     password = password.trim();
@@ -38,9 +36,9 @@ class AuthenticationController {
             }
             else {
               final userJson = jsonDecode(response.body).cast<String, dynamic>();
-              user = UserModel.fromJson(userJson);
-              await MemoryController.save('email', user.email);
-              await MemoryController.save('token', user.token);
+              GlobalSettings.user = UserModel.fromJson(userJson);
+              await MemoryController.save('email', GlobalSettings.user.email);
+              await MemoryController.save('token', GlobalSettings.user.token);
               showDialog(
                 context: context,
                 builder: (_) => new NotificationView().successLoginPopUp(context));
@@ -83,7 +81,7 @@ class AuthenticationController {
             }
             else {
               final userJson = jsonDecode(response.body).cast<String, dynamic>();
-              user = UserModel.fromJson(userJson);
+              GlobalSettings.user = UserModel.fromJson(userJson);
               returnMessage = "Success";
             }
           }
@@ -150,10 +148,10 @@ class AuthenticationController {
           }
           else {
             final userJson = jsonDecode(response.body).cast<String, dynamic>();
-            user = UserModel.fromJson(userJson);
-            await MemoryController.save('email', user.email);
-            await MemoryController.save('token', user.token);
-            await MemoryController.save('username', user.username);
+            GlobalSettings.user = UserModel.fromJson(userJson);
+            await MemoryController.save('email', GlobalSettings.user.email);
+            await MemoryController.save('token', GlobalSettings.user.token);
+            await MemoryController.save('username', GlobalSettings.user.username);
             showDialog(
                 context: context,
                 builder: (_) => new NotificationView().successSignUpPopUp(context));

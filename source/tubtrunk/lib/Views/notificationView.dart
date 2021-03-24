@@ -8,11 +8,7 @@ import './displayNameView.dart';
 import './loginView.dart';
 import './signUpView.dart';
 
-
 class NotificationView extends StatefulWidget {
-
-  // final AudioController auController = new AudioController();
-
   final Function rewardStoreViewSetState;
   final MainController _mainController = MainController();
 
@@ -20,10 +16,8 @@ class NotificationView extends StatefulWidget {
 
 
   NetworkGiffyDialog giftRecievePopUp(context) {
-    String gifURL = "https://media.giphy.com/media/5Y2bU7FqLOuzK/giphy.gif";
-
     return NetworkGiffyDialog(
-      image: Image.network(gifURL),
+      image: Image.asset('assets/gifs/giftrecieve.gif'),
       title: Text('CONGRATULATION!',
           textAlign: TextAlign.center,
           style: TextStyle(fontSize: 22.0, fontWeight: FontWeight.w600)),
@@ -42,10 +36,8 @@ class NotificationView extends StatefulWidget {
   }
 
   NetworkGiffyDialog purchasePopUp(context,void Function(int) removeStoreItem, int index) {
-    String gifURL = "https://media.giphy.com/media/d906FK91VCXsbDxBu6/giphy.gif";
-
     return NetworkGiffyDialog(
-      image: Image.network(gifURL),
+      image: Image.asset('assets/gifs/purchaseprompt.gif'),
       title: Text('',
           textAlign: TextAlign.center,
           style: TextStyle(fontSize: 22.0, fontWeight: FontWeight.w600)),
@@ -71,10 +63,8 @@ class NotificationView extends StatefulWidget {
   }
 
   NetworkGiffyDialog moneyReceivePopup(context) {
-    String gifURL =
-        "https://media.giphy.com/media/EBSECypExxqvOY6Te1/giphy.gif";
     return NetworkGiffyDialog(
-      image: Image.network(gifURL),
+      image: Image.asset('assets/gifs/money.gif'),
       title: Text('CONGRATULATIONS!',
           textAlign: TextAlign.center,
           style: TextStyle(fontSize: 22.0, fontWeight: FontWeight.w600)),
@@ -95,10 +85,8 @@ class NotificationView extends StatefulWidget {
   }
 
   Widget userAlreadyExistWarning(context){
-    String gifURL = "https://media.giphy.com/media/Y08bx6Fea1BafzTlvc/giphy.gif";
-
     return NetworkGiffyDialog(
-      image: Image.network(gifURL),
+      image: Image.asset('assets/gifs/alreadyexist.gif'),
       title: Text('Hmm....',
           textAlign: TextAlign.center,
           style: TextStyle(fontSize: 22.0, fontWeight: FontWeight.w600)),
@@ -116,10 +104,8 @@ class NotificationView extends StatefulWidget {
   }
 
   Widget errorWarning(context){
-    String gifURL = "https://media.giphy.com/media/8L0Pky6C83SzkzU55a/source.gif";
-
     return NetworkGiffyDialog(
-      image: Image.network(gifURL),
+      image: Image.asset('assets/gifs/errorwarning.gif'),
       title: Text('Sorry...',
           textAlign: TextAlign.center,
           style: TextStyle(fontSize: 22.0, fontWeight: FontWeight.w600)),
@@ -137,10 +123,8 @@ class NotificationView extends StatefulWidget {
   }
 
   Widget emailPasswordWarning(context){
-    String gifURL = "https://media.giphy.com/media/IgLIVXrBcID9cExa6r/giphy.gif";
-
     return NetworkGiffyDialog(
-      image: Image.network(gifURL),
+      image: Image.asset('assets/gifs/passwordwarning.gif'),
       title: Text('Oops...',
           textAlign: TextAlign.center,
           style: TextStyle(fontSize: 22.0, fontWeight: FontWeight.w600)),
@@ -158,11 +142,9 @@ class NotificationView extends StatefulWidget {
   }
 
   Widget successLoginPopUp(context){
-    String gifURL = "https://media.giphy.com/media/xUPGGDNsLvqsBOhuU0/giphy.gif";
-
     return (
       NetworkGiffyDialog(
-      image: Image.network(gifURL),
+      image: Image.asset('assets/gifs/welcome.gif'),
       title: Text('Welcome back!',
           textAlign: TextAlign.center,
           style: TextStyle(fontSize: 22.0, fontWeight: FontWeight.w600)),
@@ -185,11 +167,9 @@ class NotificationView extends StatefulWidget {
   }
 
   Widget successSignUpPopUp(context){
-    String gifURL = "https://media.giphy.com/media/xUPGGDNsLvqsBOhuU0/giphy.gif";
-
     return (
       NetworkGiffyDialog(
-      image: Image.network(gifURL),
+      image: Image.asset('assets/gifs/welcome.gif'),
       title: Text('CONGRATULATION!',
           textAlign: TextAlign.center,
           style: TextStyle(fontSize: 22.0, fontWeight: FontWeight.w600)),
@@ -212,10 +192,8 @@ class NotificationView extends StatefulWidget {
   }
 
   Widget missingName(context){
-    String gifURL = "https://media.giphy.com/media/l2JegQCAItyUA5Lpu/source.gif";
-
     return NetworkGiffyDialog(
-      image: Image.network(gifURL),
+      image: Image.asset('assets/gifs/yournameis.gif'),
       title: Text('What\'s your name?',
           textAlign: TextAlign.center,
           style: TextStyle(fontSize: 22.0, fontWeight: FontWeight.w600)),
@@ -250,10 +228,8 @@ class NotificationView extends StatefulWidget {
   }
 
   Widget logoutFail(context){
-    String gifURL = "https://media.giphy.com/media/cMVgEhDeKzPwI/source.gif";
-
     return NetworkGiffyDialog(
-      image: Image.network(gifURL),
+      image: Image.asset('assets/gifs/logoutfail.gif'),
       title: Text('Oops...',
           textAlign: TextAlign.center,
           style: TextStyle(fontSize: 22.0, fontWeight: FontWeight.w600)),
