@@ -166,7 +166,7 @@ class _MissionViewState extends State<MissionView> {
   
   Widget _buildMissionDescription(String title, String requirements) {
     return Expanded(
-      flex: 3,
+      flex: 10,
       child: ListTile(
         title: Text(title),
         subtitle: Text(
