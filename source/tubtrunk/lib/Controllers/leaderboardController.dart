@@ -1,21 +1,21 @@
 import 'package:tubtrunk/Utils/globalSettings.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:tubtrunk/Models/userModel.dart';
+import 'package:tubtrunk/Models/leaderboardModel.dart';
 
 class LeaderboardController {
-  List<UserModel> _usersList;
+  List<LeaderboardModel> _usersList;
   LeaderboardController(){
     _usersList= [];
   }
 
-  Future<List<UserModel>> fetchAllUsers() async {
+  Future<List<LeaderboardModel>> fetchAllUsers() async {
     var url = GlobalSettings.serverAddress + "getAllUsers.php";
     http.Response response = await http.get(url);
     if (response.statusCode == 200) {
       var data = jsonDecode(response.body);
       for (var key in data) {
-        _usersList.add(UserModel.fromJson(key));
+        _usersList.add(LeaderboardModel.fromJson(key));
       }
       return _usersList;
     } else {
@@ -24,5 +24,5 @@ class LeaderboardController {
     }
   }
 
-  List<UserModel> get usersList => _usersList;
+  List<LeaderboardModel> get usersList => _usersList;
 }

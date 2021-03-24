@@ -1,7 +1,5 @@
 <?php
-require_once('connectDB.php');
-
-$con = $GLOBALS['con'];
+include('connectDB.php');
 
 //get the posted user's info
 $userPassword = $_POST['UserPassword'];
@@ -18,7 +16,7 @@ while ($row = mysqli_fetch_assoc($result))
     $user = new stdClass();
     $user->uID = $row['uID'];
     $user->uEmail = $row['uEmail'];
-    $user->uUserName = $row['uSerName'];
+    $user->uUserName = $row['uUserName'];
     $user->uPassword = $row['uPassword'];
     $user->uToken = $row['uToken'];
     $user->uMoney = $row['uMoney'];

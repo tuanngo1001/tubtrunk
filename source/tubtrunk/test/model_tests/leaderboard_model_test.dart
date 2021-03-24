@@ -1,18 +1,16 @@
-import 'package:tubtrunk/Models/userModel.dart';
+import 'package:tubtrunk/Models/leaderboardModel.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   group('Initialization Test', () {
-    test("The userModel instance should display all attributes correctly", () {
-      UserModel firstTestUserModel = new UserModel("Duc Anh", "1234", "hot@hot", 100);
-      expect(firstTestUserModel.name, "Duc Anh");
-      expect(firstTestUserModel.password, "1234");
-      expect(firstTestUserModel.email, "hot@hot");
-      expect(firstTestUserModel.prize, 100);
-    });
+    // test("The userModel instance should display all attributes correctly", () {
+    //   LeaderboardModel firstTestUserModel = new LeaderboardModel("Duc Anh", 100);
+    //   expect(firstTestUserModel.name, "Duc Anh");
+    //   expect(firstTestUserModel.prize, 100);
+    // });
 
     test("The userModel.forNow instance should display all attributes correctly", () {
-      UserModel secondTestUserModel = new UserModel.forNow(uID: 1, name: "Carlos", prize: 100, avgFocusTime: 20.0, totalFocusTime: 150, totalTimes: 200, totalPrize: 500);
+      LeaderboardModel secondTestUserModel = new LeaderboardModel.forNow(uID: 1, name: "Carlos", prize: 100, avgFocusTime: 20.0, totalFocusTime: 150, totalTimes: 200, totalPrize: 500);
       expect(secondTestUserModel.uID, 1);
       expect(secondTestUserModel.name, "Carlos");
       expect(secondTestUserModel.prize, 100);
@@ -31,7 +29,7 @@ void main() {
       json['TotalMinutes'] = 200;
       json['TotalTimes'] = 300;
       json['TotalPrize'] = 1000;
-      UserModel thirdTestUserModel = UserModel.fromJson(json);
+      LeaderboardModel thirdTestUserModel = LeaderboardModel.fromJson(json);
 
       expect(thirdTestUserModel.uID, 1);
       expect(thirdTestUserModel.name, "Duc Anh");

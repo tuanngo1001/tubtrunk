@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:tubtrunk/Controllers/leaderboardController.dart';
-import 'package:tubtrunk/Models/userModel.dart';
+import 'package:tubtrunk/Models/leaderboardModel.dart';
 import 'package:tubtrunk/Views/rankingIcon.dart';
 
 class LeaderboardView extends StatefulWidget {
@@ -11,7 +11,7 @@ class LeaderboardView extends StatefulWidget {
 }
 
 class _LeaderboardViewState extends State<LeaderboardView> {
-  Future<void> _showMyDialog(int index, List<UserModel> usersList) async {
+  Future<void> _showMyDialog(int index, List<LeaderboardModel> usersList) async {
     return showDialog<void>(
       context: context,
       barrierDismissible: true,
@@ -29,7 +29,7 @@ class _LeaderboardViewState extends State<LeaderboardView> {
     );
   }
 
-  List<Widget> _generateUserAchievements(int index, List<UserModel> usersList) {
+  List<Widget> _generateUserAchievements(int index, List<LeaderboardModel> usersList) {
     return <Widget>[
       Text("Average focus time: ${double.parse(usersList[index].avgFocusTime.toStringAsFixed(2))} min(s)", style: TextStyle(color: Colors.black87, fontSize: 17.0)),
       SizedBox(height: 1.5),
@@ -157,7 +157,7 @@ class _LeaderboardViewState extends State<LeaderboardView> {
   }
 
   Future<ListView> _getDataAndReturnListView() async {
-    List<UserModel> usersList = await widget._leaderboardController.fetchAllUsers();
+    List<LeaderboardModel> usersList = await widget._leaderboardController.fetchAllUsers();
     return ListView.builder(
         padding: const EdgeInsets.all(2),
         itemCount: usersList.length,

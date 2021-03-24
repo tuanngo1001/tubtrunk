@@ -1,11 +1,10 @@
 <?php
-require_once('connectDB.php');
 include('connectDB.php');
 
-$con = $GLOBALS['con'];
 
 $userEmail = $_POST['UserEmail'];
 $userPassword = $_POST['UserPassword'];
+$userName = $_POST['UserName'];
 
 
 $getQuery = "SELECT * FROM User WHERE uEmail = '$userEmail'" ;
@@ -18,8 +17,8 @@ while ($row = mysqli_fetch_assoc($result))
 }
 
 $insertQuery = "
-	INSERT INTO User (uEmail, uPassword)
-	VALUES ('$userEmail', '$userPassword')";
+	INSERT INTO User (uEmail, uPassword, uUserName)
+	VALUES ('$userEmail', '$userPassword', '$userName')"; 	
 
 //mysqli_query($con, $insertQuery) or die(mysqli_error($con));
 if (mysqli_query($con, $insertQuery))

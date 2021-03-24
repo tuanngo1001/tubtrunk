@@ -1,13 +1,8 @@
 <?php
-require_once('connectDB.php');
 include('connectDB.php');
-include('checkUserExist.php');
-
-$con = $GLOBALS['con'];
 
 $userEmail = $_POST['UserEmail'];
 $userName = $_POST['UserName'];
-
 
 $getQuery = "SELECT * FROM User WHERE uEmail = '$userEmail'" ;
 

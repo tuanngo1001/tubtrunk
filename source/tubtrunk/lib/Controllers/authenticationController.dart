@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
+import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:tubtrunk/Utils/globalSettings.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import '../Views/notificationView.dart';
 import 'package:email_validator/email_validator.dart';
+import '../Models/userModel.dart';
+import 'memoryController.dart';
 
 class AuthenticationController {
+  static UserModel user;
+
   Future<dynamic> login(context, String email, String password) async {
     email = email.trim();
     password = password.trim();
@@ -20,7 +24,7 @@ class AuthenticationController {
       map['UserPassword'] = password;
 
       await http.post(GlobalSettings.serverAddress + "loginUser.php", body: map)
-        .then((response) {
+        .then((response) async {
           if (response.statusCode == 200){
             if(response.body == "Not found"){
             showDialog(
@@ -33,9 +37,10 @@ class AuthenticationController {
                 builder: (_) => new NotificationView().errorWarning(context));
             }
             else {
-              save('email', email);
-              save('password', password);
-              save('token', response.body);
+              final userJson = jsonDecode(response.body).cast<String, dynamic>();
+              user = UserModel.fromJson(userJson);
+              await MemoryController.save('email', user.email);
+              await MemoryController.save('token', user.token);
               showDialog(
                 context: context,
                 builder: (_) => new NotificationView().successLoginPopUp(context));
@@ -50,6 +55,52 @@ class AuthenticationController {
     }
   }
 
+  static Future<String> rememberMe(context) async {
+    String email, token;
+    String returnMessage = "";
+    await MemoryController.read("email").then((ret) {
+      email = ret;
+    });
+    await MemoryController.read("token").then((ret) {
+      token = ret;
+    });
+
+    if (email == "" || token == ""){
+      returnMessage = "FAIL";
+    }
+    else {
+      var map = new Map<String, String>();
+      map["UserEmail"] = email;
+      map["UserToken"] = token;
+      await http.post(GlobalSettings.serverAddress + "rememberMe.php", body: map)
+        .then((response) async {
+          if (response.statusCode == 200){
+            if(response.body == "Not found"){
+            showDialog(
+              context: context,
+              builder: (_) => new NotificationView().autoLoginFail(context));
+            }
+            else if(response.body == "Error"){
+              showDialog(
+                context: context,
+                builder: (_) => new NotificationView().errorWarning(context));
+            }
+            else {
+              final userJson = jsonDecode(response.body).cast<String, dynamic>();
+              user = UserModel.fromJson(userJson);
+              returnMessage = "Success";
+            }
+          }
+          else { //status code == 404
+            showDialog(
+              context: context,
+              builder: (_) => new NotificationView().errorWarning(context));
+          }
+        });
+    }
+    return returnMessage;
+  }
+
   Future<dynamic> signup(context, String email, String password) async {
     email = email.trim();
     password = password.trim();
@@ -62,12 +113,12 @@ class AuthenticationController {
       var map = new Map<String, String>();
       map["UserEmail"] = email;
       map["UserPassword"] = password;
-      map["UserName"] = "User"; //Default name, they can change it later.
+      map["UserName"] = "New User"; //Default name, they can change it later.
 
       await http.post(GlobalSettings.serverAddress+"addNewUser.php", body:map)
         .then((response) {
           if (response.statusCode == 200) {
-            if(response.body == "Already Exist"){
+            if(response.body == "Invalid"){
               showDialog(
                   context: context,
                   builder: (_) => new NotificationView().userAlreadyExistWarning(context));
@@ -91,7 +142,7 @@ class AuthenticationController {
     map['UserPassword'] = password;
 
     await http.post(GlobalSettings.serverAddress + "loginUser.php", body: map)
-      .then((response) {
+      .then((response) async {
         if (response.statusCode == 200){
           if(response.body == "Not found"){
             showDialog(
@@ -104,10 +155,11 @@ class AuthenticationController {
               builder: (_) => new NotificationView().errorWarning(context));
           }
           else {
-            save('email', email);
-            save('password', password);
-            save('token', response.body);
-            save('username', 'User');
+            final userJson = jsonDecode(response.body).cast<String, dynamic>();
+            user = UserModel.fromJson(userJson);
+            await MemoryController.save('email', user.email);
+            await MemoryController.save('token', user.token);
+            await MemoryController.save('username', user.username);
             showDialog(
                 context: context,
                 builder: (_) => new NotificationView().successSignUpPopUp(context));
@@ -129,20 +181,21 @@ class AuthenticationController {
       }
     else {
       var map = new Map<String, String>();
-      await read('email').then((email) {
+      await MemoryController.read('email').then((email) {
         map["UserEmail"] = email;
       });
       map["UserName"] = userName;
 
       await http.post(GlobalSettings.serverAddress+"updateUserName.php", body:map)
-        .then((response) {
+        .then((response) async {
           print(response.body);
           if (response.statusCode == 200) {
             if (response.body == "Success"){
-              save('username', userName);
+              await MemoryController.removeKey('username');
+              await MemoryController.save('username', userName);
               NotificationView().changeNameSuccess(context);
             }
-            else if (response.body == "false"){
+            else if (response.body == "Existed"){
               showDialog(
                 context: context,
                 builder: (_) => new NotificationView().missingName(context));
@@ -162,16 +215,16 @@ class AuthenticationController {
     }
   }
 
-  Future<dynamic> logout(context) async {
+  Future logout(context) async {
       var map = new Map<String, String>();
-      await read('email').then((email) {
-        map["UserEmail"] = email;
+      await MemoryController.read('token').then((token) {
+        map["userToken"] = token;
       });
 
       await http.post(GlobalSettings.serverAddress+"logoutUser.php", body:map)
-        .then((response) {
+        .then((response) async {
           if (response.body == "Success"){
-            remove();
+            await MemoryController.remove();
             NotificationView().logoutSuccess(context);
           }
           else {
@@ -199,27 +252,5 @@ class AuthenticationController {
     }
     else
       return false;
-  }
-
-  void save(String inputKey, String inputValue) async {
-    await SharedPreferences.getInstance().then((prefs) {
-      prefs.setString(inputKey, inputValue) ;
-      print('saved $inputKey: $inputValue.');
-    });
-  }
-
-  Future<String> read(String inputKey) async {
-    final prefs = await SharedPreferences.getInstance();
-    final value = prefs.getString(inputKey) ?? "";
-    print('read $inputKey: $value.');
-    return value;
-  }
-
-  void remove() async {
-    await SharedPreferences.getInstance().then((prefs) {
-      // prefs.remove(inputKey);
-      prefs.clear();
-      print('cleared local memory.');
-    });
   }
 }

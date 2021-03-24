@@ -1,7 +1,5 @@
 <?php
-require_once('connectDB.php');
-
-$con = $GLOBALS['con'];
+include('connectDB.php');
 
 //get the posted user's info
 $userEmail = $_POST['UserEmail'];
