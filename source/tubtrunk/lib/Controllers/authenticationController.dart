@@ -113,7 +113,7 @@ class AuthenticationController {
       var map = new Map<String, String>();
       map["UserEmail"] = email;
       map["UserPassword"] = password;
-      map["UserName"] = "User"; //Default name, they can change it later.
+      map["UserName"] = "New User"; //Default name, they can change it later.
 
       await http.post(GlobalSettings.serverAddress+"addNewUser.php", body:map)
         .then((response) {
