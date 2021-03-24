@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'loginView.dart';
 import '../Controllers/authenticationController.dart';
 
-
 class SignUpView extends StatefulWidget {
   @override
   _SignUpViewState createState() => _SignUpViewState();
@@ -24,106 +23,108 @@ class _SignUpViewState extends State<SignUpView> {
         body: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-          buildTitle(),
-          buildSignUpBody(context),
-          SizedBox(height: 30.0),
-          buildFooter(context)
-        ]));
+              buildTitle(),
+              buildSignUpBody(context),
+              SizedBox(height: 30.0),
+              buildFooter(context)
+            ]));
   }
 
   Widget buildTitle() {
     return Container(
         child: Stack(
-          children: <Widget>[
-            Container(
-                padding: EdgeInsets.fromLTRB(15.0, 110.0, 0.0, 0.0),
-                child: Text('SIGN UP for',
-                    style: TextStyle(
-                        fontSize: 40.0,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.grey))),
-            Container(
-                padding: EdgeInsets.fromLTRB(15.0, 140.0, 0.0, 0.0),
-                child: Text('tub',
-                    style: TextStyle(
-                        fontSize: 70.0,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black))),
-            Container(
-                padding: EdgeInsets.fromLTRB(120.0, 140.0, 0.0, 0.0),
-                child: Text('trunk',
-                    style: TextStyle(
-                        fontSize: 70.0,
-                        fontWeight: FontWeight.bold,
-                        color: Color(0xfff97c7c)))),
-            Container(
-                padding: EdgeInsets.fromLTRB(290.0, 169.0, 0.0, 0.0),
-                child: Icon(
-                  Icons.alarm,
-                  size: 40.0,
-                )),
-          ],
-        ));
+      children: <Widget>[
+        Container(
+            padding: EdgeInsets.fromLTRB(15.0, 110.0, 0.0, 0.0),
+            child: Text('SIGN UP for',
+                style: TextStyle(
+                    fontSize: 40.0,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.grey))),
+        Container(
+            padding: EdgeInsets.fromLTRB(15.0, 140.0, 0.0, 0.0),
+            child: Text('tub',
+                style: TextStyle(
+                    fontSize: 70.0,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black))),
+        Container(
+            padding: EdgeInsets.fromLTRB(120.0, 140.0, 0.0, 0.0),
+            child: Text('trunk',
+                style: TextStyle(
+                    fontSize: 70.0,
+                    fontWeight: FontWeight.bold,
+                    color: Color(0xfff97c7c)))),
+        Container(
+            padding: EdgeInsets.fromLTRB(290.0, 169.0, 0.0, 0.0),
+            child: Icon(
+              Icons.alarm,
+              size: 40.0,
+            )),
+      ],
+    ));
   }
 
   Widget buildSignUpBody(BuildContext context) {
     return Container(
-            padding: EdgeInsets.only(top: 35.0, left: 20.0, right: 20.0),
-            child: Column(
-              children: <Widget>[
-                TextField(
-                  controller: widget.email,
-                  decoration: InputDecoration(
-                      labelText: "EMAIL",
-                      hintText: "Ex: example@gmail.com",
-                      labelStyle: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontFamily: 'Montserrat',
-                          color: Colors.grey),
-                      focusedBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(color: Color(0xfff97c7c)))),
-                ),
-                SizedBox(height: 10.0),
-                TextField(
-                  controller: widget.password,
-                  decoration: InputDecoration(
-                      labelText: "PASSWORD",
-                      hintText: "At least 4 characters",
-                      labelStyle: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontFamily: 'Montserrat',
-                          color: Colors.grey),
-                      focusedBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(color: Color(0xfff97c7c)))),
-                  obscureText: true,
-                ),
-                SizedBox(height: 40.0),
-                Container(
-                    height: 40.0,
-                    child: ElevatedButton(
-                        style: ButtonStyle(
-                          shape: MaterialStateProperty.all(
-                            RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(20.0)),
-                          ),
-                          backgroundColor: MaterialStateProperty.resolveWith((states) {
-                            if (states.contains(MaterialState.pressed))
-                              return Color(0xffee6969);
-                            return Color(0xfff97c7c);
-                          }),
-                        ),
-                        onPressed: () {
-                          widget.authenticationController.signup(context, widget.email.text, widget.password.text);
-                        },
-                        child: Center(
-                          child: Text('SIGN UP',
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold,
-                                  fontFamily: 'Montserrat')),
-                        ))),
-              ],
-            ));
+        padding: EdgeInsets.only(top: 35.0, left: 20.0, right: 20.0),
+        child: Column(
+          children: <Widget>[
+            TextField(
+              controller: widget.email,
+              decoration: InputDecoration(
+                  labelText: "EMAIL",
+                  hintText: "Ex: example@gmail.com",
+                  labelStyle: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontFamily: 'Montserrat',
+                      color: Colors.grey),
+                  focusedBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color: Color(0xfff97c7c)))),
+            ),
+            SizedBox(height: 10.0),
+            TextField(
+              controller: widget.password,
+              decoration: InputDecoration(
+                  labelText: "PASSWORD",
+                  hintText: "At least 4 characters",
+                  labelStyle: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontFamily: 'Montserrat',
+                      color: Colors.grey),
+                  focusedBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color: Color(0xfff97c7c)))),
+              obscureText: true,
+            ),
+            SizedBox(height: 40.0),
+            Container(
+                height: 40.0,
+                child: ElevatedButton(
+                    style: ButtonStyle(
+                      shape: MaterialStateProperty.all(
+                        RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20.0)),
+                      ),
+                      backgroundColor:
+                          MaterialStateProperty.resolveWith((states) {
+                        if (states.contains(MaterialState.pressed))
+                          return Color(0xffee6969);
+                        return Color(0xfff97c7c);
+                      }),
+                    ),
+                    onPressed: () {
+                      widget.authenticationController.signup(
+                          context, widget.email.text, widget.password.text);
+                    },
+                    child: Center(
+                      child: Text('SIGN UP',
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                              fontFamily: 'Montserrat')),
+                    ))),
+          ],
+        ));
   }
 
   Widget buildFooter(BuildContext context) {
@@ -131,8 +132,7 @@ class _SignUpViewState extends State<SignUpView> {
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
         Text('Already have an account?',
-            style:
-            TextStyle(color: Colors.grey, fontFamily: 'Montserrat')),
+            style: TextStyle(color: Colors.grey, fontFamily: 'Montserrat')),
         SizedBox(width: 5.0),
         InkWell(
             onTap: () {

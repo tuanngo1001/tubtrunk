@@ -20,7 +20,7 @@ class StatisticController {
   Future<int> fetchTimerRecord() async {
     int completed=0;
     var map = new Map<String, String>();
-    map["UserID"] = "1";
+    map["UserID"] = GlobalSettings.user.uID.toString();
 
     var response = await http.post(
         GlobalSettings.serverAddress + "getTimerRecordsForUser.php",

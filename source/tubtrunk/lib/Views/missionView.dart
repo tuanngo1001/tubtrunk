@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:tubtrunk/Controllers/rewardMissionController.dart';
 import 'package:tubtrunk/Models/rewardMissionModel.dart';
 import 'package:step_progress_indicator/step_progress_indicator.dart';
-import 'package:tubtrunk/Views/challengeIcon.dart';
+import 'package:tubtrunk/Views/Icons/challengeIcon.dart';
 
 class MissionView extends StatefulWidget {
-  final RewardMissionController _rewardMissionController = RewardMissionController();
+  final RewardMissionController _rewardMissionController =
+      RewardMissionController();
   Function(int) updateProgressCallback;
 
   MissionView() {
@@ -75,12 +76,8 @@ class _MissionViewState extends State<MissionView> {
 
   Widget _buildTab(String tabName) {
     return Tab(
-      child: Text(
-          tabName,
-          style: TextStyle(
-              fontSize: 16.0, color: Colors.blueGrey.shade900
-          )
-      ),
+      child: Text(tabName,
+          style: TextStyle(fontSize: 16.0, color: Colors.blueGrey.shade900)),
     );
   }
 
@@ -101,17 +98,21 @@ class _MissionViewState extends State<MissionView> {
   }
 
   Widget _buildAvailableMissions() {
-    List<Widget> missionWidgets = List.generate(availableMissionsList.length, (index) {
-      List<Widget> missionComponents = _buildAvailableMissionComponents(availableMissionsList[index]);
+    List<Widget> missionWidgets =
+        List.generate(availableMissionsList.length, (index) {
+      List<Widget> missionComponents =
+          _buildAvailableMissionComponents(availableMissionsList[index]);
       return _buildMission(missionComponents);
     });
 
     return _buildMissions(missionWidgets);
   }
 
-  Widget _buildAcceptedMissions(List<RewardMissionModel> missionList, String status) {
+  Widget _buildAcceptedMissions(
+      List<RewardMissionModel> missionList, String status) {
     List<Widget> missionWidgets = List.generate(missionList.length, (index) {
-      List<Widget> missionComponents = _buildAcceptedMissionComponents(missionList[index], status);
+      List<Widget> missionComponents =
+          _buildAcceptedMissionComponents(missionList[index], status);
       return _buildMission(missionComponents);
     });
 
@@ -156,14 +157,17 @@ class _MissionViewState extends State<MissionView> {
     ];
   }
 
-  List<Widget> _buildAcceptedMissionComponents(RewardMissionModel mission, String status) {
+  List<Widget> _buildAcceptedMissionComponents(
+      RewardMissionModel mission, String status) {
     return <Widget>[
       _buildMissionDescription(mission.title, mission.toString()),
       _buildMissionStatus(mission.prize, status),
-      _buildProgressIndicator(totalRequirements: mission.requirements.length, finishedRequirements: mission.completedRequirements)
+      _buildProgressIndicator(
+          totalRequirements: mission.requirements.length,
+          finishedRequirements: mission.completedRequirements)
     ];
   }
-  
+
   Widget _buildMissionDescription(String title, String requirements) {
     return Expanded(
       flex: 10,
@@ -172,9 +176,7 @@ class _MissionViewState extends State<MissionView> {
         subtitle: Text(
           requirements,
           style: TextStyle(
-              fontSize: 14,
-              fontWeight: FontWeight.w400,
-              color: Colors.black87),
+              fontSize: 14, fontWeight: FontWeight.w400, color: Colors.black87),
         ),
       ),
     );
@@ -192,9 +194,7 @@ class _MissionViewState extends State<MissionView> {
         Text(
           prize.toString(),
           style: TextStyle(
-              fontSize: 14,
-              fontWeight: FontWeight.w500,
-              color: Colors.black87),
+              fontSize: 14, fontWeight: FontWeight.w500, color: Colors.black87),
         ),
       ],
     );
@@ -204,17 +204,10 @@ class _MissionViewState extends State<MissionView> {
     return ElevatedButton.icon(
       onPressed: () => rewardMissionController.moveMissionToInProgress(mission),
       style: ElevatedButton.styleFrom(
-          primary: Colors.green.shade400,
+          primary: Color(0xfff97c7c),
           padding: EdgeInsets.symmetric(horizontal: 2),
-          textStyle: TextStyle(
-              fontSize: 30,
-              fontWeight: FontWeight.bold
-          )
-      ),
-      icon: Icon(
-          Challenge.challenge_icon,
-          size: 30.0, color: Colors.black
-      ),
+          textStyle: TextStyle(fontSize: 30, fontWeight: FontWeight.bold)),
+      icon: Icon(Challenge.challenge_icon, size: 30.0, color: Colors.black),
       label: Text(
         'Challenge!',
         style: TextStyle(
@@ -235,9 +228,7 @@ class _MissionViewState extends State<MissionView> {
           const SizedBox(width: 5),
           Text(
             status,
-            style: TextStyle(
-                fontSize: 15,
-                fontWeight: FontWeight.bold),
+            style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
           ),
           const SizedBox(width: 3)
         ],
@@ -245,7 +236,8 @@ class _MissionViewState extends State<MissionView> {
     );
   }
 
-  Widget _buildProgressIndicator({int totalRequirements, int finishedRequirements}) {
+  Widget _buildProgressIndicator(
+      {int totalRequirements, int finishedRequirements}) {
     return Expanded(
       flex: 1,
       child: StepProgressIndicator(
@@ -254,21 +246,20 @@ class _MissionViewState extends State<MissionView> {
         size: 24,
         selectedColor: Colors.green,
         unselectedColor: Colors.grey[400],
-        customStep: (index, color, _) =>
-        color == Colors.green
+        customStep: (index, color, _) => color == Colors.green
             ? Container(
-          color: color,
-          child: Icon(
-            Icons.check,
-            color: Colors.white,
-          ),
-        )
+                color: color,
+                child: Icon(
+                  Icons.check,
+                  color: Colors.white,
+                ),
+              )
             : Container(
-          color: color,
-          child: Icon(
-            Icons.remove,
-          ),
-        ),
+                color: color,
+                child: Icon(
+                  Icons.remove,
+                ),
+              ),
       ),
     );
   }

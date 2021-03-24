@@ -43,26 +43,26 @@ class NavigateButtonWidget extends StatelessWidget {
         child: ElevatedButton(
             style: ButtonStyle(
               shape: MaterialStateProperty.all(
-              RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(20.0)),
-            ),
-            backgroundColor: MaterialStateProperty.resolveWith((states) {
+                RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20.0)),
+              ),
+              backgroundColor: MaterialStateProperty.resolveWith((states) {
                 if (states.contains(MaterialState.pressed))
                   return Color(0xffee6969);
                 return Color(0xfff97c7c);
               }),
             ),
             onPressed: () async {
-              await AuthenticationController.rememberMe(context).then((returnMessage) async {
+              await AuthenticationController.rememberMe(context)
+                  .then((returnMessage) {
                 print(returnMessage);
-                if (returnMessage == "Success"){
+                if (returnMessage == "Success") {
                   Navigator.pop(context);
                   Navigator.push(
                     context,
                     MaterialPageRoute(builder: (context) => MainView()),
                   );
-                }
-                else {
+                } else {
                   Navigator.pop(context);
                   Navigator.push(
                     context,
@@ -70,7 +70,6 @@ class NavigateButtonWidget extends StatelessWidget {
                   );
                 }
               });
-              
             },
             child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,

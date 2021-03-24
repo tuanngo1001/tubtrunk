@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tubtrunk/Utils/globalSettings.dart';
 import 'missionView.dart';
 import 'accountView.dart';
 import 'timerView.dart';
@@ -53,7 +54,7 @@ class _MainViewState extends State<MainView> with SingleTickerProviderStateMixin
             padding: const EdgeInsets.only(left: 0.0, right: 10),
             child: Center(
               child: Text(
-                _mainController.money.toString(),
+                GlobalSettings.user.money.toString(),
                 style: TextStyle(color: Colors.blueGrey[900], fontSize: 19.0),
               ),
             ),
@@ -61,7 +62,7 @@ class _MainViewState extends State<MainView> with SingleTickerProviderStateMixin
         ],
         backgroundColor: Color(0xfff97c7c),
         title: Text(
-          'Tubtrunk',
+          'Hi, ' + GlobalSettings.user.username,
           style: TextStyle(color: Colors.white),
         ),
       ),

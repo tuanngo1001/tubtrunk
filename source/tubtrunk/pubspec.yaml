@@ -73,11 +73,8 @@ flutter:
   #      fonts:
   #        - asset: assets/MyCouponIcon.ttf
   assets:
-    - assets/TrunkCoinIcon.png
-    - assets/facebook.png
-    - assets/google_logo.png
-    - assets/musics/
-    - assets/musics/icons/
+    - assets/
+    - assets/gifs/
 
   fonts:
     - family: MyCouponIcon
@@ -88,7 +85,7 @@ flutter:
       fonts:
         - asset: fonts/ChallengeIcon.ttf
 
-    - family:  Ranking
+    - family: Ranking
       fonts:
         - asset: fonts/RankIcon.ttf
 
