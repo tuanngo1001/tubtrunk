@@ -71,11 +71,8 @@ flutter:
   #      fonts:
   #        - asset: assets/MyCouponIcon.ttf
   assets:
-    - assets/TrunkCoinIcon.png
-    - assets/facebook.png
-    - assets/google_logo.png
-    - assets/musics/
-    - assets/musics/icons/
+    - assets/
+    - assets/gifs/
 
   fonts:
     - family: MyCouponIcon

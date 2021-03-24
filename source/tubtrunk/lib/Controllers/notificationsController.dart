@@ -81,10 +81,8 @@ class NotificationsController {
       priority: Priority.high,
       styleInformation: DefaultStyleInformation(true, true),
     );
-    var iosDetails =
-        new IOSNotificationDetails(threadIdentifier: 'tubtrunk_notification');
-    var generalNotificationDetails =
-        new NotificationDetails(android: androidDetails, iOS: iosDetails);
+    var iosDetails = new IOSNotificationDetails(threadIdentifier: 'tubtrunk_notification');
+    var generalNotificationDetails = new NotificationDetails(android: androidDetails, iOS: iosDetails);
     await localNotification.show(
       0,
       notifTitle,
