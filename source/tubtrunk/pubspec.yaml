@@ -86,6 +86,10 @@ flutter:
       fonts:
         - asset: fonts/ChallengeIcon.ttf
 
+    - family:  Ranking
+      fonts:
+        - asset: fonts/RankIcon.ttf
+
     - family: Stalinist One
       fonts:
         - asset: fonts/StalinistOne-Regular.ttf
