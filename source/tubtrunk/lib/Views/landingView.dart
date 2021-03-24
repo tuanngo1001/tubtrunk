@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'loginView.dart';
+import 'package:tubtrunk/Controllers/authenticationController.dart';
+import 'mainView.dart';
 
 class LandingView extends StatelessWidget {
   @override
@@ -50,12 +52,25 @@ class NavigateButtonWidget extends StatelessWidget {
                 return Color(0xfff97c7c);
               }),
             ),
-            onPressed: () {
-              Navigator.pop(context);
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => LoginView()),
-              );
+            onPressed: () async {
+              await AuthenticationController.rememberMe(context).then((returnMessage) async {
+                print(returnMessage);
+                if (returnMessage == "Success"){
+                  Navigator.pop(context);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => MainView()),
+                  );
+                }
+                else {
+                  Navigator.pop(context);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => LoginView()),
+                  );
+                }
+              });
+              
             },
             child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
