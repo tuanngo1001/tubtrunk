@@ -1,15 +1,13 @@
 <?php
-require_once('connectDB.php');
 include('connectDB.php');
 
-$con = $GLOBALS['con'];
+$userToken = $_POST['UserToken'];
 
-$userEmail = $_POST['UserEmail'];
-
-$updateQuery = "UPDATE User SET uToken = NULL WHERE uEmail = '$userEmail'";
+$updateQuery = "UPDATE User SET uToken = NULL WHERE uToken = '$userToken'";
 $result = mysqli_query($con, $updateQuery) or die(mysqli_error($con));
 
-if($result){
+if($result)
+{
     die("Success");
 }
 ?>

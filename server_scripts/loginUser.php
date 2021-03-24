@@ -1,7 +1,5 @@
 <?php
-require_once('connectDB.php');
-
-$con = $GLOBALS['con'];
+include('connectDB.php');
 
 //get the posted user's info
 $userPassword = $_POST['UserPassword'];
@@ -15,6 +13,13 @@ $token = "";
 while ($row = mysqli_fetch_assoc($result)) 
 {
     //Generate a random unique token for "remember me functionality"
+    $user = new stdClass();
+    $user->uID = $row['uID'];
+    $user->uEmail = $row['uEmail'];
+    $user->uUserName = $row['uUserName'];
+    $user->uPassword = $row['uPassword'];
+    $user->uToken = $row['uToken'];
+    $user->uMoney = $row['uMoney'];
 
     if ($row['uToken'] == null || $row['uToken'] == '')
     {
@@ -24,15 +29,14 @@ while ($row = mysqli_fetch_assoc($result))
         //If successfully insert new token, return it
         if (mysqli_query($con, $insertQuery))
         {
-            die($token);
+            $user->uToken = $token;
         }else
         {
             die(mysqli_error($con));
         }
-    }else
-    {
-        die($row['uToken']);
-    }
+    } 
+    $myUser = json_encode($user);
+    die($myUser);
 }
 
 die("Not found");
