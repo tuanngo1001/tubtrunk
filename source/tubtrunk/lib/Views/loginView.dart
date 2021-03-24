@@ -20,144 +20,145 @@ class _LoginViewState extends State<LoginView> {
   Widget build(BuildContext context) {
     return Scaffold(
         resizeToAvoidBottomInset: false,
-        body: Column(crossAxisAlignment: CrossAxisAlignment.start, children: <
-            Widget>[
-          buildTitle(),
-          buildLoginBody(context),
-          SizedBox(height: 30.0),
-          buildFooter(context)
-        ]));
+        body: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              buildTitle(),
+              buildLoginBody(context),
+              SizedBox(height: 30.0),
+              buildFooter(context)
+            ]));
   }
 
   Widget buildTitle() {
     return Container(
         child: Stack(
-          children: <Widget>[
-            Container(
-                padding: EdgeInsets.fromLTRB(15.0, 110.0, 0.0, 0.0),
-                child: Text('tub',
-                    style: TextStyle(
-                        fontSize: 80.0, fontWeight: FontWeight.bold))),
-            Container(
-                padding: EdgeInsets.fromLTRB(15.0, 175.0, 0.0, 0.0),
-                child: Text('trunk',
-                    style: TextStyle(
-                        fontSize: 80.0,
-                        fontWeight: FontWeight.bold,
-                        color: Color(0xfff97c7c)))),
-            Container(
-                padding: EdgeInsets.fromLTRB(210.0, 212.0, 0.0, 0.0),
-                child: Icon(
-                  Icons.alarm,
-                  size: 40.0,
-                )),
-          ],
-        ));
+      children: <Widget>[
+        Container(
+            padding: EdgeInsets.fromLTRB(15.0, 110.0, 0.0, 0.0),
+            child: Text('tub',
+                style: TextStyle(fontSize: 80.0, fontWeight: FontWeight.bold))),
+        Container(
+            padding: EdgeInsets.fromLTRB(15.0, 175.0, 0.0, 0.0),
+            child: Text('trunk',
+                style: TextStyle(
+                    fontSize: 80.0,
+                    fontWeight: FontWeight.bold,
+                    color: Color(0xfff97c7c)))),
+        Container(
+            padding: EdgeInsets.fromLTRB(210.0, 212.0, 0.0, 0.0),
+            child: Icon(
+              Icons.alarm,
+              size: 40.0,
+            )),
+      ],
+    ));
   }
 
   Widget buildLoginBody(BuildContext context) {
     return Container(
-            padding: EdgeInsets.only(top: 35.0, left: 20.0, right: 20.0),
-            child: Column(
-              children: <Widget>[
-                TextField(
-                  decoration: InputDecoration(
-                      labelText: "EMAIL",
-                      labelStyle: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontFamily: 'Montserrat',
-                          color: Colors.grey),
-                      focusedBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(color: Color(0xfff97c7c)))),
-                  controller: widget.email,
-                ),
-                SizedBox(height: 20.0),
-                TextField(
-                  decoration: InputDecoration(
-                      labelText: "PASSWORD",
-                      labelStyle: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontFamily: 'Montserrat',
-                          color: Colors.grey),
-                      focusedBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(color: Color(0xfff97c7c)))),
-                  obscureText: true,
-                  controller: widget.password,
-                ),
-                SizedBox(height: 5.0),
-                Container(
-                    alignment: Alignment(1.0, 0.0),
-                    padding: EdgeInsets.only(top: 15.0, left: 20.0),
-                    child: InkWell(
-                      child: Text(
-                        'Forgot Password',
-                        style: TextStyle(
-                            color: Color(0xfff97c7c),
-                            fontWeight: FontWeight.bold,
-                            decoration: TextDecoration.underline),
+        padding: EdgeInsets.only(top: 35.0, left: 20.0, right: 20.0),
+        child: Column(
+          children: <Widget>[
+            TextField(
+              decoration: InputDecoration(
+                  labelText: "EMAIL",
+                  labelStyle: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontFamily: 'Montserrat',
+                      color: Colors.grey),
+                  focusedBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color: Color(0xfff97c7c)))),
+              controller: widget.email,
+            ),
+            SizedBox(height: 20.0),
+            TextField(
+              decoration: InputDecoration(
+                  labelText: "PASSWORD",
+                  labelStyle: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontFamily: 'Montserrat',
+                      color: Colors.grey),
+                  focusedBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color: Color(0xfff97c7c)))),
+              obscureText: true,
+              controller: widget.password,
+            ),
+            SizedBox(height: 5.0),
+            Container(
+                alignment: Alignment(1.0, 0.0),
+                padding: EdgeInsets.only(top: 15.0, left: 20.0),
+                child: InkWell(
+                  child: Text(
+                    'Forgot Password',
+                    style: TextStyle(
+                        color: Color(0xfff97c7c),
+                        fontWeight: FontWeight.bold,
+                        decoration: TextDecoration.underline),
+                  ),
+                )),
+            SizedBox(height: 40.0),
+            Container(
+                height: 40.0,
+                child: ElevatedButton(
+                    style: ButtonStyle(
+                      shape: MaterialStateProperty.all(
+                        RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20.0)),
                       ),
-                    )),
-                SizedBox(height: 40.0),
-                Container(
-                    height: 40.0,
-                    child: ElevatedButton(
-                        style: ButtonStyle(
-                          shape: MaterialStateProperty.all(
-                          RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20.0)),
-                        ),
-                        backgroundColor: MaterialStateProperty.resolveWith((states) {
-                            if (states.contains(MaterialState.pressed))
-                              return Color(0xffee6969);
-                            return Color(0xfff97c7c);
-                          }),
-                        ),
-                        onPressed: () {
-                          widget.authenticationController.login(
-                              context,
-                              widget.email.text,
-                              widget.password.text);
-                          widget.clearTextInput();
-                        },
-                        child: Center(
-                          child: Text('LOGIN',
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold,
-                                  fontFamily: 'Montserrat')),
-                        ))),
-                SizedBox(height: 20.0),
-                Container(
-                    height: 40.0,
-                    child: OutlinedButton(
-                        style: ButtonStyle(
-                          shape: MaterialStateProperty.all(
-                            RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(20.0)),
-                          ),
-                          backgroundColor: MaterialStateProperty.resolveWith((states) {
-                            return Colors.transparent;
-                          }),
-                        ),
-                        onPressed: () {},
-                        child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: <Widget>[
-                              Center(
-                                  child: ImageIcon(
-                                      AssetImage('assets/google_logo.png'),
-                                      color: Colors.black,)),
-                              SizedBox(width: 5.0),
-                              Center(
-                                child: Text('Log in with Google',
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontFamily: 'Montserrat',
-                                        color: Colors.black)),
-                              )
-                            ]))),
-              ],
-            ));
+                      backgroundColor:
+                          MaterialStateProperty.resolveWith((states) {
+                        if (states.contains(MaterialState.pressed))
+                          return Color(0xffee6969);
+                        return Color(0xfff97c7c);
+                      }),
+                    ),
+                    onPressed: () {
+                      widget.authenticationController.login(
+                          context, widget.email.text, widget.password.text);
+                      widget.clearTextInput();
+                    },
+                    child: Center(
+                      child: Text('LOGIN',
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                              fontFamily: 'Montserrat')),
+                    ))),
+            SizedBox(height: 20.0),
+            Container(
+                height: 40.0,
+                child: OutlinedButton(
+                    style: ButtonStyle(
+                      shape: MaterialStateProperty.all(
+                        RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20.0)),
+                      ),
+                      backgroundColor:
+                          MaterialStateProperty.resolveWith((states) {
+                        return Colors.transparent;
+                      }),
+                    ),
+                    onPressed: () {},
+                    child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          Center(
+                              child: ImageIcon(
+                            AssetImage('assets/google_logo.png'),
+                            color: Colors.black,
+                          )),
+                          SizedBox(width: 5.0),
+                          Center(
+                            child: Text('Log in with Google',
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontFamily: 'Montserrat',
+                                    color: Colors.black)),
+                          )
+                        ]))),
+          ],
+        ));
   }
 
   Widget buildFooter(BuildContext context) {
@@ -165,8 +166,7 @@ class _LoginViewState extends State<LoginView> {
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
         Text('New to Tubtrunk?',
-            style:
-            TextStyle(color: Colors.grey, fontFamily: 'Montserrat')),
+            style: TextStyle(color: Colors.grey, fontFamily: 'Montserrat')),
         SizedBox(width: 5.0),
         InkWell(
             onTap: () {

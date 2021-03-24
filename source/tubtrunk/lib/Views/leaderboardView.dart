@@ -11,7 +11,8 @@ class LeaderboardView extends StatefulWidget {
 }
 
 class _LeaderboardViewState extends State<LeaderboardView> {
-  Future<void> _showMyDialog(int index, List<LeaderboardModel> usersList) async {
+  Future<void> _showMyDialog(
+      int index, List<LeaderboardModel> usersList) async {
     return showDialog<void>(
       context: context,
       barrierDismissible: true,
@@ -29,13 +30,18 @@ class _LeaderboardViewState extends State<LeaderboardView> {
     );
   }
 
-  List<Widget> _generateUserAchievements(int index, List<LeaderboardModel> usersList) {
+  List<Widget> _generateUserAchievements(
+      int index, List<LeaderboardModel> usersList) {
     return <Widget>[
-      Text("Average focus time: ${double.parse(usersList[index].avgFocusTime.toStringAsFixed(2))} min(s)", style: TextStyle(color: Colors.black87, fontSize: 17.0)),
+      Text(
+          "Average focus time: ${double.parse(usersList[index].avgFocusTime.toStringAsFixed(2))} min(s)",
+          style: TextStyle(color: Colors.black87, fontSize: 17.0)),
       SizedBox(height: 1.5),
-      Text("Total focus time: ${usersList[index].totalFocusTime} min(s)", style: TextStyle(color: Colors.black87, fontSize: 17.0)),
+      Text("Total focus time: ${usersList[index].totalFocusTime} min(s)",
+          style: TextStyle(color: Colors.black87, fontSize: 17.0)),
       SizedBox(height: 1.5),
-      Text("Successful focus sessions: ${usersList[index].totalTimes} time(s)", style: TextStyle(color: Colors.black87, fontSize: 17.0)),
+      Text("Successful focus sessions: ${usersList[index].totalTimes} time(s)",
+          style: TextStyle(color: Colors.black87, fontSize: 17.0)),
       SizedBox(height: 1.5),
       RichText(
         text: TextSpan(
@@ -92,6 +98,7 @@ class _LeaderboardViewState extends State<LeaderboardView> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Leaderboard'),
+        backgroundColor: Color(0xfff97c7c),
       ),
       body: SafeArea(
         child: FutureBuilder<ListView>(
@@ -157,7 +164,8 @@ class _LeaderboardViewState extends State<LeaderboardView> {
   }
 
   Future<ListView> _getDataAndReturnListView() async {
-    List<LeaderboardModel> usersList = await widget._leaderboardController.fetchAllUsers();
+    List<LeaderboardModel> usersList =
+        await widget._leaderboardController.fetchAllUsers();
     return ListView.builder(
         padding: const EdgeInsets.all(2),
         itemCount: usersList.length,
@@ -167,40 +175,44 @@ class _LeaderboardViewState extends State<LeaderboardView> {
             child: GestureDetector(
               onTap: () => _showMyDialog(index, usersList),
               child: Card(
-                color: Colors.green.shade300,
+                color: Colors.cyan.shade50,
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: <Widget>[
                     Expanded(
                         child: ListTile(
-                          leading: _highlightTopThreeBadges(index),
-                          title: Transform.translate(
-                            offset: Offset(-25, 0),
-                            child: Text(
-                              '${index + 1}',
-                              style: TextStyle(fontSize: 20.0),
-                            ),
-                          ),
-                        )),
+                      leading: _highlightTopThreeBadges(index),
+                      title: Transform.translate(
+                        offset: Offset(-25, 0),
+                        child: Text(
+                          '${index + 1}',
+                          style: TextStyle(fontSize: 20.0),
+                        ),
+                      ),
+                    )),
                     Expanded(
                         child: ListTile(
-                          title: Text(
-                            "${usersList[index].name}",
-                            style: TextStyle(fontSize: 15.0),
-                          ),
-                        )),
+                      title: Text(
+                        "${usersList[index].name}",
+                        style: TextStyle(
+                          fontSize: 15.0,
+                          fontFamily: 'Montserrat',
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    )),
                     Expanded(
                         child: ListTile(
-                          trailing: Text('${usersList[index].totalFocusTime}',
-                              style: TextStyle(fontSize: 18)),
-                          title: Transform.translate(
-                            offset: Offset(15, 0),
-                            child: Icon(
-                              Icons.av_timer_outlined,
-                              size: 25.0,
-                            ),
-                          ),
-                        ))
+                      trailing: Text('${usersList[index].totalFocusTime}',
+                          style: TextStyle(fontSize: 18)),
+                      title: Transform.translate(
+                        offset: Offset(15, 0),
+                        child: Icon(
+                          Icons.av_timer_outlined,
+                          size: 25.0,
+                        ),
+                      ),
+                    ))
                   ],
                 ),
               ),

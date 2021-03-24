@@ -83,7 +83,7 @@ flutter:
       fonts:
         - asset: fonts/ChallengeIcon.ttf
 
-    - family:  Ranking
+    - family: Ranking
       fonts:
         - asset: fonts/RankIcon.ttf
 

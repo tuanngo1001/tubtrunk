@@ -3,9 +3,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 class MemoryController {
   static Future save(String inputKey, String inputValue) async {
     await SharedPreferences.getInstance().then((prefs) {
-      prefs.setString(inputKey, inputValue) ;
+      prefs.setString(inputKey, inputValue);
       print('saved $inputKey: $inputValue.');
-      });
+    });
   }
 
   static Future<String> read(String inputKey) async {
