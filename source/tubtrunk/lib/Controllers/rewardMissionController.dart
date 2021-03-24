@@ -94,7 +94,7 @@ class RewardMissionController {
   void updateRequirementProgress(int minutes) async {
     List<RewardMissionModel> updatedMissions = [];
     for (RewardMissionModel mission in inProgressMissions) {
-      if (mission.addMinutes(minutes)) {
+      if (mission.addDuration(minutes)) {
         updatedMissions.add(mission);
       }
     }

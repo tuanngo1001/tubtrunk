@@ -21,7 +21,7 @@ class RewardMissionModel {
 
   int completedRequirements;
 
-  RewardMissionModel._internal({this.id, this.title, this.prize, this.requirements, this.inProgress, this.progressTrack}) {
+  RewardMissionModel({this.id, this.title, this.prize, this.requirements, this.inProgress, this.progressTrack}) {
     completedRequirements = 0;
     for (int i = 0; i < progressTrack.length; i++) {
       if (requirements[i][_timesIndex] == progressTrack[i]) {
@@ -30,10 +30,10 @@ class RewardMissionModel {
     }
   }
 
-  bool addMinutes(int minutes) {
+  bool addDuration(int minutes) {
     bool updated = false;
     for (int i = 0; i < requirements.length; i++) {
-      if (requirements[i][_minutesIndex] == minutes && progressTrack[i] != requirements[i][_timesIndex]) {
+      if (requirements[i][_minutesIndex] == minutes && progressTrack[i] < requirements[i][_timesIndex]) {
         updated = true;
         ++progressTrack[i];
 
@@ -57,7 +57,7 @@ class RewardMissionModel {
   }
 
   factory RewardMissionModel.fromJson(Map<String, dynamic> json) {
-    return RewardMissionModel._internal(
+    return RewardMissionModel(
       id: json['ID'],
       title: json['Title'],
       prize: json['Prize'],
