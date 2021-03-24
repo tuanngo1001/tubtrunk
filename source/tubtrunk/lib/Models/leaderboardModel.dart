@@ -7,10 +7,6 @@ class LeaderboardModel {
   int totalTimes;
   int totalPrize;
 
-
-  //Constructor
-  // LeaderboardModel(this.name, this.prize);
-
   LeaderboardModel.forNow({this.uID, this.name, this.prize, this.avgFocusTime, this.totalFocusTime, this.totalTimes, this.totalPrize});
 
   factory LeaderboardModel.fromJson(Map<String, dynamic> json) {
