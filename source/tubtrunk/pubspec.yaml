@@ -76,6 +76,7 @@ flutter:
     - assets/google_logo.png
     - assets/musics/
     - assets/musics/icons/
+    - assets/user_icon.png
 
   fonts:
     - family: MyCouponIcon

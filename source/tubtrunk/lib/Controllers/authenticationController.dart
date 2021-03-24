@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:tubtrunk/Utils/globalSettings.dart';
-import '../Views/notificationView.dart';
 import 'package:email_validator/email_validator.dart';
-import '../Models/userModel.dart';
+import 'package:tubtrunk/Utils/globalSettings.dart';
+import 'package:tubtrunk/Views/notificationView.dart';
+import 'package:tubtrunk/Models/userModel.dart';
 import 'memoryController.dart';
 
 class AuthenticationController {
@@ -78,7 +78,7 @@ class AuthenticationController {
             if(response.body == "Not found") {
               returnMessage = "FAIL - Not found";
             }
-            else if(response.body == "Error"){
+            else if(response.body == "Error") {
               returnMessage = "FAIL - Error";
             }
             else {
