@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tubtrunk/Controllers/storeController.dart';
-import 'package:tubtrunk/Views/myCouponIcon.dart';
+import 'package:tubtrunk/Views/Icons/myCouponIcon.dart';
 import 'notificationView.dart';
 import 'package:tubtrunk/Controllers/audioController.dart';
 
