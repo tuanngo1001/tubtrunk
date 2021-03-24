@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:tubtrunk/Utils/globalSettings.dart';
-import '../Views/notificationView.dart';
 import 'package:email_validator/email_validator.dart';
-import '../Models/userModel.dart';
+import 'package:tubtrunk/Utils/globalSettings.dart';
+import 'package:tubtrunk/Views/notificationView.dart';
+import 'package:tubtrunk/Models/userModel.dart';
 import 'memoryController.dart';
 
 class AuthenticationController {
@@ -79,15 +79,9 @@ class AuthenticationController {
           .then((response) async {
         if (response.statusCode == 200) {
           if (response.body == "Not found") {
-            showDialog(
-                context: context,
-                builder: (_) => new NotificationView().autoLoginFail(context));
-            returnMessage = "FAIL";
+            returnMessage = "FAIL - Not found";
           } else if (response.body == "Error") {
-            showDialog(
-                context: context,
-                builder: (_) => new NotificationView().errorWarning(context));
-            returnMessage = "Error";
+            returnMessage = "FAIL - Error";
           } else {
             final userJson = jsonDecode(response.body).cast<String, dynamic>();
             GlobalSettings.user = UserModel.fromJson(userJson);
@@ -95,10 +89,7 @@ class AuthenticationController {
           }
         } else {
           //status code == 404
-          showDialog(
-              context: context,
-              builder: (_) => new NotificationView().errorWarning(context));
-          returnMessage = "Error";
+          returnMessage = "FAIL - Error 404";
         }
       });
     }

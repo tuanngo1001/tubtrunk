@@ -14,7 +14,6 @@ class NotificationView extends StatefulWidget {
 
   NotificationView([this.rewardStoreViewSetState]);
 
-
   NetworkGiffyDialog giftRecievePopUp(context) {
     return NetworkGiffyDialog(
       image: Image.asset('assets/gifs/giftrecieve.gif'),
@@ -35,7 +34,8 @@ class NotificationView extends StatefulWidget {
     );
   }
 
-  NetworkGiffyDialog purchasePopUp(context,void Function(int) removeStoreItem, int index) {
+  NetworkGiffyDialog purchasePopUp(
+      context, void Function(int) removeStoreItem, int index) {
     return NetworkGiffyDialog(
       image: Image.asset('assets/gifs/purchaseprompt.gif'),
       title: Text('',
@@ -53,7 +53,8 @@ class NotificationView extends StatefulWidget {
         Navigator.of(context).pop();
         showDialog(
             context: context,
-            builder: (_) => new NotificationView(rewardStoreViewSetState).giftRecievePopUp(context));
+            builder: (_) => new NotificationView(rewardStoreViewSetState)
+                .giftRecievePopUp(context));
         // Perform some action
       },
       buttonOkText: Text("Hell Yeah"),
@@ -84,7 +85,7 @@ class NotificationView extends StatefulWidget {
     );
   }
 
-  Widget userAlreadyExistWarning(context){
+  Widget userAlreadyExistWarning(context) {
     return NetworkGiffyDialog(
       image: Image.asset('assets/gifs/alreadyexist.gif'),
       title: Text('Hmm....',
@@ -103,7 +104,7 @@ class NotificationView extends StatefulWidget {
     );
   }
 
-  Widget errorWarning(context){
+  Widget errorWarning(context) {
     return NetworkGiffyDialog(
       image: Image.asset('assets/gifs/errorwarning.gif'),
       title: Text('Sorry...',
@@ -122,31 +123,7 @@ class NotificationView extends StatefulWidget {
     );
   }
 
-  Widget autoLoginFail(context){
-    String gifURL = "https://media.giphy.com/media/3ohhwiWa2C60XsJCa4/source.mp4";
-
-    return NetworkGiffyDialog(
-      image: Image.network(gifURL),
-      title: Text('Oops...',
-          textAlign: TextAlign.center,
-          style: TextStyle(fontSize: 22.0, fontWeight: FontWeight.w600)),
-      description: Text(
-        'Please Log In Again!',
-        textAlign: TextAlign.center,
-      ),
-      entryAnimation: EntryAnimation.TOP,
-      onlyCancelButton: true,
-      onCancelButtonPressed: () {
-        Navigator.pop(context);
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => LoginView()),
-        );
-      },
-    );
-  }
-
-  Widget emailPasswordWarning(context){
+  Widget emailPasswordWarning(context) {
     return NetworkGiffyDialog(
       image: Image.asset('assets/gifs/passwordwarning.gif'),
       title: Text('Oops...',
@@ -165,9 +142,8 @@ class NotificationView extends StatefulWidget {
     );
   }
 
-  Widget successLoginPopUp(context){
-    return (
-      NetworkGiffyDialog(
+  Widget successLoginPopUp(context) {
+    return (NetworkGiffyDialog(
       image: Image.asset('assets/gifs/welcome.gif'),
       title: Text('Welcome back!',
           textAlign: TextAlign.center,
@@ -186,13 +162,11 @@ class NotificationView extends StatefulWidget {
         );
         LoginView().clearTextInput();
       },
-    )
-    );
+    ));
   }
 
-  Widget successSignUpPopUp(context){
-    return (
-      NetworkGiffyDialog(
+  Widget successSignUpPopUp(context) {
+    return (NetworkGiffyDialog(
       image: Image.asset('assets/gifs/welcome.gif'),
       title: Text('CONGRATULATION!',
           textAlign: TextAlign.center,
@@ -211,11 +185,10 @@ class NotificationView extends StatefulWidget {
         );
         SignUpView().clearTextInput();
       },
-    )
-    );
+    ));
   }
 
-  Widget missingName(context){
+  Widget missingName(context) {
     return NetworkGiffyDialog(
       image: Image.asset('assets/gifs/yournameis.gif'),
       title: Text('What\'s your name?',
@@ -251,7 +224,7 @@ class NotificationView extends StatefulWidget {
     );
   }
 
-  Widget logoutFail(context){
+  Widget logoutFail(context) {
     return NetworkGiffyDialog(
       image: Image.asset('assets/gifs/logoutfail.gif'),
       title: Text('Oops...',
