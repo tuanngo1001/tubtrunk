@@ -75,15 +75,11 @@ class AuthenticationController {
       await http.post(GlobalSettings.serverAddress + "rememberMe.php", body: map)
         .then((response) async {
           if (response.statusCode == 200){
-            if(response.body == "Not found"){
-            showDialog(
-              context: context,
-              builder: (_) => new NotificationView().autoLoginFail(context));
+            if(response.body == "Not found") {
+              returnMessage = "FAIL - Not found";
             }
             else if(response.body == "Error"){
-              showDialog(
-                context: context,
-                builder: (_) => new NotificationView().errorWarning(context));
+              returnMessage = "FAIL - Error";
             }
             else {
               final userJson = jsonDecode(response.body).cast<String, dynamic>();
@@ -92,11 +88,9 @@ class AuthenticationController {
             }
           }
           else { //status code == 404
-            showDialog(
-              context: context,
-              builder: (_) => new NotificationView().errorWarning(context));
+            returnMessage = "FAIL - Error 404";
           }
-        });
+      });
     }
     return returnMessage;
   }
