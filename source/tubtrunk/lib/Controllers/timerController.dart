@@ -2,11 +2,7 @@ import 'package:circular_countdown_timer/circular_countdown_timer.dart';
 import 'package:tubtrunk/Utils/globalSettings.dart';
 import 'package:http/http.dart' as http;
 
-import '../Controllers/rewardMissionController.dart';
-
 class TimerController {
-  RewardMissionController _rewardMissionController;
-
   CountDownController _countDownController;
   CountDownController get countDownController => _countDownController;
 
@@ -50,7 +46,7 @@ class TimerController {
     _startDateTime = DateTime.now();
   }
 
-  void saveTimerRecord({int duration: 0, bool completed: false}) async {
+  Future<void> saveTimerRecord({int duration: 0, bool completed: false, http.Client clientParameter}) async {
     var map = new Map<String, String>();
     map["UserID"] = "1";
     map["Date"] = GlobalSettings.dateFormatted.format(_startDateTime);
@@ -58,11 +54,19 @@ class TimerController {
     map["Duration"] = duration.toString();
     map["Completed"] = completed ? "1" : "0";
 
-    var response = await http
-        .post(GlobalSettings.serverAddress + "addTimerRecord.php", body: map);
+    http.Client client;
+    if (clientParameter == null) {
+      client = http.Client();
+    } else {
+      client = clientParameter;
+    }
+
+    var response = await client.post(GlobalSettings.serverAddress + "addTimerRecord.php", body: map);
 
     if (response.statusCode == 200) {
       print("Successfully saved new timer record");
+    } else {
+      throw Exception("Failed to save new timer record");
     }
   }
 
