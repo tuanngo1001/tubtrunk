@@ -1,7 +1,5 @@
 <?php
-require_once('connectDB.php');
-
-$con = $GLOBALS['con'];
+include('connectDB.php');
 
 $userToken = $_POST['UserToken'];
 

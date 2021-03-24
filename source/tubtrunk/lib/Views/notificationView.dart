@@ -122,6 +122,30 @@ class NotificationView extends StatefulWidget {
     );
   }
 
+  Widget autoLoginFail(context){
+    String gifURL = "https://media.giphy.com/media/3ohhwiWa2C60XsJCa4/source.mp4";
+
+    return NetworkGiffyDialog(
+      image: Image.network(gifURL),
+      title: Text('Oops...',
+          textAlign: TextAlign.center,
+          style: TextStyle(fontSize: 22.0, fontWeight: FontWeight.w600)),
+      description: Text(
+        'Please Log In Again!',
+        textAlign: TextAlign.center,
+      ),
+      entryAnimation: EntryAnimation.TOP,
+      onlyCancelButton: true,
+      onCancelButtonPressed: () {
+        Navigator.pop(context);
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => LoginView()),
+        );
+      },
+    );
+  }
+
   Widget emailPasswordWarning(context){
     return NetworkGiffyDialog(
       image: Image.asset('assets/gifs/passwordwarning.gif'),
