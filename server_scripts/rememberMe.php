@@ -4,12 +4,13 @@ require_once('connectDB.php');
 $con = $GLOBALS['con'];
 
 //get the posted user's info
-$userPassword = $_POST['UserPassword'];
 $userEmail = $_POST['UserEmail'];
+$userToken = $_POST['UserToken'];
 
-$getQuery = "SELECT * FROM User WHERE uPassword = '$userPassword' AND uEmail = '$userEmail'" ;
 
-$result = mysqli_query($con, $getQuery);
+$getQuery = "SELECT * FROM User WHERE uToken = '$userToken' AND uEmail = '$userEmail'" ;
+
+$result = mysqli_query($con, $getQuery) or die(mysqli_error($con));
 $token = "";
 
 while ($row = mysqli_fetch_assoc($result)) 
@@ -23,24 +24,9 @@ while ($row = mysqli_fetch_assoc($result))
     $user->uToken = $row['uToken'];
     $user->uMoney = $row['uMoney'];
 
-    if ($row['uToken'] == null || $row['uToken'] == '')
-    {
-        $token = uniqid();
-        $insertQuery = "UPDATE User SET uToken = '$token' WHERE uEmail = '$userEmail'";
-
-        //If successfully insert new token, return it
-        if (mysqli_query($con, $insertQuery))
-        {
-            $user->uToken = $token;
-        }else
-        {
-            die(mysqli_error($con));
-        }
-    } 
     $myUser = json_encode($user);
     die($myUser);
 }
-
 die("Not found");
 ?>
 
