@@ -8,7 +8,7 @@ import 'package:tubtrunk/Models/userModel.dart';
 import 'package:tubtrunk/Utils/globalSettings.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
-import 'authentication_controller_test.mocks.dart';
+import 'controller_test.mocks.dart';
 
 class MockBuildContext extends Mock implements BuildContext {}
 

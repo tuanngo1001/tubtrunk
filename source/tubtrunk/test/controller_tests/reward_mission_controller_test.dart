@@ -8,7 +8,7 @@ import 'package:mockito/mockito.dart';
 import 'package:tubtrunk/Models/userModel.dart';
 import 'package:tubtrunk/Utils/globalSettings.dart';
 import 'package:collection/collection.dart';
-import 'reward_mission_controller_test.mocks.dart';
+import 'controller_test.mocks.dart';
 
 @GenerateMocks([http.Client])
 void main() {
