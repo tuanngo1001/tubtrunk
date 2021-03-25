@@ -4,6 +4,7 @@ import 'package:mockito/mockito.dart';
 import 'package:http/http.dart' as http;
 
 import 'package:tubtrunk/Controllers/timerController.dart';
+import 'package:tubtrunk/Models/userModel.dart';
 import 'package:tubtrunk/Utils/globalSettings.dart';
 import 'timer_controller_test.mocks.dart';
 
@@ -30,8 +31,9 @@ void main() {
       timerController.updateStartDateTime();
       final http.Client client = MockClient();
 
+      GlobalSettings.user = UserModel.forNow(uID: 1);
       var map = new Map<String, String>();
-      map["UserID"] = "1";
+      map["UserID"] = GlobalSettings.user.uID.toString();
       map["Date"] = GlobalSettings.dateFormatted.format(DateTime.now());
       map["Time"] = GlobalSettings.timeFormatted.format(DateTime.now());
       map["Duration"] = "0";
