@@ -17,7 +17,7 @@ class RewardMissionModel {
   int prize;
   List<dynamic> requirements;
   bool inProgress;
-  List<int> progressTrack;
+  List<dynamic> progressTrack;
 
   int completedRequirements;
 
@@ -63,7 +63,7 @@ class RewardMissionModel {
       prize: json['Prize'],
       requirements: json['Requirements'],
       inProgress: json['InProgress'],
-      progressTrack: json['ProgressTrack'].cast<int>()
+      progressTrack: json['ProgressTrack']
     );
   }
 
