@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'loginView.dart';
+import 'package:tubtrunk/Controllers/authenticationController.dart';
+import 'mainView.dart';
 
 class LandingView extends StatelessWidget {
   @override
@@ -41,21 +43,33 @@ class NavigateButtonWidget extends StatelessWidget {
         child: ElevatedButton(
             style: ButtonStyle(
               shape: MaterialStateProperty.all(
-              RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(20.0)),
-            ),
-            backgroundColor: MaterialStateProperty.resolveWith((states) {
+                RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20.0)),
+              ),
+              backgroundColor: MaterialStateProperty.resolveWith((states) {
                 if (states.contains(MaterialState.pressed))
                   return Color(0xffee6969);
                 return Color(0xfff97c7c);
               }),
             ),
-            onPressed: () {
-              Navigator.pop(context);
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => LoginView()),
-              );
+            onPressed: () async {
+              await AuthenticationController.rememberMe(context)
+                  .then((returnMessage) {
+                print(returnMessage);
+                if (returnMessage == "Success") {
+                  Navigator.pop(context);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => MainView()),
+                  );
+                } else {
+                  Navigator.pop(context);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => LoginView()),
+                  );
+                }
+              });
             },
             child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,

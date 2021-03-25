@@ -1,18 +1,18 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:tubtrunk/Utils/globalSettings.dart';
+import 'package:http/http.dart' as http;
 
 class MainController {
   int _selectedIndex;
   int get selectedIndex => _selectedIndex;
-
-  int _money;
-  int get money => _money;
 
   TabController tabController;
 
   // Private constructor
   MainController._internal() {
     _selectedIndex = 0;
-    _money = 3000;
   }
 
   // Singleton
@@ -29,7 +29,16 @@ class MainController {
     tabController.animateTo(index);
   }
 
-  void addMoney(int amount) {
-    _money += amount;
+  void addMoney(int amount) async {
+    GlobalSettings.user.money += amount;
+
+    var map = new Map<String, String>();
+    map["UserID"] = GlobalSettings.user.uID.toString();
+    map["UserMoney"] = GlobalSettings.user.money.toString();
+
+    await http.post(
+        GlobalSettings.serverAddress + "updateUserMoney.php",
+        body: map
+    );
   }
 }

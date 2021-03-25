@@ -1,11 +1,11 @@
 import 'dart:convert';
-
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:tubtrunk/Controllers/rewardMissionController.dart';
 import 'package:tubtrunk/Models/rewardMissionModel.dart';
 import 'package:http/http.dart' as http;
 import 'package:mockito/mockito.dart';
+import 'package:tubtrunk/Models/userModel.dart';
 import 'package:tubtrunk/Utils/globalSettings.dart';
 import 'package:collection/collection.dart';
 
@@ -13,10 +13,12 @@ import 'reward_mission_controller_test.mocks.dart';
 
 @GenerateMocks([http.Client])
 void main() {
+  GlobalSettings.user = UserModel.forNow(uID: 1);
+
   test("List of available missions should be correct after fetching", () async {
     var controller = RewardMissionController.test();
     var map = new Map<String, String>();
-    map["UserID"] = "1";
+    map["UserID"] = GlobalSettings.user.uID.toString();
 
     var jsonSuccessResponse =
         '[{"ID":1,"Title":"Mission 1","Prize":50,"Requirements":[[1, 1],[2, 1],[3, 1],[4, 1]],"InProgress":false,"ProgressTrack":[]},'
@@ -60,7 +62,7 @@ void main() {
   test("List of in-progress and achieved missions should be correct after fetching", () async {
     var controller = RewardMissionController.test();
     var map = new Map<String, String>();
-    map["UserID"] = "1";
+    map["UserID"] = GlobalSettings.user.uID.toString();
 
     var jsonSuccessResponse =
         '[{"ID":1,"Title":"Mission 1","Prize":50,"Requirements":[[1, 1],[2, 1],[3, 1],[4, 1]],"InProgress":true,"ProgressTrack":[0,0,1,0]},'
@@ -109,7 +111,7 @@ void main() {
     );
 
     var map = new Map<String, String>();
-    map["UserID"] = "1";
+    map["UserID"] = GlobalSettings.user.uID.toString();
     map["MissionID"] = mission.id.toString();
     map["InProgress"] = "1";
     map["ProgressTrack"] = mission.progressTrack.toString();

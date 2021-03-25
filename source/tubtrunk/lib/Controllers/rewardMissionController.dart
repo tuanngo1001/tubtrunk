@@ -48,7 +48,7 @@ class RewardMissionController {
     }
 
     var map = new Map<String, String>();
-    map["UserID"] = "1";
+    map["UserID"] = GlobalSettings.user.uID.toString();
 
     var response = await httpClient.post(
         GlobalSettings.serverAddress + "getAvailableMissions.php",
@@ -72,7 +72,7 @@ class RewardMissionController {
     }
 
     var map = new Map<String, String>();
-    map["UserID"] = "1";
+    map["UserID"] = GlobalSettings.user.uID.toString();
 
     var response = await httpClient.post(
         GlobalSettings.serverAddress + "getAcceptedMissions.php",
@@ -98,7 +98,7 @@ class RewardMissionController {
 
   Future<bool> moveMissionToInProgress(RewardMissionModel mission, {http.Client httpClient}) async {
     var map = new Map<String, String>();
-    map["UserID"] = "1";
+    map["UserID"] = GlobalSettings.user.uID.toString();
     map["MissionID"] = mission.id.toString();
 
     if (httpClient == null)
@@ -138,7 +138,7 @@ class RewardMissionController {
     }
 
     var map = new Map<String, String>();
-    map["UserID"] = "1";
+    map["UserID"] = GlobalSettings.user.uID.toString();
     map["MissionID"] = mission.id.toString();
     map["InProgress"] = isCompleted ? "0" : "1";
     map["ProgressTrack"] = mission.progressTrack.toString();
