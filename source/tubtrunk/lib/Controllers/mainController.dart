@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:tubtrunk/Utils/globalSettings.dart';
 import 'package:http/http.dart' as http;
@@ -29,14 +27,21 @@ class MainController {
     tabController.animateTo(index);
   }
 
-  void addMoney(int amount) async {
+  void addMoney(int amount, {http.Client clientParameter}) async {
     GlobalSettings.user.money += amount;
 
     var map = new Map<String, String>();
     map["UserID"] = GlobalSettings.user.uID.toString();
     map["UserMoney"] = GlobalSettings.user.money.toString();
 
-    await http.post(
+    http.Client client;
+    if (clientParameter == null) {
+      client = clientParameter;
+    } else {
+      client = http.Client();
+    }
+
+    await client.post(
         GlobalSettings.serverAddress + "updateUserMoney.php",
         body: map
     );
