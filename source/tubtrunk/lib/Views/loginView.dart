@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'signUpView.dart';
 import '../Controllers/authenticationController.dart';
+import 'notificationView.dart';
 
 class LoginView extends StatefulWidget {
   @override
@@ -113,9 +114,31 @@ class _LoginViewState extends State<LoginView> {
                         return Color(0xfff97c7c);
                       }),
                     ),
-                    onPressed: () {
-                      widget.authenticationController.login(
-                          context, widget.email.text, widget.password.text);
+                    onPressed: () async {
+                      String returnMessage =
+                          await widget.authenticationController.login(
+                              context, widget.email.text, widget.password.text);
+                      if (returnMessage == "Invalid input") {
+                        showDialog(
+                            context: context,
+                            builder: (_) => new NotificationView()
+                                .emailPasswordWarning(context));
+                      } else if (returnMessage == "User not found") {
+                        showDialog(
+                            context: context,
+                            builder: (_) => new NotificationView()
+                                .emailPasswordWarning(context));
+                      } else if (returnMessage == "Error") {
+                        showDialog(
+                            context: context,
+                            builder: (_) =>
+                                new NotificationView().errorWarning(context));
+                      } else if (returnMessage == "Success") {
+                        showDialog(
+                            context: context,
+                            builder: (_) => new NotificationView()
+                                .successLoginPopUp(context));
+                      }
                       widget.clearTextInput();
                     },
                     child: Center(
