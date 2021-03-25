@@ -10,11 +10,7 @@ import 'package:tubtrunk/Views/Icons/challengeIcon.dart';
 class MissionView extends StatefulWidget {
   final RewardMissionController _rewardMissionController = RewardMissionController();
 
-  Function(int) updateProgressCallback;
-
-  MissionView() {
-    updateProgressCallback = _rewardMissionController.updateRequirementProgress;
-  }
+  Function(int) get updateProgressCallback => _rewardMissionController.updateRequirementProgress;
 
   @override
   _MissionViewState createState() => _MissionViewState();
@@ -167,11 +163,13 @@ class _MissionViewState extends State<MissionView> {
 
   List<Widget> _buildAcceptedMissionComponents(
       RewardMissionModel mission, String status) {
-    return <Widget>[_buildMissionDescription(mission.title, mission.toString()),
+    return <Widget>[
+      _buildMissionDescription(mission.title, mission.toString()),
       _buildMissionStatus(mission.prize, status),
       _buildProgressIndicator(
           totalRequirements: mission.requirements.length,
-          finishedRequirements: mission.completedRequirements)
+          finishedRequirements: mission.completedRequirements,
+      )
     ];
   }
 
@@ -209,7 +207,7 @@ class _MissionViewState extends State<MissionView> {
 
   Widget _buildChallengeButton(RewardMissionModel mission) {
     return ElevatedButton.icon(
-      onPressed: () => rewardMissionController.moveMissionToInProgress(mission),
+      onPressed: () => acceptMission(mission),
       style: ElevatedButton.styleFrom(
           primary: Color(0xfff97c7c),
           padding: EdgeInsets.symmetric(horizontal: 2),
@@ -223,6 +221,12 @@ class _MissionViewState extends State<MissionView> {
         ),
       ),
     );
+  }
+
+  void acceptMission(RewardMissionModel mission) async {
+    bool success = await rewardMissionController.moveMissionToInProgress(mission);
+    if (success)
+      rewardMissionController.loadMissions();
   }
 
   Widget _buildMissionStatus(int prize, String status) {
