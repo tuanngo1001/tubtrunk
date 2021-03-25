@@ -45,6 +45,7 @@ class _MissionViewState extends State<MissionView> {
     inProgressMissionsList = rewardMissionController.inProgressMissions;
     achievedMissionsList = rewardMissionController.achievedMissions;
 
+
     return DefaultTabController(
       length: 3,
       initialIndex: 0,
@@ -52,7 +53,6 @@ class _MissionViewState extends State<MissionView> {
         appBar: _buildAppBar(),
         body: _buildBody(),
         floatingActionButton:_shareButton(),
-
       ),
     );
   }

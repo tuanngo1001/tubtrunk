@@ -37,7 +37,7 @@ $getQuery = "SELECT
              ON
                  FirstSet.uID = SecondSet.userProgressID
              ORDER BY
-                 FirstSet.uID";
+                 FirstSet.totalMinutes  DESC";
 
 $result = mysqli_query($con, $getQuery)  or die(mysqli_error($con));
 
