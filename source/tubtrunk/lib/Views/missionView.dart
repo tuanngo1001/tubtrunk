@@ -27,7 +27,6 @@ class _MissionViewState extends State<MissionView> {
   RewardMissionController rewardMissionController;
   final _screenshotController = ScreenshotController();
 
-
   @override
   void initState() {
     super.initState();
@@ -52,9 +51,12 @@ class _MissionViewState extends State<MissionView> {
 
     return DefaultTabController(
       length: 3,
+      initialIndex: 0,
       child: Scaffold(
         appBar: _buildAppBar(),
         body: _buildBody(),
+        floatingActionButton:_shareButton(),
+
       ),
     );
   }
@@ -93,12 +95,15 @@ class _MissionViewState extends State<MissionView> {
   }
 
   Widget _buildTabBarView() {
-    return TabBarView(
-      children: [
-        _buildAvailableMissions(),
-        _buildAcceptedMissions(inProgressMissionsList, "In-Progress"),
-        _buildAcceptedMissions(achievedMissionsList, "Achieved"),
-      ],
+    return Screenshot(
+      controller: _screenshotController,
+      child: TabBarView(
+        children: [
+          _buildAvailableMissions(),
+          _buildAcceptedMissions(inProgressMissionsList, "In-Progress"),
+          _buildAcceptedMissions(achievedMissionsList, "Achieved"),
+        ],
+      ),
     );
   }
 
@@ -109,19 +114,17 @@ class _MissionViewState extends State<MissionView> {
           _buildAvailableMissionComponents(availableMissionsList[index]);
       return _buildMission(missionComponents);
     });
-
     return _buildMissions(missionWidgets);
+    //return Screenshot(controller: _screenshotController,child: _buildMissions(missionWidgets));
   }
 
   Widget _buildAcceptedMissions(List<RewardMissionModel> missionList, String status) {
     List<Widget> missionWidgets = List.generate(missionList.length, (index) {
       List<Widget> missionComponents = _buildAcceptedMissionComponents(missionList[index], status);
-      return Screenshot(controller: _screenshotController,child: _buildMission(missionComponents));
+      return _buildMission(missionComponents);
     });
-
-    //missionWidgets.add(_buildShareButton());
-
     return _buildMissions(missionWidgets);
+    //return Container(child: Screenshot(controller:_screenshotController,child: _buildMissions(missionWidgets)));
   }
 
   Widget _buildMissions(List<Widget> missionComponents) {
@@ -228,7 +231,7 @@ class _MissionViewState extends State<MissionView> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
-          _buildShareButton(),
+          //_buildShareButton(),
           _buildMissionPrize(prize),
           const SizedBox(width: 5),
           Text(
@@ -269,16 +272,14 @@ class _MissionViewState extends State<MissionView> {
     );
   }
 
-  Widget _buildShareButton(){
+  FloatingActionButton _shareButton(){
     return FloatingActionButton(
-        mini: true,
-        onPressed: _takeScreenshot,
-        child: const Icon(Icons.share_outlined,),
+      mini: true,
+      onPressed:() async{
+        final imageFile = await _screenshotController.capture();
+        Share.shareFiles([imageFile.path]);
+      },
+      child: const Icon(Icons.share_outlined,),
     );
-  }
-
-  void _takeScreenshot() async{
-    final imageFile = await _screenshotController.capture();
-    Share.shareFiles([imageFile.path]);
   }
 }
