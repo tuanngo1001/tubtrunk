@@ -3,9 +3,8 @@ import 'package:tubtrunk/Controllers/storeController.dart';
 import 'package:tubtrunk/Models/couponModel.dart';
 
 void main() {
-
-  group('storeController Tests',(){
-    group('Initialization Test',(){
+  group('storeController Tests', () {
+    group('Initialization Test', () {
       test("The storeController instance should be not null", () {
         //Arrange
         //Act
@@ -23,12 +22,13 @@ void main() {
       });
     });
 
-    group('storeController Functions Test',(){
+    group('storeController Functions Test', () {
       test("getCouponList should return a List<CouponModel>", () {
         //Arrange
         StoreController testStoreController = new StoreController();
         //Act
-        Future<List<CouponModel>> testCouponList = testStoreController.getCouponList();
+        Future<List<CouponModel>> testCouponList =
+            testStoreController.getCouponList();
         //Assert
         testCouponList.then((value) {
           expect((testCouponList is List<CouponModel>), true);
@@ -39,15 +39,16 @@ void main() {
         //Arrange
         StoreController testStoreController = new StoreController();
         CouponModel testCoupon = new CouponModel();
-        Future<List<CouponModel>> testCouponList = testStoreController.getCouponList();
+        Future<List<CouponModel>> testCouponList =
+            testStoreController.getCouponList();
         //Act
-        testCouponList.then((value){
+        testCouponList.then((value) {
           int currentSize = (testCouponList as List<CouponModel>).length;
           (testCouponList as List<CouponModel>).add(testCoupon);
-          testStoreController.removeCouponAtIndex(currentSize-1);
+          testStoreController.removeCouponAtIndex(currentSize - 1);
 
-        //Assert
-          expect((testCouponList as List<CouponModel>).length, currentSize-1);
+          //Assert
+          expect((testCouponList as List<CouponModel>).length, currentSize - 1);
         });
       });
 
@@ -55,13 +56,14 @@ void main() {
         //Arrange
         StoreController testStoreController = new StoreController();
         CouponModel testCoupon = new CouponModel();
-        Future<List<CouponModel>> testCouponList = testStoreController.getCouponList();
+        Future<List<CouponModel>> testCouponList =
+            testStoreController.getCouponList();
         //Act
-        testCouponList.then((value){
+        testCouponList.then((value) {
           int currentSize = (testCouponList as List<CouponModel>).length;
           List<CouponModel> beforeList1 = testCouponList as List<CouponModel>;
           (testCouponList as List<CouponModel>).add(testCoupon);
-          testStoreController.removeCouponAtIndex(currentSize+10);
+          testStoreController.removeCouponAtIndex(currentSize + 10);
 
           //Assert
           expect((testCouponList as List<CouponModel>), beforeList1);
@@ -71,7 +73,6 @@ void main() {
           testStoreController.removeCouponAtIndex(-100);
           //Assert
           expect((testCouponList as List<CouponModel>), beforeList2);
-
         });
       });
     });

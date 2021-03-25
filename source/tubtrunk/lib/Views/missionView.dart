@@ -1,17 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:screenshot/screenshot.dart';
+import 'package:share/share.dart';
 import 'package:tubtrunk/Controllers/rewardMissionController.dart';
 import 'package:tubtrunk/Models/rewardMissionModel.dart';
 import 'package:step_progress_indicator/step_progress_indicator.dart';
 import 'package:tubtrunk/Views/Icons/challengeIcon.dart';
 
-class MissionView extends StatefulWidget {
-  final RewardMissionController _rewardMissionController =
-      RewardMissionController();
-  Function(int) updateProgressCallback;
 
-  MissionView() {
-    updateProgressCallback = _rewardMissionController.updateRequirementProgress;
-  }
+class MissionView extends StatefulWidget {
+  final RewardMissionController _rewardMissionController = RewardMissionController();
+
+  Function(int) get updateProgressCallback => _rewardMissionController.updateRequirementProgress;
 
   @override
   _MissionViewState createState() => _MissionViewState();
@@ -22,6 +21,7 @@ class _MissionViewState extends State<MissionView> {
   List<RewardMissionModel> inProgressMissionsList;
   List<RewardMissionModel> achievedMissionsList;
   RewardMissionController rewardMissionController;
+  final _screenshotController = ScreenshotController();
 
   @override
   void initState() {
@@ -48,10 +48,11 @@ class _MissionViewState extends State<MissionView> {
 
     return DefaultTabController(
       length: 3,
+      initialIndex: 0,
       child: Scaffold(
         appBar: _buildAppBar(),
         body: _buildBody(),
-
+        floatingActionButton:_shareButton(),
       ),
     );
   }
@@ -90,12 +91,15 @@ class _MissionViewState extends State<MissionView> {
   }
 
   Widget _buildTabBarView() {
-    return TabBarView(
-      children: [
-        _buildAvailableMissions(),
-        _buildAcceptedMissions(inProgressMissionsList, "In-Progress"),
-        _buildAcceptedMissions(achievedMissionsList, "Achieved"),
-      ],
+    return Screenshot(
+      controller: _screenshotController,
+      child: TabBarView(
+        children: [
+          _buildAvailableMissions(),
+          _buildAcceptedMissions(inProgressMissionsList, "In-Progress"),
+          _buildAcceptedMissions(achievedMissionsList, "Achieved"),
+        ],
+      ),
     );
   }
 
@@ -106,19 +110,17 @@ class _MissionViewState extends State<MissionView> {
           _buildAvailableMissionComponents(availableMissionsList[index]);
       return _buildMission(missionComponents);
     });
-
     return _buildMissions(missionWidgets);
+    //return Screenshot(controller: _screenshotController,child: _buildMissions(missionWidgets));
   }
 
-  Widget _buildAcceptedMissions(
-      List<RewardMissionModel> missionList, String status) {
+  Widget _buildAcceptedMissions(List<RewardMissionModel> missionList, String status) {
     List<Widget> missionWidgets = List.generate(missionList.length, (index) {
-      List<Widget> missionComponents =
-          _buildAcceptedMissionComponents(missionList[index], status);
+      List<Widget> missionComponents = _buildAcceptedMissionComponents(missionList[index], status);
       return _buildMission(missionComponents);
     });
-
     return _buildMissions(missionWidgets);
+    //return Container(child: Screenshot(controller:_screenshotController,child: _buildMissions(missionWidgets)));
   }
 
   Widget _buildMissions(List<Widget> missionComponents) {
@@ -166,7 +168,8 @@ class _MissionViewState extends State<MissionView> {
       _buildMissionStatus(mission.prize, status),
       _buildProgressIndicator(
           totalRequirements: mission.requirements.length,
-          finishedRequirements: mission.completedRequirements)
+          finishedRequirements: mission.completedRequirements,
+      )
     ];
   }
 
@@ -204,7 +207,7 @@ class _MissionViewState extends State<MissionView> {
 
   Widget _buildChallengeButton(RewardMissionModel mission) {
     return ElevatedButton.icon(
-      onPressed: () => rewardMissionController.moveMissionToInProgress(mission),
+      onPressed: () => acceptMission(mission),
       style: ElevatedButton.styleFrom(
           primary: Color(0xfff97c7c),
           padding: EdgeInsets.symmetric(horizontal: 2),
@@ -220,12 +223,19 @@ class _MissionViewState extends State<MissionView> {
     );
   }
 
+  void acceptMission(RewardMissionModel mission) async {
+    bool success = await rewardMissionController.moveMissionToInProgress(mission);
+    if (success)
+      rewardMissionController.loadMissions();
+  }
+
   Widget _buildMissionStatus(int prize, String status) {
     return Expanded(
       flex: 0,
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.end,
+        mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
+          //_buildShareButton(),
           _buildMissionPrize(prize),
           const SizedBox(width: 5),
           Text(
@@ -263,6 +273,17 @@ class _MissionViewState extends State<MissionView> {
                 ),
               ),
       ),
+    );
+  }
+
+  FloatingActionButton _shareButton(){
+    return FloatingActionButton(
+      mini: true,
+      onPressed:() async{
+        final imageFile = await _screenshotController.capture();
+        Share.shareFiles([imageFile.path]);
+      },
+      child: const Icon(Icons.share_outlined,),
     );
   }
 }

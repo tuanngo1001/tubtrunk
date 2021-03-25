@@ -6,8 +6,6 @@ import 'package:tubtrunk/Utils/globalSettings.dart';
 import 'dart:convert';
 
 class RewardMissionController {
-  List<RewardMissionModel> stubDB;
-
   List<RewardMissionModel> _availableMissions;
   List<RewardMissionModel> get availableMissions => _availableMissions;
 
@@ -17,18 +15,24 @@ class RewardMissionController {
   List<RewardMissionModel> _achievedMissions;
   List<RewardMissionModel> get achievedMissions => _achievedMissions;
 
-  int prizeMoney = 0;
-
   Function(VoidCallback) setStateCallback;
+
+  RewardMissionController.test() {
+    initializeMissionList();
+  }
 
   RewardMissionController() {
     loadMissions();
   }
 
-  void loadMissions() async {
+  void initializeMissionList() {
     _availableMissions = [];
     _inProgressMissions = [];
     _achievedMissions = [];
+  }
+
+  void loadMissions() async {
+    initializeMissionList();
 
     await fetchAvailableMissions();
     await fetchAcceptedMissions();
@@ -38,11 +42,15 @@ class RewardMissionController {
     }
   }
 
-  Future fetchAvailableMissions() async {
+  Future<bool> fetchAvailableMissions({http.Client httpClient}) async {
+    if (httpClient == null) {
+      httpClient = http.Client();
+    }
+
     var map = new Map<String, String>();
     map["UserID"] = GlobalSettings.user.uID.toString();
 
-    var response = await http.post(
+    var response = await httpClient.post(
         GlobalSettings.serverAddress + "getAvailableMissions.php",
         body: map
     );
@@ -52,14 +60,21 @@ class RewardMissionController {
           .decode(response.body)
           .map((tr) => RewardMissionModel.fromJson(tr))
       );
+      return true;
     }
+
+    return false;
   }
 
-  Future fetchAcceptedMissions() async {
+  Future<bool> fetchAcceptedMissions({http.Client httpClient}) async {
+    if (httpClient == null) {
+      httpClient = http.Client();
+    }
+
     var map = new Map<String, String>();
     map["UserID"] = GlobalSettings.user.uID.toString();
 
-    var response = await http.post(
+    var response = await httpClient.post(
         GlobalSettings.serverAddress + "getAcceptedMissions.php",
         body: map
     );
@@ -75,33 +90,39 @@ class RewardMissionController {
           _achievedMissions.add(mission);
         }
       }
+      return true;
     }
+
+    return false;
   }
 
-  void moveMissionToInProgress(RewardMissionModel mission) async {
+  Future<bool> moveMissionToInProgress(RewardMissionModel mission, {http.Client httpClient}) async {
     var map = new Map<String, String>();
     map["UserID"] = GlobalSettings.user.uID.toString();
     map["MissionID"] = mission.id.toString();
 
-    await http.post(
+    if (httpClient == null)
+      httpClient = http.Client();
+
+    var response = await httpClient.post(
         GlobalSettings.serverAddress + "acceptMission.php",
         body: map
     );
 
-    loadMissions();
+    return response.statusCode == 200;
   }
 
   void updateRequirementProgress(int minutes) async {
     List<RewardMissionModel> updatedMissions = [];
     for (RewardMissionModel mission in inProgressMissions) {
-      if (mission.addMinutes(minutes)) {
+      if (mission.addDuration(minutes)) {
         updatedMissions.add(mission);
       }
     }
 
     for (RewardMissionModel mission in updatedMissions) {
       bool isCompleted = mission.isCompleted();
-      bool successfulUpdated = await _updateMissionProgress(mission, isCompleted);
+      bool successfulUpdated = await updateMissionProgress(mission, isCompleted);
 
       if (isCompleted && successfulUpdated) {
         MainController().addMoney(mission.prize);
@@ -111,14 +132,18 @@ class RewardMissionController {
     loadMissions();
   }
 
-  Future<bool> _updateMissionProgress(RewardMissionModel mission, bool isCompleted) async {
+  Future<bool> updateMissionProgress(RewardMissionModel mission, bool isCompleted, {http.Client httpClient}) async {
+    if (httpClient == null) {
+      httpClient = http.Client();
+    }
+
     var map = new Map<String, String>();
     map["UserID"] = GlobalSettings.user.uID.toString();
     map["MissionID"] = mission.id.toString();
     map["InProgress"] = isCompleted ? "0" : "1";
     map["ProgressTrack"] = mission.progressTrack.toString();
 
-    var response = await http.post(
+    var response = await httpClient.post(
         GlobalSettings.serverAddress + "updateMissionProgress.php",
         body: map
     );

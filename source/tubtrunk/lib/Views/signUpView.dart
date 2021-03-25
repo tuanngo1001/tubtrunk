@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'loginView.dart';
 import '../Controllers/authenticationController.dart';
+import 'notificationView.dart';
 
 class SignUpView extends StatefulWidget {
   @override
@@ -112,9 +113,50 @@ class _SignUpViewState extends State<SignUpView> {
                         return Color(0xfff97c7c);
                       }),
                     ),
-                    onPressed: () {
-                      widget.authenticationController.signup(
-                          context, widget.email.text, widget.password.text);
+                    onPressed: () async {
+                      String returnMessage =
+                          await widget.authenticationController.signup(
+                              context, widget.email.text, widget.password.text);
+                      if (returnMessage == "Invalid input") {
+                        showDialog(
+                            context: context,
+                            builder: (_) => new NotificationView()
+                                .emailPasswordWarning(context));
+                      } else if (returnMessage == "Invalid user") {
+                        showDialog(
+                            context: context,
+                            builder: (_) => new NotificationView()
+                                .userAlreadyExistWarning(context));
+                      } else if (returnMessage == "Error") {
+                        showDialog(
+                            context: context,
+                            builder: (_) =>
+                                new NotificationView().errorWarning(context));
+                      } else if (returnMessage == "Success") {
+                        String returnMessage2 = await widget
+                            .authenticationController
+                            .loginAfterSignup(context, widget.email.text,
+                                widget.password.text);
+
+                        if (returnMessage2 == "User not found") {
+                          showDialog(
+                              context: context,
+                              builder: (_) => new NotificationView()
+                                  .emailPasswordWarning(context));
+                        } else if (returnMessage2 == "Error") {
+                          showDialog(
+                              context: context,
+                              builder: (_) =>
+                                  new NotificationView().errorWarning(context));
+                        } else if (returnMessage2 == "Success") {
+                          showDialog(
+                              context: context,
+                              builder: (_) => new NotificationView()
+                                  .successSignUpPopUp(context));
+                        }
+                      }
+
+                      widget.clearTextInput();
                     },
                     child: Center(
                       child: Text('SIGN UP',
