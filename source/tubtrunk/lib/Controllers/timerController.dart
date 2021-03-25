@@ -1,4 +1,5 @@
 import 'package:circular_countdown_timer/circular_countdown_timer.dart';
+import 'package:tubtrunk/Controllers/mainController.dart';
 import 'package:tubtrunk/Utils/globalSettings.dart';
 import 'package:http/http.dart' as http;
 
@@ -48,7 +49,7 @@ class TimerController {
 
   Future<void> saveTimerRecord({int duration: 0, bool completed: false, http.Client clientParameter}) async {
     var map = new Map<String, String>();
-    map["UserID"] = "1";
+    map["UserID"] = GlobalSettings.user.uID.toString();
     map["Date"] = GlobalSettings.dateFormatted.format(_startDateTime);
     map["Time"] = GlobalSettings.timeFormatted.format(_startDateTime);
     map["Duration"] = duration.toString();
@@ -91,6 +92,7 @@ class TimerController {
     print('Countdown Completed');
     int minutes = _duration ~/ 60;
     updateProgressCallback(minutes);
+    MainController().addMoney(minutes);
 
     countDownController.restart(duration: _duration);
     countDownController.pause();
