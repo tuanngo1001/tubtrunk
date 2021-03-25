@@ -9,9 +9,12 @@ class LeaderboardController {
     _usersList= [];
   }
 
-  Future<List<LeaderboardModel>> fetchAllUsers() async {
+  Future<List<LeaderboardModel>> fetchAllUsers({http.Client httpClient}) async {
+    if (httpClient == null) {
+      httpClient = http.Client();
+    }
     var url = GlobalSettings.serverAddress + "getAllUsers.php";
-    http.Response response = await http.get(url);
+    var response = await httpClient.get(url);
     if (response.statusCode == 200) {
       var data = jsonDecode(response.body);
       for (var key in data) {
@@ -19,8 +22,8 @@ class LeaderboardController {
       }
       return _usersList;
     } else {
-      print(response.statusCode);
-      throw Exception('Failed to load post');
+      _usersList=[];
+      return _usersList;
     }
   }
 
