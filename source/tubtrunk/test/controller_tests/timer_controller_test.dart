@@ -6,7 +6,7 @@ import 'package:http/http.dart' as http;
 import 'package:tubtrunk/Controllers/timerController.dart';
 import 'package:tubtrunk/Models/userModel.dart';
 import 'package:tubtrunk/Utils/globalSettings.dart';
-import 'timer_controller_test.mocks.dart';
+import 'controller_test.mocks.dart';
 
 @GenerateMocks([http.Client])
 void main() {
