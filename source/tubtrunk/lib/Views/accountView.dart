@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:tubtrunk/Utils/globalSettings.dart';
 import 'displayNameView.dart';
 import 'leaderboardView.dart';
+import 'notificationView.dart';
 import 'package:tubtrunk/Controllers/authenticationController.dart';
 
 class AccountView extends StatefulWidget {
@@ -139,9 +140,18 @@ class _AccountViewState extends State<AccountView> {
                                     return Colors.white;
                                   }),
                                 ),
-                                onPressed: () {
-                                  widget.authenticationController
+                                onPressed: () async {
+                                  String returnMessage = await widget
+                                      .authenticationController
                                       .logout(context);
+                                  if (returnMessage == "Error") {
+                                    showDialog(
+                                        context: context,
+                                        builder: (_) => new NotificationView()
+                                            .logoutFail(context));
+                                  } else if (returnMessage == "Success") {
+                                    NotificationView().logoutSuccess(context);
+                                  }
                                 },
                                 child: Text('Log out',
                                     style: TextStyle(
