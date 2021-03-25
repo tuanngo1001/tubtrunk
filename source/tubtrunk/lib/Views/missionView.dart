@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:screenshot/screenshot.dart';
+import 'package:share/share.dart';
 import 'package:tubtrunk/Controllers/rewardMissionController.dart';
 import 'package:tubtrunk/Models/rewardMissionModel.dart';
 import 'package:step_progress_indicator/step_progress_indicator.dart';
 import 'package:tubtrunk/Views/Icons/challengeIcon.dart';
 
+
 class MissionView extends StatefulWidget {
-  final RewardMissionController _rewardMissionController =
-      RewardMissionController();
+  final RewardMissionController _rewardMissionController = RewardMissionController();
+
   Function(int) updateProgressCallback;
 
   MissionView() {
@@ -22,6 +25,8 @@ class _MissionViewState extends State<MissionView> {
   List<RewardMissionModel> inProgressMissionsList;
   List<RewardMissionModel> achievedMissionsList;
   RewardMissionController rewardMissionController;
+  final _screenshotController = ScreenshotController();
+
 
   @override
   void initState() {
@@ -108,13 +113,13 @@ class _MissionViewState extends State<MissionView> {
     return _buildMissions(missionWidgets);
   }
 
-  Widget _buildAcceptedMissions(
-      List<RewardMissionModel> missionList, String status) {
+  Widget _buildAcceptedMissions(List<RewardMissionModel> missionList, String status) {
     List<Widget> missionWidgets = List.generate(missionList.length, (index) {
-      List<Widget> missionComponents =
-          _buildAcceptedMissionComponents(missionList[index], status);
-      return _buildMission(missionComponents);
+      List<Widget> missionComponents = _buildAcceptedMissionComponents(missionList[index], status);
+      return Screenshot(controller: _screenshotController,child: _buildMission(missionComponents));
     });
+
+    //missionWidgets.add(_buildShareButton());
 
     return _buildMissions(missionWidgets);
   }
@@ -159,8 +164,7 @@ class _MissionViewState extends State<MissionView> {
 
   List<Widget> _buildAcceptedMissionComponents(
       RewardMissionModel mission, String status) {
-    return <Widget>[
-      _buildMissionDescription(mission.title, mission.toString()),
+    return <Widget>[_buildMissionDescription(mission.title, mission.toString()),
       _buildMissionStatus(mission.prize, status),
       _buildProgressIndicator(
           totalRequirements: mission.requirements.length,
@@ -222,8 +226,9 @@ class _MissionViewState extends State<MissionView> {
     return Expanded(
       flex: 0,
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.end,
+        mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
+          _buildShareButton(),
           _buildMissionPrize(prize),
           const SizedBox(width: 5),
           Text(
@@ -262,5 +267,18 @@ class _MissionViewState extends State<MissionView> {
               ),
       ),
     );
+  }
+
+  Widget _buildShareButton(){
+    return FloatingActionButton(
+        mini: true,
+        onPressed: _takeScreenshot,
+        child: const Icon(Icons.share_outlined,),
+    );
+  }
+
+  void _takeScreenshot() async{
+    final imageFile = await _screenshotController.capture();
+    Share.shareFiles([imageFile.path]);
   }
 }
