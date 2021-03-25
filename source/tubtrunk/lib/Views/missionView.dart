@@ -45,11 +45,13 @@ class _MissionViewState extends State<MissionView> {
     inProgressMissionsList = rewardMissionController.inProgressMissions;
     achievedMissionsList = rewardMissionController.achievedMissions;
 
+
     return DefaultTabController(
       length: 3,
       child: Scaffold(
         appBar: _buildAppBar(),
         body: _buildBody(),
+
       ),
     );
   }

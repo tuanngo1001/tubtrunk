@@ -9,14 +9,6 @@ class LeaderboardController {
     _usersList= [];
   }
 
-  // static LeaderboardController _instance;
-  // factory LeaderboardController() {
-  //   if (_instance == null) {
-  //     _instance = LeaderboardController._internal();
-  //   }
-  //   return _instance;
-  // }
-
   Future<List<LeaderboardModel>> fetchAllUsers() async {
     var url = GlobalSettings.serverAddress + "getAllUsers.php";
     http.Response response = await http.get(url);
