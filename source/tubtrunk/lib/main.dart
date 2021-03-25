@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import './Views/firstScreen.dart';
+import './Views/landingView.dart';
 
 void main() {
   runApp(MyApp());
@@ -12,10 +12,11 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Tubtrunk App',
       theme: ThemeData(
-        primarySwatch: Colors.teal,
+        primarySwatch: Colors.indigo,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: FirstScreen(),
+      home: LandingView(),
+      debugShowCheckedModeBanner: false,
     );
   }
 }

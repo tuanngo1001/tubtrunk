@@ -1,7 +1,5 @@
 <?php
-require_once('connectDB.php');
-
-$con = $GLOBALS['con'];
+include('connectDB.php');
 
 $getQuery = "SELECT * FROM Coupon";
 
@@ -16,7 +14,7 @@ while ($row = mysqli_fetch_assoc($result)) {
     $rowData->Store = $row['store'];
     $rowData->Discount = $row['discount'];
     $rowData->Description = $row['description'];
-    $rowData->ExpireDate = $row['expire date'];
+    $rowData->ExpireDate = $row['cExpiryDate'];
 
     array_push($data, $rowData);
 }

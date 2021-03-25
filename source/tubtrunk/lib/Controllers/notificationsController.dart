@@ -79,7 +79,6 @@ class NotificationsController {
       "Push Notification",
       importance: Importance.high,
       priority: Priority.high,
-      timeoutAfter: 5000,
       styleInformation: DefaultStyleInformation(true, true),
     );
     var iosDetails =
@@ -94,38 +93,6 @@ class NotificationsController {
       payload: '',
     );
   }
-
-  // Future scheduleNotification() async {
-  //   tz.initializeTimeZones();
-  //   String timeZoneName = 'CST';
-  //   tz.setLocalLocation(tz.getLocation(timeZoneName));
-  //   var scheduleNotificationDateTime =
-  //       tz.TZDateTime.now(tz.local).add(const Duration(seconds: 5));
-  //   var androidDetails = new AndroidNotificationDetails(
-  //     "Timer End",
-  //     "Local Notification 2",
-  //     "Timer done!",
-  //     // sound: RawResourceAndroidNotificationSound(''),
-  //     importance: Importance.high,
-  //     priority: Priority.high,
-  //     timeoutAfter: 5000,
-  //     styleInformation: DefaultStyleInformation(true, true),
-  //   );
-  //   var iosDetails = new IOSNotificationDetails(
-  //     // sound: '.aiff',
-  //     threadIdentifier: 'timer_done',
-  //   );
-  //   var generalNotificationDetails =
-  //       new NotificationDetails(android: androidDetails, iOS: iosDetails);
-  //   await localNotification.zonedSchedule(
-  //     0,
-  //     "Time's Up!!!",
-  //     "Your focus period is over, take a rest!",
-  //     scheduleNotificationDateTime,
-  //     generalNotificationDetails,
-  //     payload: 'Payload',
-  //   );
-  // }
 
   Future<void> cancelNotification() async {
     await localNotification.cancel(0);
