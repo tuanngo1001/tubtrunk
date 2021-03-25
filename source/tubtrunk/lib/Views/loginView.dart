@@ -148,38 +148,7 @@ class _LoginViewState extends State<LoginView> {
                               fontWeight: FontWeight.bold,
                               fontFamily: 'Montserrat')),
                     ))),
-            SizedBox(height: 20.0),
-            // Container(
-            //     height: 40.0,
-            //     child: OutlinedButton(
-            //         style: ButtonStyle(
-            //           shape: MaterialStateProperty.all(
-            //             RoundedRectangleBorder(
-            //                 borderRadius: BorderRadius.circular(20.0)),
-            //           ),
-            //           backgroundColor:
-            //               MaterialStateProperty.resolveWith((states) {
-            //             return Colors.transparent;
-            //           }),
-            //         ),
-            //         onPressed: () {},
-            //         child: Row(
-            //             mainAxisAlignment: MainAxisAlignment.center,
-            //             children: <Widget>[
-            //               Center(
-            //                   child: ImageIcon(
-            //                 AssetImage('assets/google_logo.png'),
-            //                 color: Colors.black,
-            //               )),
-            //               SizedBox(width: 5.0),
-            //               Center(
-            //                 child: Text('Log in with Google',
-            //                     style: TextStyle(
-            //                         fontWeight: FontWeight.bold,
-            //                         fontFamily: 'Montserrat',
-            //                         color: Colors.black)),
-            //               )
-            //             ]))),
+            SizedBox(height: 20.0)
           ],
         ));
   }
