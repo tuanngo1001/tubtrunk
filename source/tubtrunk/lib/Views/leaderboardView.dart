@@ -164,8 +164,7 @@ class _LeaderboardViewState extends State<LeaderboardView> {
   }
 
   Future<ListView> _getDataAndReturnListView() async {
-    List<LeaderboardModel> usersList =
-        await widget._leaderboardController.fetchAllUsers();
+    List<LeaderboardModel> usersList = await widget._leaderboardController.fetchAllUsers();
     return ListView.builder(
         padding: const EdgeInsets.all(2),
         itemCount: usersList.length,
