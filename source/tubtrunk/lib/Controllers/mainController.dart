@@ -36,9 +36,9 @@ class MainController {
 
     http.Client client;
     if (clientParameter == null) {
-      client = clientParameter;
-    } else {
       client = http.Client();
+    } else {
+      client = clientParameter;
     }
 
     await client.post(
