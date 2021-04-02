@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:tubtrunk/Controllers/timerController.dart';
 import 'package:circular_countdown_timer/circular_countdown_timer.dart';
 import 'package:flutter_duration_picker/flutter_duration_picker.dart';
+import 'package:is_lock_screen/is_lock_screen.dart';
 
 import '../Controllers/notificationsController.dart';
 import './notificationView.dart';
@@ -38,20 +39,18 @@ class _TimerViewState extends State<TimerView> with WidgetsBindingObserver, Auto
   bool get wantKeepAlive => true;
 
   @override
-  void didChangeAppLifecycleState(AppLifecycleState state) {
+  void didChangeAppLifecycleState(AppLifecycleState state) async {
     super.didChangeAppLifecycleState(state);
 
-    if (state == AppLifecycleState.inactive ||
-        state == AppLifecycleState.detached) return;
-
-    final isBackground = state == AppLifecycleState.paused;
-    if (isBackground && !_timerController.stopped) {
-      notificationsController.setNotification("Warning! You've left Tubtrunk!",
-          "You have been assessed a failed session.");
-      notificationsController.showNotification();
-      setState(() {
-        _timerController.reset();
-      });
+    if (state == AppLifecycleState.inactive) {
+      if (!await isLockScreen() && !_timerController.stopped) {
+        notificationsController.setNotification("Warning! You've left Tubtrunk!",
+            "You have been assessed a failed session.");
+        notificationsController.showNotification();
+        setState(() {
+          _timerController.reset();
+        });
+      }
     }
   }
 
