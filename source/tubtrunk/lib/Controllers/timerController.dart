@@ -27,7 +27,7 @@ class TimerController {
   // Private constructor
   TimerController._internal() {
     _countDownController = CountDownController();
-    _duration = 5;
+    _duration = 60;
     _stopped = true;
     _resumable = false;
     _finished = false;
