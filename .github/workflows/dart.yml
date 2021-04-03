@@ -13,7 +13,7 @@ jobs:
       - uses: actions/checkout@v2 # (1)
       - name: Setup Flutter # (2)
         run: |
-          git clone https://github.com/flutter/flutter/tree/4d7946a68d26794349189cf21b3f68cc6fe61dcb
+          git clone https://github.com/flutter/flutter.git --branch 2.0.3
           echo "$GITHUB_WORKSPACE/flutter/bin" >> $GITHUB_PATH
       - name: Run Checks # (3)
         run: |
