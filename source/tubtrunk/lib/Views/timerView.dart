@@ -42,8 +42,14 @@ class _TimerViewState extends State<TimerView> with WidgetsBindingObserver, Auto
   void didChangeAppLifecycleState(AppLifecycleState state) async {
     super.didChangeAppLifecycleState(state);
 
+    if (_timerController.stopped)
+      return;
+
     if (state == AppLifecycleState.inactive) {
-      if (!await isLockScreen() && !_timerController.stopped) {
+      if (await isLockScreen()) {
+        _timerController.startLockscreenTimer();
+      }
+      else {
         notificationsController.setNotification("Warning! You've left Tubtrunk!",
             "You have been assessed a failed session.");
         notificationsController.showNotification();
@@ -51,6 +57,9 @@ class _TimerViewState extends State<TimerView> with WidgetsBindingObserver, Auto
           _timerController.reset();
         });
       }
+    }
+    else if (state == AppLifecycleState.resumed) {
+      _timerController.stopLockscreenTimer();
     }
   }
 
@@ -180,9 +189,6 @@ class _TimerViewState extends State<TimerView> with WidgetsBindingObserver, Auto
                     builder: (context) =>
                         NotificationView().moneyReceivePopup(context)),
               );
-              notificationsController.setNotification("Time's Up!!!",
-                  "Your focus time period is over, click to receive your rewards!");
-              notificationsController.showNotification();
             },
           ),
         ),
