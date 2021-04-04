@@ -7,7 +7,6 @@ import 'package:flutter/rendering.dart';
 import 'package:tubtrunk/Models/timerRecordModel.dart';
 import 'package:share/share.dart';
 
-
 class StatisticView extends StatefulWidget {
   @override
   _StatisticViewState createState() => _StatisticViewState();
@@ -64,7 +63,7 @@ class _StatisticViewState extends State<StatisticView> {
 
   Future<TabBarView> _getDataAndReturnTabBarView() async {
     int totalTimes = await _statisticController.fetchTimerRecord();
-    double averageTimes =  double.parse((_statisticController.getAverageFocusTimes()).toStringAsFixed(2));
+    double averageTimes = double.parse((_statisticController.getAverageFocusTimes()).toStringAsFixed(2));
     List<TimerRecordModel> recordsList = _statisticController.getTimerRecords();
     return TabBarView(
       children: [
@@ -103,41 +102,50 @@ class _StatisticViewState extends State<StatisticView> {
               text: 'Failed',
               isSquare: false,
             ),
-
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Icon(
                   Icons.share_outlined,
                 ),
-                TextButton(onPressed: _takeScreenshot, child: Text("Share", style:TextStyle(fontSize: 25)))
+                TextButton(
+                    onPressed: _takeScreenshot,
+                    child: Text("Share", style: TextStyle(fontSize: 25)))
               ],
             )
           ],
         ),
-
         ListView.builder(
-          padding: const EdgeInsets.all(8),
-          itemCount: totalTimes,
-          itemBuilder: (BuildContext context, int index) {
+            padding: const EdgeInsets.all(8),
+            itemCount: totalTimes,
+            itemBuilder: (BuildContext context, int index) {
               return Container(
-                  child: Card(
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: <Widget>[
-                         ListTile(
-                          leading: Icon(Icons.date_range_outlined),
-                          title: Text('Date: ${recordsList[totalTimes-index-1].date}      Time: ${recordsList[totalTimes-index-1].time}'),
-                          subtitle: Text('Duration: ${recordsList[totalTimes-index-1].duration} min(s)\nStatus: ${recordsList[totalTimes-index-1].isCompleted()} '),
-                        ),
-                      ],
-                    ),
+                child: Card(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: <Widget>[
+                      ListTile(
+                        leading: Icon(Icons.date_range_outlined),
+                        title: Text(
+                            'Date: ${recordsList[totalTimes - index - 1].date}      Time: ${recordsList[totalTimes - index - 1].time}'),
+                        subtitle: Text(
+                            'Duration: ${recordsList[totalTimes - index - 1].duration} min(s)\nStatus: ${recordsList[totalTimes - index - 1].isCompleted()} '),
+                      ),
+                    ],
                   ),
+                ),
               );
-          }
-    )
+            })
       ],
     );
+  }
+
+  double displayPieChartValue(int times) {
+    if (times == 0) {
+      return 1.0;
+    } else {
+      return times.toDouble();
+    }
   }
 
   List<PieChartSectionData> showingSections() {
@@ -153,7 +161,7 @@ class _StatisticViewState extends State<StatisticView> {
         case 0:
           return PieChartSectionData(
             color: const Color(0xff0293ee),
-            value: succeedTimes.toDouble(),
+            value: displayPieChartValue(succeedTimes),
             title: '$succeedPercentage% ($succeedTimes)',
             radius: radius,
             titleStyle: TextStyle(
@@ -164,7 +172,7 @@ class _StatisticViewState extends State<StatisticView> {
         case 1:
           return PieChartSectionData(
             color: const Color(0xfff8b250),
-            value: failedTimes.toDouble(),
+            value: displayPieChartValue(failedTimes),
             title: '$failedPercentage% ($failedTimes)',
             radius: radius,
             titleStyle: TextStyle(
@@ -178,7 +186,7 @@ class _StatisticViewState extends State<StatisticView> {
     });
   }
 
-  void _takeScreenshot() async{
+  void _takeScreenshot() async {
     final imageFile = await _screenshotController.capture();
     Share.shareFiles([imageFile.path]);
   }
