@@ -58,30 +58,28 @@ class _AccountViewState extends State<AccountView> {
                           child: Padding(
                             padding: const EdgeInsets.symmetric(
                                 horizontal: 20.0, vertical: 22.0),
-                            child: Expanded(
-                              child: Column(
-                                children: <Widget>[
-                                  Text(
-                                    "Email",
-                                    style: TextStyle(
-                                      color: Color(0xfff97c7c),
+                            child: Column(
+                              children: <Widget>[
+                                Text(
+                                  "Email",
+                                  style: TextStyle(
+                                    color: Color(0xfff97c7c),
+                                    fontFamily: 'Montserrat',
+                                    fontSize: 22.0,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: 5.0,
+                                ),
+                                Text(
+                                  GlobalSettings.user.email,
+                                  style: TextStyle(
                                       fontFamily: 'Montserrat',
-                                      fontSize: 22.0,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    height: 5.0,
-                                  ),
-                                  Text(
-                                    GlobalSettings.user.email,
-                                    style: TextStyle(
-                                        fontFamily: 'Montserrat',
-                                        fontSize: 20.0,
-                                        color: Colors.pinkAccent),
-                                  )
-                                ],
-                              ),
+                                      fontSize: 20.0,
+                                      color: Colors.pinkAccent),
+                                )
+                              ],
                             ),
                           )),
                       SizedBox(
@@ -198,7 +196,7 @@ class _AccountViewState extends State<AccountView> {
             ),
           ),
           SizedBox(
-            height: 50.0,
+            height: 45.0,
           ),
         ],
       ),
