@@ -41,6 +41,7 @@ class NavigateButtonWidget extends StatelessWidget {
         height: 60.0,
         width: 270.0,
         child: ElevatedButton(
+            key: Key('getStartedBtn'),
             style: ButtonStyle(
               shape: MaterialStateProperty.all(
                 RoundedRectangleBorder(

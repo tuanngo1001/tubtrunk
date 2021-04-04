@@ -62,6 +62,7 @@ class _LoginViewState extends State<LoginView> {
         child: Column(
           children: <Widget>[
             TextField(
+              key: Key("lvEmailTextField"),
               decoration: InputDecoration(
                   labelText: "EMAIL",
                   labelStyle: TextStyle(
@@ -74,6 +75,7 @@ class _LoginViewState extends State<LoginView> {
             ),
             SizedBox(height: 20.0),
             TextField(
+            key: Key("lvPwdTextField"),
               decoration: InputDecoration(
                   labelText: "PASSWORD",
                   labelStyle: TextStyle(
@@ -102,6 +104,7 @@ class _LoginViewState extends State<LoginView> {
             Container(
                 height: 40.0,
                 child: ElevatedButton(
+                    key: Key("lvLoginBtn"),
                     style: ButtonStyle(
                       shape: MaterialStateProperty.all(
                         RoundedRectangleBorder(
