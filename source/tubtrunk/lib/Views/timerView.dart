@@ -69,8 +69,9 @@ class _TimerViewState extends State<TimerView> with WidgetsBindingObserver, Auto
       );
   }
 
-  _button({String title, VoidCallback onPressed}) {
+  _button({String title, VoidCallback onPressed, String key}) {
     return Expanded(
+      key: Key(key),
       child: ElevatedButton(
         child: Text(
           title,
@@ -196,6 +197,7 @@ class _TimerViewState extends State<TimerView> with WidgetsBindingObserver, Auto
           ),
           _button(
             title: _timerController.stopStartButtonText,
+            key: "tvStartBtn",
             onPressed: () {
               setState(() {
                 _timerController.stopStart();
@@ -207,6 +209,7 @@ class _TimerViewState extends State<TimerView> with WidgetsBindingObserver, Auto
           ),
           _button(
             title: "Reset",
+            key: "tvResetBtn",
             onPressed: () async {
               if (_timerController.resumable) {
                 print("Asking for confirmation");
