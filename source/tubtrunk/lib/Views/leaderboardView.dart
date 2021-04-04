@@ -11,7 +11,8 @@ class LeaderboardView extends StatefulWidget {
 }
 
 class _LeaderboardViewState extends State<LeaderboardView> {
-  Future<void> _showMyDialog(int index, List<LeaderboardModel> usersList) async {
+  Future<void> _showMyDialog(
+      int index, List<LeaderboardModel> usersList) async {
     return showDialog<void>(
       context: context,
       barrierDismissible: true,
@@ -20,8 +21,7 @@ class _LeaderboardViewState extends State<LeaderboardView> {
           backgroundColor: Colors.orange.shade300,
           insetPadding: EdgeInsets.all(0),
           title: Text("${usersList[index].name}'s Achievement",
-            key: Key("${index+1}st userAchievement")
-          ),
+              key: Key("${index + 1}st userAchievement")),
           content: SingleChildScrollView(
             child:
                 ListBody(children: _generateUserAchievements(index, usersList)),
@@ -165,7 +165,8 @@ class _LeaderboardViewState extends State<LeaderboardView> {
   }
 
   Future<ListView> _getDataAndReturnListView() async {
-    List<LeaderboardModel> usersList = await widget._leaderboardController.fetchAllUsers();
+    List<LeaderboardModel> usersList =
+        await widget._leaderboardController.fetchAllUsers();
     return ListView.builder(
         key: Key("userList"),
         padding: const EdgeInsets.all(2),
@@ -176,7 +177,7 @@ class _LeaderboardViewState extends State<LeaderboardView> {
             child: GestureDetector(
               onTap: () => _showMyDialog(index, usersList),
               child: Card(
-                key: Key("${index+1}st cardButton"),
+                key: Key("${index + 1}st cardButton"),
                 color: Colors.cyan.shade50,
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
@@ -186,10 +187,8 @@ class _LeaderboardViewState extends State<LeaderboardView> {
                       leading: _highlightTopThreeBadges(index),
                       title: Transform.translate(
                         offset: Offset(-25, 0),
-                        child: Text(
-                          '${index + 1}',
-                          style: TextStyle(fontSize: 20.0)
-                        ),
+                        child: Text('${index + 1}',
+                            style: TextStyle(fontSize: 20.0)),
                       ),
                     )),
                     Expanded(
@@ -201,14 +200,13 @@ class _LeaderboardViewState extends State<LeaderboardView> {
                           fontFamily: 'Montserrat',
                           fontWeight: FontWeight.bold,
                         ),
-                        key: Key('${index+1}th username'),
+                        key: Key('${index + 1}th username'),
                       ),
                     )),
                     Expanded(
                         child: ListTile(
                       trailing: Text('${usersList[index].totalFocusTime}',
-                          style: TextStyle(fontSize: 18)
-                      ),
+                          style: TextStyle(fontSize: 18)),
                       title: Transform.translate(
                         offset: Offset(15, 0),
                         child: Icon(
