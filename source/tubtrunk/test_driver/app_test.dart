@@ -4,5 +4,5 @@ import 'package:test/test.dart';
 import 'reward_system_test.dart' as RewardSystemTest;
 
 void main() {
-  RewardSystemTest.user_story_1();
+  RewardSystemTest.userStory1();
 }
