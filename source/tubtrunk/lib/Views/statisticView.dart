@@ -165,14 +165,14 @@ class _StatisticViewState extends State<StatisticView> {
     int failedTimes = _statisticController.getFailedFocusTimes();
 
     return List.generate(2, (i) {
-      final double fontSize = 25;
+      final double fontSize = 20;
       final double radius = 100;
       switch (i) {
         case 0:
           return PieChartSectionData(
             color: const Color(0xff0293ee),
             value: displayPieChartValue(succeedTimes),
-            title: Text('$succeedPercentage% ($succeedTimes)', key: Key("stvSucceedProportion")).toString(),
+            title: Text('$succeedPercentage% ($succeedTimes)', key: Key("stvSucceedProportion")).data,
             radius: radius,
             titleStyle: TextStyle(
                 fontSize: fontSize,
@@ -183,7 +183,7 @@ class _StatisticViewState extends State<StatisticView> {
           return PieChartSectionData(
             color: const Color(0xfff8b250),
             value: displayPieChartValue(failedTimes),
-            title: Text('$failedPercentage% ($failedTimes)', key: Key("stvFailedProportion")).toString(),
+            title: Text('$failedPercentage% ($failedTimes)', key: Key("stvFailedProportion")).data,
             radius: radius,
             titleStyle: TextStyle(
                 fontSize: fontSize,

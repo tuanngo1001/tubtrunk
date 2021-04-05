@@ -67,7 +67,7 @@ class _LeaderboardViewState extends State<LeaderboardView> {
               ),
             ),
             TextSpan(
-                text: Text("${usersList[index].totalPrize}", key: Key("${index+1}st lbvPrize")).toString(),
+                text: Text("${usersList[index].totalPrize}", key: Key("${index+1}st lbvPrize")).data,
                 style: TextStyle(color: Colors.black87, fontSize: 17.0)),
           ],
         ),
@@ -91,7 +91,7 @@ class _LeaderboardViewState extends State<LeaderboardView> {
               ),
             ),
             TextSpan(
-                text: Text('${usersList[index].prize}', key: Key("${index+1}st lbvMoneyAmount")).toString(),
+                text: Text('${usersList[index].prize}', key: Key("${index+1}st lbvMoneyAmount")).data,
                 style: TextStyle(color: Colors.black87, fontSize: 17.0))
           ],
         ),

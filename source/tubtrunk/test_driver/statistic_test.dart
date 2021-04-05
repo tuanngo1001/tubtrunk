@@ -3,7 +3,7 @@ import 'package:test/test.dart';
 import 'dart:io';
 
 void main() {
-  group('Statistic acceptance tests', () {
+  group('Statistic acceptance tests.', () {
     FlutterDriver driver;
     // Connect to the Flutter driver before running any tests.
     setUpAll(() async {
@@ -19,21 +19,20 @@ void main() {
 
     test('Check if all the summary shows up', () async {
       await driver.clearTimeline();
-
       final statTabItem = find.byValueKey("stvStatBarItem");
       await driver.tap(statTabItem);
-      sleep(Duration(seconds: 2));
+      sleep(Duration(seconds: 3));
       final statSummary = find.byValueKey("stvSummary");
       final succeedIndicator = find.text("Succeed");
       final failedIndicator = find.text("Failed");
       final succeedProportion = find.byValueKey("stvSucceedProportion");
       final failedProportion = find.byValueKey("stvFailedProportion");
 
-      expect(await driver.getText(statSummary), isNotEmpty);
+      assert(await driver.getText(statSummary) != null);
       expect(await driver.getText(succeedIndicator), "Succeed");
       expect(await driver.getText(failedIndicator), "Failed");
-      expect(await driver.getText(succeedProportion), isNotEmpty);
-      expect(await driver.getText(failedProportion), isNotEmpty);
+      assert(await driver.getText(succeedProportion) != null);
+      assert(await driver.getText(failedProportion) != null);
     }, timeout: Timeout.none);
 
     test('Check if there is a records list when navigating to history tab', () async {
@@ -45,9 +44,9 @@ void main() {
       final recordsList = find.byValueKey('stvTimeRecordsList');
       final recordTitle = find.byValueKey('10st stvRecordTitle');
       await driver.scrollUntilVisible(recordsList, recordTitle);
-      sleep(Duration(seconds: 1));
+      sleep(Duration(seconds: 2));
 
-      expect(await driver.getText(recordTitle), isNotEmpty);
+      assert(await driver.getText(recordTitle) != null);
     }, timeout: Timeout.none);
   });
 }

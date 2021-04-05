@@ -3,7 +3,7 @@ import 'package:test/test.dart';
 import 'dart:io';
 
 void main() {
-  group('Leaderboard acceptance tests', () {
+  group('Leaderboard acceptance tests.', () {
     FlutterDriver driver;
     // Connect to the Flutter driver before running any tests.
     setUpAll(() async {
@@ -54,11 +54,11 @@ void main() {
       sleep(Duration(seconds: 2));
 
       expect(await driver.getText(userAchievementDialog), "Anh Trung's Achievement");
-      expect(await driver.getText(averageFocusTime), isNotEmpty);
-      expect(await driver.getText(totalTime), isNotEmpty);
-      expect(await driver.getText(successSessions), isNotEmpty);
-      expect(await driver.getText(missionsPrize), isNotEmpty);
-      expect(await driver.getText(moneyAmount), isNotEmpty);
+      assert(await driver.getText(averageFocusTime) != null);
+      assert(await driver.getText(totalTime) != null);
+      assert(await driver.getText(successSessions) != null);
+      assert(await driver.getText(missionsPrize) != null);
+      assert(await driver.getText(moneyAmount) != null);
     }, timeout: Timeout.none);
   });
 }

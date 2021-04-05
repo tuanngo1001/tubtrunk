@@ -6,6 +6,7 @@ import 'leaderboard_test.dart' as LeaderboardTest;
 import 'statistic_test.dart' as StatisticsTest;
 void main() {
   RewardSystemTest.user_story_1();
-  LeaderboardTest.main();
   StatisticsTest.main();
+  LeaderboardTest.main();
+
 }
