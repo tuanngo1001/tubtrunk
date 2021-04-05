@@ -13,7 +13,7 @@ void main() {
   group('TimerController tests', () {
     test('Testing initialization of timer controller', () {
       final timerController = TimerController();
-      expect(timerController.duration, 5); // default duration set in controller class
+      expect(timerController.duration, 60); // default duration set in controller class
       expect(timerController.stopped, true);
       expect(timerController.resumable, false);
       expect(timerController.finished, false);

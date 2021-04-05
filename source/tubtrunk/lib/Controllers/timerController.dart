@@ -1,5 +1,8 @@
+import 'dart:async';
+
 import 'package:circular_countdown_timer/circular_countdown_timer.dart';
 import 'package:tubtrunk/Controllers/mainController.dart';
+import 'package:tubtrunk/Controllers/notificationsController.dart';
 import 'package:tubtrunk/Utils/globalSettings.dart';
 import 'package:http/http.dart' as http;
 
@@ -23,6 +26,7 @@ class TimerController {
   String get stopStartButtonText => _stopStartButtonText;
 
   DateTime _startDateTime;
+  Timer _lockScreenTimer;
 
   // Private constructor
   TimerController._internal() {
@@ -128,5 +132,36 @@ class TimerController {
     _resumable = false;
     _finished = false;
     _stopStartButtonText = "Start";
+  }
+
+  void startLockscreenTimer() {
+    Duration remainingDuration = _parseDuration(_countDownController.getTime());
+    _lockScreenTimer = Timer(remainingDuration, () {
+      notificationsController.setNotification(
+          "Time's Up!!!",
+          "Your focus time period is over, click to receive your rewards!"
+      );
+      notificationsController.showNotification();
+    });
+  }
+
+  Duration _parseDuration(String s) {
+    int hours = 0;
+    int minutes = 0;
+    int seconds;
+    List<String> parts = s.split(':');
+    if (parts.length > 2) {
+      hours = int.parse(parts[parts.length - 3]);
+    }
+    if (parts.length > 1) {
+      minutes = int.parse(parts[parts.length - 2]);
+    }
+    seconds = int.parse(parts[parts.length - 1]);
+    return Duration(hours: hours, minutes: minutes, seconds: seconds);
+  }
+
+  void stopLockscreenTimer() {
+    _lockScreenTimer?.cancel();
+    _lockScreenTimer = null;
   }
 }
