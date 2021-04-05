@@ -29,10 +29,10 @@ void main() {
       final failedProportion = find.byValueKey("stvFailedProportion");
 
       assert(await driver.getText(statSummary) != null);
-      expect(await driver.getText(succeedIndicator), "Succeed");
-      expect(await driver.getText(failedIndicator), "Failed");
       assert(await driver.getText(succeedProportion) != null);
       assert(await driver.getText(failedProportion) != null);
+      expect(await driver.getText(succeedIndicator), "Succeed");
+      expect(await driver.getText(failedIndicator), "Failed");
     }, timeout: Timeout.none);
 
     test('Check if there is a records list when navigating to history tab', () async {
@@ -42,10 +42,9 @@ void main() {
       sleep(Duration(seconds: 2));
 
       final recordsList = find.byValueKey('stvTimeRecordsList');
-      final recordTitle = find.byValueKey('10st stvRecordTitle');
-      await driver.scrollUntilVisible(recordsList, recordTitle);
+      final recordTitle = find.byValueKey('1st stvRecordTitle');
       sleep(Duration(seconds: 2));
-
+      assert(recordsList != null);
       assert(await driver.getText(recordTitle) != null);
     }, timeout: Timeout.none);
   });
