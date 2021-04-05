@@ -8,6 +8,8 @@ import 'memoryController.dart';
 import 'package:crypt/crypt.dart';
 
 class AuthenticationController {
+  final String salt = "tubtrunk";
+
   Future<String> login(context, String email, String password,
       {http.Client client}) async {
     String returnMessage = "";
@@ -242,7 +244,7 @@ class AuthenticationController {
   }
 
   String hashPassword(String password) {
-    final hashedValue = Crypt.sha256(password, salt: GlobalSettings.Salt);
+    final hashedValue = Crypt.sha256(password, salt: salt);
     return hashedValue.toString();
   }
 }
