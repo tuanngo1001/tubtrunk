@@ -207,7 +207,7 @@ class AuthenticationController {
     String returnMessage = "";
     var map = new Map<String, String>();
     await MemoryController.read('token').then((token) {
-      map["userToken"] = token;
+      map["UserToken"] = token;
     });
     if (client == null) {
       client = http.Client();
