@@ -55,6 +55,7 @@ class _MainViewState extends State<MainView> with SingleTickerProviderStateMixin
             child: Center(
               child: Text(
                 GlobalSettings.user.money.toString(),
+                key: Key("mvMoney"),
                 style: TextStyle(color: Colors.blueGrey[900], fontSize: 19.0),
               ),
             ),
@@ -83,15 +84,15 @@ class _MainViewState extends State<MainView> with SingleTickerProviderStateMixin
         type: BottomNavigationBarType.fixed,
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-            icon: Icon(Icons.timer, size: iconSize),
+            icon: Icon(Icons.timer, size: iconSize, key: Key("mvTimerBarItem")),
             label: 'Timer',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.military_tech_outlined, size: iconSize),
+            icon: Icon(Icons.military_tech_outlined, size: iconSize,key: Key("mvMissionBarItem")),
             label: 'Mission',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.shopping_bag_outlined, size: iconSize),
+            icon: Icon(Icons.shopping_bag_outlined, size: iconSize, key: Key("mvStoreBarItem")),
             label: 'Store',
           ),
           BottomNavigationBarItem(
