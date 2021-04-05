@@ -6,6 +6,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:tubtrunk/Controllers/authenticationController.dart';
 import 'package:tubtrunk/Models/userModel.dart';
 import 'package:tubtrunk/Utils/globalSettings.dart';
+import 'package:crypt/crypt.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'controller_test.mocks.dart';
@@ -32,7 +33,8 @@ void main() {
 
       var map = new Map<String, String>();
       map['UserEmail'] = validEmail;
-      map['UserPassword'] = validPassword;
+      map['UserPassword'] =
+          Crypt.sha256(validPassword, salt: "tubtrunk").toString();
 
       var jsonSuccessResponse =
           '{"uID":"1","uEmail":"123@gmail.com","uUserName":"Tester","uPassword":"1234","uToken":"6059ef266bbea","uMoney":"100"}';
@@ -109,7 +111,8 @@ void main() {
 
       var map = new Map<String, String>();
       map['UserEmail'] = validEmail;
-      map["UserPassword"] = validPassword;
+      map["UserPassword"] =
+          Crypt.sha256(validPassword, salt: "tubtrunk").toString();
       map["UserName"] = "New User";
 
       var successResponse = "Success";
@@ -130,7 +133,8 @@ void main() {
 
       var map = new Map<String, String>();
       map['UserEmail'] = validEmail;
-      map["UserPassword"] = validPassword;
+      map["UserPassword"] =
+          Crypt.sha256(validPassword, salt: "tubtrunk").toString();
 
       var jsonSuccessResponse =
           '{"uID":"1","uEmail":"123@gmail.com","uUserName":"Tester","uPassword":"1234","uToken":"6059ef266bbea","uMoney":"100"}';
