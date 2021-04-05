@@ -85,6 +85,6 @@ class StatisticController {
   int getFailedPercentage() {
     if (_totalFocusTimes == 0) return 0;
 
-    return _failedFocusTimes * 100 ~/ _totalFocusTimes;
+    return (100 - getSucceedPercentage());
   }
 }
