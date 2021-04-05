@@ -6,4 +6,5 @@ class GlobalSettings {
   static DateFormat dateFormatted = DateFormat("MM/dd/yyyy");
   static DateFormat timeFormatted = DateFormat("HH:mm");
   static UserModel user;
+  static String Salt = "tubtrunk";
 }
