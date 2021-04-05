@@ -3,11 +3,13 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:email_validator/email_validator.dart';
 import 'package:tubtrunk/Utils/globalSettings.dart';
-import 'package:tubtrunk/Views/notificationView.dart';
 import 'package:tubtrunk/Models/userModel.dart';
 import 'memoryController.dart';
+import 'package:crypt/crypt.dart';
 
 class AuthenticationController {
+  final String salt = "tubtrunk";
+
   Future<String> login(context, String email, String password,
       {http.Client client}) async {
     String returnMessage = "";
@@ -17,8 +19,9 @@ class AuthenticationController {
       returnMessage = "Invalid input";
     } else {
       var map = new Map<String, String>();
+      final hashedPassword = hashPassword(password);
       map['UserEmail'] = email;
-      map['UserPassword'] = password;
+      map['UserPassword'] = hashedPassword;
 
       if (client == null) {
         client = http.Client();
@@ -103,8 +106,9 @@ class AuthenticationController {
         client = http.Client();
       }
       var map = new Map<String, String>();
+      final hashedPassword = hashPassword(password);
       map["UserEmail"] = email;
-      map["UserPassword"] = password;
+      map["UserPassword"] = hashedPassword;
       map["UserName"] = "New User"; //Default name, they can change it later.
 
       await client
@@ -129,8 +133,9 @@ class AuthenticationController {
       {http.Client client}) async {
     String returnMessage = "";
     var map = new Map<String, String>();
+    final hashedPassword = hashPassword(password);
     map['UserEmail'] = email;
-    map['UserPassword'] = password;
+    map['UserPassword'] = hashedPassword;
     if (client == null) {
       client = http.Client();
     }
@@ -236,5 +241,10 @@ class AuthenticationController {
       return true;
     } else
       return false;
+  }
+
+  String hashPassword(String password) {
+    final hashedValue = Crypt.sha256(password, salt: salt);
+    return hashedValue.toString();
   }
 }
