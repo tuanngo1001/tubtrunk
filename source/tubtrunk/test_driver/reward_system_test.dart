@@ -78,7 +78,7 @@ void user_story_1() {
       )
     );
 
-    test('Check if there is a challenge available',() async {
+    test('Check if there is a challenge available along with its description',() async {
       driver.clearTimeline();
       //Find and tap the timer tab item to go to mission page
       final MissionTabItem = find.byValueKey("mvMissionBarItem");
@@ -87,17 +87,6 @@ void user_story_1() {
       final Missions  = find.byType("Card");
       await driver.tap(Missions);
 
-      expect(1, 1);
-    });
-
-    test('Check if the challenges description is available',() async {
-      driver.clearTimeline();
-      //Find and tap the timer tab item to go to mission page
-      final MissionTabItem = find.byValueKey("mvMissionBarItem");
-      await driver.tap(MissionTabItem);
-      await Future.delayed(const Duration(seconds: 2), (){});
-      final Missions  = find.byType("Card");
-      await driver.tap(Missions);
       expect(1, 1);
     });
 
