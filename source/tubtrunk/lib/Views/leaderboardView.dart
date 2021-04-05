@@ -20,7 +20,8 @@ class _LeaderboardViewState extends State<LeaderboardView> {
         return AlertDialog(
           backgroundColor: Colors.orange.shade300,
           insetPadding: EdgeInsets.all(0),
-          title: Text("${usersList[index].name}'s Achievement"),
+          title: Text("${usersList[index].name}'s Achievement",
+              key: Key("${index + 1}st userAchievement")),
           content: SingleChildScrollView(
             child:
                 ListBody(children: _generateUserAchievements(index, usersList)),
@@ -30,18 +31,23 @@ class _LeaderboardViewState extends State<LeaderboardView> {
     );
   }
 
-  List<Widget> _generateUserAchievements(
-      int index, List<LeaderboardModel> usersList) {
+  List<Widget> _generateUserAchievements(int index, List<LeaderboardModel> usersList) {
     return <Widget>[
       Text(
           "Average focus time: ${double.parse(usersList[index].avgFocusTime.toStringAsFixed(2))} min(s)",
-          style: TextStyle(color: Colors.black87, fontSize: 17.0)),
+          style: TextStyle(color: Colors.black87, fontSize: 17.0),
+          key: Key("${index+1}st lbvAvgTime")
+      ),
       SizedBox(height: 1.5),
       Text("Total focus time: ${usersList[index].totalFocusTime} min(s)",
-          style: TextStyle(color: Colors.black87, fontSize: 17.0)),
+          style: TextStyle(color: Colors.black87, fontSize: 17.0),
+          key: Key("${index+1}st lbvTotalTime")
+      ),
       SizedBox(height: 1.5),
       Text("Successful focus sessions: ${usersList[index].totalTimes} time(s)",
-          style: TextStyle(color: Colors.black87, fontSize: 17.0)),
+          style: TextStyle(color: Colors.black87, fontSize: 17.0),
+          key: Key("${index+1}st lbvSuccessSessions")
+      ),
       SizedBox(height: 1.5),
       RichText(
         text: TextSpan(
@@ -61,7 +67,7 @@ class _LeaderboardViewState extends State<LeaderboardView> {
               ),
             ),
             TextSpan(
-                text: "${usersList[index].totalPrize}",
+                text: Text("${usersList[index].totalPrize}", key: Key("${index+1}st lbvPrize")).data,
                 style: TextStyle(color: Colors.black87, fontSize: 17.0)),
           ],
         ),
@@ -85,7 +91,7 @@ class _LeaderboardViewState extends State<LeaderboardView> {
               ),
             ),
             TextSpan(
-                text: '${usersList[index].prize}',
+                text: Text('${usersList[index].prize}', key: Key("${index+1}st lbvMoneyAmount")).data,
                 style: TextStyle(color: Colors.black87, fontSize: 17.0))
           ],
         ),
@@ -164,8 +170,10 @@ class _LeaderboardViewState extends State<LeaderboardView> {
   }
 
   Future<ListView> _getDataAndReturnListView() async {
-    List<LeaderboardModel> usersList = await widget._leaderboardController.fetchAllUsers();
+    List<LeaderboardModel> usersList =
+        await widget._leaderboardController.fetchAllUsers();
     return ListView.builder(
+        key: Key("userList"),
         padding: const EdgeInsets.all(2),
         itemCount: usersList.length,
         itemBuilder: (BuildContext context, int index) {
@@ -174,6 +182,7 @@ class _LeaderboardViewState extends State<LeaderboardView> {
             child: GestureDetector(
               onTap: () => _showMyDialog(index, usersList),
               child: Card(
+                key: Key("${index + 1}st cardButton"),
                 color: Colors.cyan.shade50,
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
@@ -183,10 +192,8 @@ class _LeaderboardViewState extends State<LeaderboardView> {
                       leading: _highlightTopThreeBadges(index),
                       title: Transform.translate(
                         offset: Offset(-25, 0),
-                        child: Text(
-                          '${index + 1}',
-                          style: TextStyle(fontSize: 20.0),
-                        ),
+                        child: Text('${index + 1}',
+                            style: TextStyle(fontSize: 20.0)),
                       ),
                     )),
                     Expanded(
@@ -198,6 +205,7 @@ class _LeaderboardViewState extends State<LeaderboardView> {
                           fontFamily: 'Montserrat',
                           fontWeight: FontWeight.bold,
                         ),
+                        key: Key('${index + 1}th username'),
                       ),
                     )),
                     Expanded(
