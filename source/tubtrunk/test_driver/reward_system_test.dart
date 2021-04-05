@@ -1,10 +1,8 @@
 // Imports the Flutter Driver API.
 import 'package:flutter_driver/flutter_driver.dart';
 import 'package:test/test.dart';
-void main() {
-}
 
-void userStory1() {
+void main() {
   group( 'As a user, I want to receive my reward after the focus time so that I will'
           ' have the motivation to use the application.', () {
     final getStartedBtn = find.byValueKey("getStartedBtn");
