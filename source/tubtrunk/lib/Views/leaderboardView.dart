@@ -31,18 +31,23 @@ class _LeaderboardViewState extends State<LeaderboardView> {
     );
   }
 
-  List<Widget> _generateUserAchievements(
-      int index, List<LeaderboardModel> usersList) {
+  List<Widget> _generateUserAchievements(int index, List<LeaderboardModel> usersList) {
     return <Widget>[
       Text(
           "Average focus time: ${double.parse(usersList[index].avgFocusTime.toStringAsFixed(2))} min(s)",
-          style: TextStyle(color: Colors.black87, fontSize: 17.0)),
+          style: TextStyle(color: Colors.black87, fontSize: 17.0),
+          key: Key("${index+1}st lbvAvgTime")
+      ),
       SizedBox(height: 1.5),
       Text("Total focus time: ${usersList[index].totalFocusTime} min(s)",
-          style: TextStyle(color: Colors.black87, fontSize: 17.0)),
+          style: TextStyle(color: Colors.black87, fontSize: 17.0),
+          key: Key("${index+1}st lbvTotalTime")
+      ),
       SizedBox(height: 1.5),
       Text("Successful focus sessions: ${usersList[index].totalTimes} time(s)",
-          style: TextStyle(color: Colors.black87, fontSize: 17.0)),
+          style: TextStyle(color: Colors.black87, fontSize: 17.0),
+          key: Key("${index+1}st lbvSuccessSessions")
+      ),
       SizedBox(height: 1.5),
       RichText(
         text: TextSpan(
@@ -62,7 +67,7 @@ class _LeaderboardViewState extends State<LeaderboardView> {
               ),
             ),
             TextSpan(
-                text: "${usersList[index].totalPrize}",
+                text: Text("${usersList[index].totalPrize}", key: Key("${index+1}st lbvPrize")).toString(),
                 style: TextStyle(color: Colors.black87, fontSize: 17.0)),
           ],
         ),
@@ -86,7 +91,7 @@ class _LeaderboardViewState extends State<LeaderboardView> {
               ),
             ),
             TextSpan(
-                text: '${usersList[index].prize}',
+                text: Text('${usersList[index].prize}', key: Key("${index+1}st lbvMoneyAmount")).toString(),
                 style: TextStyle(color: Colors.black87, fontSize: 17.0))
           ],
         ),

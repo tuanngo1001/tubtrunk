@@ -96,11 +96,11 @@ class _MainViewState extends State<MainView> with SingleTickerProviderStateMixin
             label: 'Store',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.stacked_bar_chart, size: iconSize),
+            icon: Icon(Icons.stacked_bar_chart, size: iconSize, key: Key("stvStatBarItem")),
             label: 'Statistics',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.account_circle_outlined, size: iconSize),
+            icon: Icon(Icons.account_circle_outlined, size: iconSize, key: Key("accvAccountBarItem")),
             label: 'Account',
           ),
         ],

@@ -190,6 +190,7 @@ class _AccountViewState extends State<AccountView> {
                         fontFamily: 'Montserrat',
                         fontSize: 26.0,
                         fontWeight: FontWeight.w300),
+                    key: Key("leaderboardButton"),
                   ),
                 ),
               ),

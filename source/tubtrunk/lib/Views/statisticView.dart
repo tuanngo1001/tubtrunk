@@ -35,7 +35,9 @@ class _StatisticViewState extends State<StatisticView> {
                 Tab(
                   child: Text("History",
                       style: TextStyle(
-                          fontSize: 18.0, color: Colors.blueGrey.shade900)),
+                          fontSize: 18.0, color: Colors.blueGrey.shade900),
+                  key: Key("stvHistoryTab"),
+                  ),
                 )
               ],
             ),
@@ -76,7 +78,10 @@ class _StatisticViewState extends State<StatisticView> {
             Center(
                 child: Text('Total focus times: $totalTimes \nAverage focus times: $averageTimes min(s)',
                     maxLines: 3,
-                    style: TextStyle(fontSize: 25))),
+                    style: TextStyle(fontSize: 25),
+                key: Key("stvSummary")
+                )
+            ),
             AspectRatio(
               aspectRatio: 1,
               child: PieChart(
@@ -116,6 +121,7 @@ class _StatisticViewState extends State<StatisticView> {
           ],
         ),
         ListView.builder(
+            key: Key("stvTimeRecordsList"),
             padding: const EdgeInsets.all(8),
             itemCount: totalTimes,
             itemBuilder: (BuildContext context, int index) {
@@ -127,9 +133,13 @@ class _StatisticViewState extends State<StatisticView> {
                       ListTile(
                         leading: Icon(Icons.date_range_outlined),
                         title: Text(
-                            'Date: ${recordsList[totalTimes - index - 1].date}      Time: ${recordsList[totalTimes - index - 1].time}'),
+                            'Date: ${recordsList[totalTimes - index - 1].date}      Time: ${recordsList[totalTimes - index - 1].time}',
+                            key: Key("${index+1}st stvRecordTitle")
+                        ),
                         subtitle: Text(
-                            'Duration: ${recordsList[totalTimes - index - 1].duration} min(s)\nStatus: ${recordsList[totalTimes - index - 1].isCompleted()} '),
+                            'Duration: ${recordsList[totalTimes - index - 1].duration} min(s)\nStatus: ${recordsList[totalTimes - index - 1].isCompleted()} ',
+                            key: Key("${index+1}st stvRecordSubtitle")
+                        ),
                       ),
                     ],
                   ),
@@ -162,7 +172,7 @@ class _StatisticViewState extends State<StatisticView> {
           return PieChartSectionData(
             color: const Color(0xff0293ee),
             value: displayPieChartValue(succeedTimes),
-            title: '$succeedPercentage% ($succeedTimes)',
+            title: Text('$succeedPercentage% ($succeedTimes)', key: Key("stvSucceedProportion")).toString(),
             radius: radius,
             titleStyle: TextStyle(
                 fontSize: fontSize,
@@ -173,7 +183,7 @@ class _StatisticViewState extends State<StatisticView> {
           return PieChartSectionData(
             color: const Color(0xfff8b250),
             value: displayPieChartValue(failedTimes),
-            title: '$failedPercentage% ($failedTimes)',
+            title: Text('$failedPercentage% ($failedTimes)', key: Key("stvFailedProportion")).toString(),
             radius: radius,
             titleStyle: TextStyle(
                 fontSize: fontSize,
