@@ -2,7 +2,7 @@
 import 'package:flutter_driver/flutter_driver.dart';
 import 'package:test/test.dart';
 
-void runLoginTest() {
+void runTests() {
   group('As a user, I want to log in with my account.', () {
     final getStartedBtn = find.byValueKey("getStartedBtn");
 
