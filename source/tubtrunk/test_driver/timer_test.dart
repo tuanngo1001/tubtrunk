@@ -6,7 +6,6 @@ void runTests() {
     final timerViewButtonFinder = find.byValueKey('mvTimerBarItem');
     final stopStartButtonFinder = find.byValueKey('tvStartBtn');
     final resetButtonFinder = find.byValueKey('tvResetBtn');
-    final circularCountdownTimerFinder = find.byValueKey('tvCircularCountdownTimer');
     FlutterDriver driver;
 
     setUpAll(() async {
