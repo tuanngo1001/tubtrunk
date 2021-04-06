@@ -10,7 +10,7 @@ import './notificationView.dart';
 class TimerView extends StatefulWidget {
   final Function(int) updateProgressCallback;
 
-  TimerView({this.updateProgressCallback});
+  TimerView({Key key, this.updateProgressCallback}) : super(key: key);
 
   @override
   _TimerViewState createState() => _TimerViewState();
@@ -191,6 +191,7 @@ class _TimerViewState extends State<TimerView> with WidgetsBindingObserver, Auto
                         NotificationView().moneyReceivePopup(context)),
               );
             },
+            key: Key('tvCircularCountdownTimer'),
           ),
         ),
       ),

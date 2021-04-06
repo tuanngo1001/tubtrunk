@@ -69,7 +69,7 @@ class NotificationView extends StatefulWidget {
           textAlign: TextAlign.center,
           style: TextStyle(fontSize: 22.0, fontWeight: FontWeight.w600)),
       description: Text(
-        'You have received a surprise reward for being focused. Enjoy!',
+        'You have received a reward for completing your focus session. Enjoy!',
         textAlign: TextAlign.center,
       ),
       entryAnimation: EntryAnimation.TOP,
@@ -81,6 +81,7 @@ class NotificationView extends StatefulWidget {
       buttonOkText: Text("Shop Now"),
       buttonOkColor: Colors.lightGreen,
       buttonCancelText: Text("Nah, I want more"),
+      key: Key('nvMoneyReceivePopup'),
     );
   }
 
