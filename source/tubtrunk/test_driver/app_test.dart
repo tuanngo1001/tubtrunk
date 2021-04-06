@@ -11,6 +11,6 @@ void main() {
   NetworkingTest.runTests();
   RewardSystemTest.runTests();
   StatisticsTest.runTests();
-  LeaderboardTest.runTests();
   TimerTest.runTests();
+  LeaderboardTest.runTests();
 }
