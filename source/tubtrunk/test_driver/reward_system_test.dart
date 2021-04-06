@@ -3,8 +3,9 @@ import 'package:flutter_driver/flutter_driver.dart';
 import 'package:test/test.dart';
 
 void runTests() {
-  group( 'As a user, I want to receive my reward after the focus time so that I will'
-          ' have the motivation to use the application.', () {
+  group(
+      'As a user, I want to receive my reward after the focus time so that I will'
+      ' have the motivation to use the application.', () {
     final getStartedBtn = find.byValueKey("getStartedBtn");
     FlutterDriver driver;
 
@@ -23,7 +24,7 @@ void runTests() {
     test('Check Timer Give Money When Finish', () async {
       driver.clearTimeline();
       // First, tap the Get Started button
-      await driver.tap(getStartedBtn);
+      // await driver.tap(getStartedBtn);
 
       //Find and fill email and password to login
       final userName = find.byValueKey("lvEmailTextField");
@@ -38,12 +39,12 @@ void runTests() {
       //Find and tap the login button
       final loginBtn = find.byValueKey("lvLoginBtn");
       await driver.tap(loginBtn);
-      await Future.delayed(const Duration(seconds: 1), (){});
+      await Future.delayed(const Duration(seconds: 1), () {});
 
       //Find and tap the ok button from pop up
       final okBtn = find.byType('RaisedButton');
       await driver.tap(okBtn);
-      await Future.delayed(const Duration(seconds: 1), (){});
+      await Future.delayed(const Duration(seconds: 1), () {});
 
       //Find the current money
       final money = find.byValueKey("mvMoney");
@@ -53,43 +54,43 @@ void runTests() {
       final startBtn = find.byValueKey("tvStartBtn");
       await driver.tap(startBtn);
 
-      await Future.delayed(const Duration(seconds: 62), (){});
+      await Future.delayed(const Duration(seconds: 62), () {});
 
       final nahBtn = find.text("Nah, I want more");
       await driver.tap(nahBtn);
 
-      await Future.delayed(const Duration(seconds: 2), (){});
+      await Future.delayed(const Duration(seconds: 2), () {});
 
       //Find the current money
       final afterMoney = find.byValueKey("mvMoney");
       String userAfterMoney = await driver.getText(afterMoney);
       int afterMoneyInt = int.parse(userAfterMoney);
 
-      expect(int.parse(userMoney) +1 , afterMoneyInt);
+      expect(int.parse(userMoney) + 1, afterMoneyInt);
     },
-      timeout: Timeout(
-        Duration(seconds: 90),
-      )
-    );
+        timeout: Timeout(
+          Duration(seconds: 90),
+        ));
 
-    test('Check if there is a challenge available along with its description',() async {
+    test('Check if there is a challenge available along with its description',
+        () async {
       driver.clearTimeline();
       //Find and tap the timer tab item to go to mission page
       final missionTabItem = find.byValueKey("mvMissionBarItem");
       await driver.tap(missionTabItem);
-      await Future.delayed(const Duration(seconds: 2), (){});
-      final missions  = find.byType("Card");
+      await Future.delayed(const Duration(seconds: 2), () {});
+      final missions = find.byType("Card");
       await driver.tap(missions);
       expect(1, 1);
     });
 
-    test('Check if there is items in store',() async {
+    test('Check if there is items in store', () async {
       driver.clearTimeline();
       //Find and tap the timer tab item to go to store page
       final storeTabItem = find.byValueKey("mvStoreBarItem");
       await driver.tap(storeTabItem);
-      await Future.delayed(const Duration(seconds: 2), (){});
-      final storeItems  = find.byType("Card");
+      await Future.delayed(const Duration(seconds: 2), () {});
+      final storeItems = find.byType("Card");
       expect(storeItems.serialize().isEmpty, false);
     });
   });

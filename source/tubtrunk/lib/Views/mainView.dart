@@ -14,7 +14,8 @@ class MainView extends StatefulWidget {
   _MainViewState createState() => _MainViewState();
 }
 
-class _MainViewState extends State<MainView> with SingleTickerProviderStateMixin {
+class _MainViewState extends State<MainView>
+    with SingleTickerProviderStateMixin {
   MainController _mainController;
 
   TimerView timerView;
@@ -25,13 +26,15 @@ class _MainViewState extends State<MainView> with SingleTickerProviderStateMixin
 
   static const double iconSize = 32.5;
 
-  @override initState() {
+  @override
+  initState() {
     super.initState();
     _mainController = MainController();
     _mainController.tabController = TabController(length: 5, vsync: this);
 
     missionView = MissionView();
-    timerView = TimerView(updateProgressCallback: missionView.updateProgressCallback);
+    timerView =
+        TimerView(updateProgressCallback: missionView.updateProgressCallback);
     rewardStoreView = RewardStoreView();
     statisticView = StatisticView();
     accountView = AccountView();
@@ -65,11 +68,12 @@ class _MainViewState extends State<MainView> with SingleTickerProviderStateMixin
         title: Text(
           'Hi, ' + GlobalSettings.user.username,
           style: TextStyle(color: Colors.white),
+          key: Key("mvGreetingUserName"),
         ),
       ),
       body: TabBarView(
         controller: _mainController.tabController,
-        children: <Widget> [
+        children: <Widget>[
           timerView,
           missionView,
           rewardStoreView,
@@ -88,19 +92,23 @@ class _MainViewState extends State<MainView> with SingleTickerProviderStateMixin
             label: 'Timer',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.military_tech_outlined, size: iconSize,key: Key("mvMissionBarItem")),
+            icon: Icon(Icons.military_tech_outlined,
+                size: iconSize, key: Key("mvMissionBarItem")),
             label: 'Mission',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.shopping_bag_outlined, size: iconSize, key: Key("mvStoreBarItem")),
+            icon: Icon(Icons.shopping_bag_outlined,
+                size: iconSize, key: Key("mvStoreBarItem")),
             label: 'Store',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.stacked_bar_chart, size: iconSize, key: Key("stvStatBarItem")),
+            icon: Icon(Icons.stacked_bar_chart,
+                size: iconSize, key: Key("stvStatBarItem")),
             label: 'Statistics',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.account_circle_outlined, size: iconSize, key: Key("accvAccountBarItem")),
+            icon: Icon(Icons.account_circle_outlined,
+                size: iconSize, key: Key("accvAccountBarItem")),
             label: 'Account',
           ),
         ],
