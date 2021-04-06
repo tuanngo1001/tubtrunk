@@ -29,6 +29,7 @@ class _DisplayNameViewState extends State<DisplayNameView> {
     return Container(
         child: Stack(children: <Widget>[
       Container(
+          key: Key("changeNameTitle"),
           padding: EdgeInsets.fromLTRB(15.0, 140.0, 0.0, 0.0),
           child: Text('What would you like us',
               style: TextStyle(

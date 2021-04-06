@@ -75,7 +75,7 @@ class _LoginViewState extends State<LoginView> {
             ),
             SizedBox(height: 20.0),
             TextField(
-            key: Key("lvPwdTextField"),
+              key: Key("lvPwdTextField"),
               decoration: InputDecoration(
                   labelText: "PASSWORD",
                   labelStyle: TextStyle(
@@ -164,6 +164,7 @@ class _LoginViewState extends State<LoginView> {
             style: TextStyle(color: Colors.grey, fontFamily: 'Montserrat')),
         SizedBox(width: 5.0),
         InkWell(
+            key: Key("gotoSignUpView"),
             onTap: () {
               Navigator.pop(context);
               Navigator.push(
