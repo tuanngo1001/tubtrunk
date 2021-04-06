@@ -8,7 +8,7 @@ import 'networking_test.dart' as NetworkingTest;
 
 void main() {
   NetworkingTest.runLoginTest();
-  RewardSystemTest.user_story_1();
-  StatisticsTest.main();
-  LeaderboardTest.main();
+  RewardSystemTest.runTests();
+  StatisticsTest.runTests();
+  LeaderboardTest.runTests();
 }

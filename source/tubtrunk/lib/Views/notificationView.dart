@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:giffy_dialog/giffy_dialog.dart';
-// import 'package:tubtrunk/Controllers/audioController.dart';
 import 'package:tubtrunk/Controllers/mainController.dart';
 import 'package:tubtrunk/Views/mainView.dart';
 import './displayNameView.dart';
