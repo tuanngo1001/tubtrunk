@@ -6,7 +6,6 @@ void runTests() {
   group(
       'As a user, I want to receive my reward after the focus time so that I will'
       ' have the motivation to use the application.', () {
-    final getStartedBtn = find.byValueKey("getStartedBtn");
     FlutterDriver driver;
 
     // Connect to the Flutter driver before running any tests.
@@ -23,8 +22,6 @@ void runTests() {
 
     test('Check Timer Give Money When Finish', () async {
       driver.clearTimeline();
-      // First, tap the Get Started button
-      // await driver.tap(getStartedBtn);
 
       //Find and fill email and password to login
       final userName = find.byValueKey("lvEmailTextField");
@@ -68,9 +65,10 @@ void runTests() {
 
       expect(int.parse(userMoney) + 1, afterMoneyInt);
     },
-        timeout: Timeout(
-          Duration(seconds: 90),
-        ));
+      timeout: Timeout(
+        Duration(seconds: 90),
+      )
+    );
 
     test('Check if there is a challenge available along with its description',
         () async {
