@@ -72,7 +72,6 @@ class _SignUpViewState extends State<SignUpView> {
         child: Column(
           children: <Widget>[
             TextField(
-              key: Key("lvEmailTextField"),
               controller: widget.email,
               decoration: InputDecoration(
                   labelText: "EMAIL",
@@ -86,7 +85,6 @@ class _SignUpViewState extends State<SignUpView> {
             ),
             SizedBox(height: 10.0),
             TextField(
-              key: Key("lvPwdTextField"),
               controller: widget.password,
               decoration: InputDecoration(
                   labelText: "PASSWORD",
@@ -103,7 +101,6 @@ class _SignUpViewState extends State<SignUpView> {
             Container(
                 height: 40.0,
                 child: ElevatedButton(
-                    key: Key("lvSignupBtn"),
                     style: ButtonStyle(
                       shape: MaterialStateProperty.all(
                         RoundedRectangleBorder(
@@ -180,7 +177,6 @@ class _SignUpViewState extends State<SignUpView> {
             style: TextStyle(color: Colors.grey, fontFamily: 'Montserrat')),
         SizedBox(width: 5.0),
         InkWell(
-            key: Key("gotoLoginView"),
             onTap: () {
               Navigator.pop(context);
               Navigator.push(

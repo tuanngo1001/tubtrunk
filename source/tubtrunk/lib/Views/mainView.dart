@@ -68,7 +68,7 @@ class _MainViewState extends State<MainView>
         title: Text(
           'Hi, ' + GlobalSettings.user.username,
           style: TextStyle(color: Colors.white),
-          key: Key("greetingUserName"),
+          key: Key("mvGreetingUserName"),
         ),
       ),
       body: TabBarView(

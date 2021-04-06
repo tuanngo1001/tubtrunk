@@ -124,7 +124,7 @@ class _AccountViewState extends State<AccountView> {
                           // SizedBox(width: 10.0),
                           Container(
                             child: ElevatedButton(
-                                key: Key("lvLogoutBtn"),
+                                key: Key("accvLogoutBtn"),
                                 style: ButtonStyle(
                                   shape: MaterialStateProperty.all(
                                     RoundedRectangleBorder(
