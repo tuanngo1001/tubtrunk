@@ -36,7 +36,7 @@ void runTests() {
       await driver.scrollIntoView(userList);
 
       expect(await driver.getText(firstUserName), "Anh Trung");
-      expect(await driver.getText(secondUserName), "Anh Thai");
+      expect(await driver.getText(secondUserName), "Anh Quoc");
       expect(await driver.getText(thirdUserName), "Anh Nguyen");
     }, timeout: Timeout.none);
 
