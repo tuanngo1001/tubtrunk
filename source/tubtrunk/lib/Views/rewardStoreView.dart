@@ -1,21 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:tubtrunk/Controllers/mainController.dart';
 import 'package:tubtrunk/Controllers/storeController.dart';
+import 'package:tubtrunk/Utils/globalSettings.dart';
 import 'package:tubtrunk/Views/Icons/myCouponIcon.dart';
 import 'notificationView.dart';
 
 class RewardStoreView extends StatefulWidget {
+  RewardStoreView(this.onBuyItemChange);
   @override
   _RewardStoreViewState createState() => _RewardStoreViewState();
+
+  final Function(int) onBuyItemChange;
 }
 
 class _RewardStoreViewState extends State<RewardStoreView> {
   StoreController controller;
-  // AudioController auController;
+  MainController _mainController;
 
   @override
   void initState() {
     controller = new StoreController();
-    // auController = new AudioController();
+    _mainController = new MainController();
     super.initState();
   }
 
@@ -26,10 +31,21 @@ class _RewardStoreViewState extends State<RewardStoreView> {
     });
   }
 
-  void removeMusicSetState(int index) {
+  void buyItem(int itemPrice, int itemIndex, BuildContext context){
+    if(itemPrice > GlobalSettings.user.money){
+      showDialog(context: context,
+          builder: (_) => new NotificationView(removeCouponSetState).notEnoughMoney(context));
+    }else{
+      showDialog(context: context,
+          builder: (_) => new NotificationView(removeCouponSetState)
+              .purchasePopUp(context, controller.removeCouponAtIndex, itemIndex, itemPrice, setMoney));
+    }
+  }
+
+  void setMoney(int itemPrice){
+    widget.onBuyItemChange((GlobalSettings.user.money));
     setState(() {
-      //For now only remove coupon at given index, add more functions if needed.
-      // auController.removeMusicAtIndex(index);
+      _mainController.addMoney(-itemPrice);
     });
   }
 
@@ -80,18 +96,12 @@ class _RewardStoreViewState extends State<RewardStoreView> {
                               splashColor: Colors.cyanAccent,
                               hoverColor: Colors.lightBlue[100],
                               onTap: () {
-                                //AssetsAudioPlayer.playAndForget(Audio("assets/musics/TheLongestTime.mp3"));
                                 setState(() {
-                                  showDialog(
-                                      context: context,
-                                      builder: (_) => new NotificationView(
-                                              removeCouponSetState)
-                                          .purchasePopUp(
-                                              context,
-                                              controller.removeCouponAtIndex,
-                                              index));
+                                  buyItem(int.parse(controller.couponList[index].price), index, context);
+                                  // showDialog(context: context,
+                                  //     builder: (_) => new NotificationView(removeCouponSetState)
+                                  //         .purchasePopUp(context, controller.removeCouponAtIndex, index));
                                 });
-                                // Perform some action
                               },
                               child: Container(
                                   width: MediaQuery.of(context).size.width,

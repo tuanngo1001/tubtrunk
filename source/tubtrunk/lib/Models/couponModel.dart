@@ -15,7 +15,7 @@ class CouponModel {
       this.discount,
       this.description,
       this.expireDate}) {
-    price = "300";
+    price = "50";
   }
 
   factory CouponModel.fromJson(Map<String, dynamic> json) {

@@ -32,9 +32,15 @@ class _MainViewState extends State<MainView> with SingleTickerProviderStateMixin
 
     missionView = MissionView();
     timerView = TimerView(updateProgressCallback: missionView.updateProgressCallback);
-    rewardStoreView = RewardStoreView();
+    rewardStoreView = RewardStoreView(updateMoney);
     statisticView = StatisticView();
     accountView = AccountView();
+  }
+
+  void updateMoney(int newMoney){
+    setState(() {
+      GlobalSettings.user.money = newMoney;
+    });
   }
 
   @override

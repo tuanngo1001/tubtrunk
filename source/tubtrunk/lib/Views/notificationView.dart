@@ -33,8 +33,7 @@ class NotificationView extends StatefulWidget {
     );
   }
 
-  NetworkGiffyDialog purchasePopUp(
-      context, void Function(int) removeStoreItem, int index) {
+  NetworkGiffyDialog purchasePopUp(context, void Function(int) removeStoreItem, int index, int itemPrice, void Function(int) setMoney) {
     return NetworkGiffyDialog(
       image: Image.asset('assets/gifs/purchaseprompt.gif'),
       title: Text('',
@@ -46,7 +45,7 @@ class NotificationView extends StatefulWidget {
       ),
       entryAnimation: EntryAnimation.TOP,
       onOkButtonPressed: () async {
-        // auController.playByName('success-sfx.mp3');
+        setMoney(itemPrice);
         removeStoreItem(index);
         this.rewardStoreViewSetState(index);
         Navigator.of(context).pop();
@@ -239,6 +238,24 @@ class NotificationView extends StatefulWidget {
         Navigator.pop(context);
       },
     );
+  }
+
+  Widget notEnoughMoney(context) {
+    return (NetworkGiffyDialog(
+      image: Image.asset('assets/gifs/poor.gif'),
+      title: Text('SORRY',
+          textAlign: TextAlign.center,
+          style: TextStyle(fontSize: 22.0, fontWeight: FontWeight.w600)),
+      description: Text(
+        'You don\'t have enough money',
+        textAlign: TextAlign.center,
+      ),
+      entryAnimation: EntryAnimation.TOP,
+      onlyOkButton: true,
+      onOkButtonPressed: () {
+        Navigator.pop(context);
+      },
+    ));
   }
 
   @override
