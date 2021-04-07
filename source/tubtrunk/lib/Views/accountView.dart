@@ -9,6 +9,9 @@ class AccountView extends StatefulWidget {
   @override
   _AccountViewState createState() => _AccountViewState();
   final authenticationController = AuthenticationController();
+  AccountView(this.resetTabItem);
+  final void Function(int) resetTabItem;
+
 }
 
 class _AccountViewState extends State<AccountView> {
@@ -149,6 +152,7 @@ class _AccountViewState extends State<AccountView> {
                                         builder: (_) => new NotificationView()
                                             .logoutFail(context));
                                   } else if (returnMessage == "Success") {
+                                    widget.resetTabItem(0);
                                     NotificationView().logoutSuccess(context);
                                   }
                                 },
