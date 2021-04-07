@@ -38,12 +38,18 @@ class _MainViewState extends State<MainView>
     rewardStoreView = RewardStoreView(updateMoney);
 
     statisticView = StatisticView();
-    accountView = AccountView();
+    accountView = AccountView(resetTabItem);
   }
 
   void updateMoney(int newMoney){
     setState(() {
       GlobalSettings.user.money = newMoney;
+    });
+  }
+
+  void resetTabItem(int index){
+    setState(() {
+      _mainController.changeMainView(index);
     });
   }
 
