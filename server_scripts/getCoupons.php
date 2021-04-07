@@ -21,11 +21,6 @@ while ($row = mysqli_fetch_assoc($result)) {
 
 $jsonData = json_encode($data);
 die($jsonData);
-
-
-
-
-die("Not found");
 ?>
 
 

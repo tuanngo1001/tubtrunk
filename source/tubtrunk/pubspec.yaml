@@ -83,7 +83,6 @@ flutter:
   assets:
     - assets/
     - assets/gifs/
-    - assets/musics/
 
   fonts:
     - family: MyCouponIcon

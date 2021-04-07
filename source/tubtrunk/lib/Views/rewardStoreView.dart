@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tubtrunk/Controllers/mainController.dart';
+import 'package:tubtrunk/Controllers/music_controller.dart';
 import 'package:tubtrunk/Controllers/storeController.dart';
 import 'package:tubtrunk/Utils/globalSettings.dart';
 import 'package:tubtrunk/Views/Icons/myCouponIcon.dart';
@@ -54,9 +55,7 @@ class _RewardStoreViewState extends State<RewardStoreView> {
 
   void setMoney(int itemPrice){
     widget.onBuyItemChange((GlobalSettings.user.money));
-    setState(() {
-      _mainController.addMoney(-itemPrice);
-    });
+    setState(() => _mainController.addMoney(-itemPrice));
   }
 
   @override
@@ -87,7 +86,7 @@ class _RewardStoreViewState extends State<RewardStoreView> {
         ),
         body: SafeArea(
           child: FutureBuilder(
-              future: controller.getCouponList(),
+              future: controller.loadCouponList(),
               builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
                 if (snapshot.hasError) {
                   return Center(
@@ -99,8 +98,8 @@ class _RewardStoreViewState extends State<RewardStoreView> {
                 }
                 return TabBarView(
                   children: [
-                    _buildCoupons(),
-                    _buildCoupons()
+                    _buildCouponList(),
+                    _buildMusicList()
                   ],
                 );
               }),
@@ -110,7 +109,7 @@ class _RewardStoreViewState extends State<RewardStoreView> {
     );
   }
 
-  Widget _buildCoupons() {
+  Widget _buildCouponList() {
     return GridView.count(
       childAspectRatio: 2.5,
       mainAxisSpacing: 0,
@@ -171,6 +170,68 @@ class _RewardStoreViewState extends State<RewardStoreView> {
                 ],
               )
             )
+          ),
+        );
+      }),
+    );
+  }
+
+  Widget _buildMusicList() {
+    int musicPrice = 35;
+    return GridView.count(
+      childAspectRatio: 3.0,
+      mainAxisSpacing: 0,
+      crossAxisSpacing: 0,
+      crossAxisCount: 1,
+      // Generate 100 widgets that display their index in the List.
+      children:
+      List.generate(controller.musicList.length, (index) {
+        return Card(
+          color: Colors.cyan.shade50,
+          child: InkWell(
+            splashColor: Colors.cyanAccent,
+            hoverColor: Colors.lightBlue[100],
+            onTap: () {
+              MusicController.instance.playRemote(controller.musicList[index].fileName);
+              // setState(() {
+              //   buyItem(musicPrice, index, context);
+              // });
+            },
+            child: Container(
+              width: MediaQuery.of(context).size.width,
+              child: Column(
+                children: <Widget>[
+                  Padding(padding: EdgeInsets.all(18.0)),
+                  Text(
+                    controller.musicList[index].title,
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 20
+                    ),
+                  ),
+                  const SizedBox(height: 15),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      Image.asset(
+                        'assets/TrunkCoinIcon.png',
+                        width: 28.0,
+                        height: 28.0,
+                      ),
+                      Padding(padding: EdgeInsets.all(2.5)),
+                      Text(
+                        musicPrice.toString(),
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16
+                        ),
+                      )
+                    ],
+                  ),
+                ],
+              ),
+            ),
           ),
         );
       }),

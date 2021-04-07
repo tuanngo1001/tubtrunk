@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:audioplayers/audio_cache.dart';
 import 'package:audioplayers/audioplayers.dart';
 
@@ -10,13 +12,14 @@ class MusicController {
     return _instance;
   }
 
+  static String _baseRemoteUrl = "https://tubtrunk.tk/musics/";
+
   AudioPlayer _advancedPlayer;
-  AudioCache _audioCache;
   List<List<String>> _musicList = [];
+  Timer playingDemoTimer;
 
   MusicController._instantiate(){
     _advancedPlayer = new AudioPlayer();
-    _audioCache = new AudioCache(fixedPlayer: _advancedPlayer, prefix:'assets/musics/');
     _loadMusics();
   }
 
@@ -29,19 +32,16 @@ class MusicController {
     _musicList.add(["Just Do It", "JustDoIt.mp3","JustDoIt.png"]);
   }
 
-  void play(String url, {bool isDemo = true}){
+  void playRemote(String fileName){
     stop();
 
-    _advancedPlayer.play(url);
-    // _audioCache.play(fileName,volume: 100.0);
-
-    if (isDemo) {
-      Future.delayed(Duration(seconds: 15), () => _advancedPlayer.stop()); // Only play 10 seconds for demos
-    }
+    _advancedPlayer.play(_baseRemoteUrl + fileName);
+    playingDemoTimer = Timer(Duration(seconds: 15), () => _advancedPlayer.stop()); // Only play 15 seconds for demos
   }
 
   void stop(){
     _advancedPlayer.stop();
+    playingDemoTimer?.cancel();
   }
 
   void pause(){
