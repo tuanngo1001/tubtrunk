@@ -7,7 +7,7 @@ $result = mysqli_query($con, $getQuery);
 $data = array();
 while ($row = mysqli_fetch_assoc($result)) {
     $rowData = new stdClass();
-    $rowData->ID = $row['msID'];
+    $rowData->ID = intval($row['msID']);
     $rowData->Title = $row['msTitle'];
     $rowData->FileName = $row['msFileName'];
 

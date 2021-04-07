@@ -7,7 +7,7 @@ class MusicModel {
 
   factory MusicModel.fromJson(Map<String, dynamic> json) {
     return MusicModel(
-      id: int.parse(json['ID']),
+      id: json['ID'],
       title: json['Title'],
       fileName: json['FileName'],
     );
