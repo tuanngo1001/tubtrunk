@@ -28,7 +28,7 @@ class _RewardStoreViewState extends State<RewardStoreView> {
   void removeCouponSetState(int index) {
     setState(() {
       //For now only remove coupon at given index, add more functions if needed.
-      controller.couponList.removeAt(index);
+      controller.removeCouponAtIndex(index);
     });
   }
 
@@ -192,21 +192,25 @@ class _RewardStoreViewState extends State<RewardStoreView> {
             splashColor: Colors.cyanAccent,
             hoverColor: Colors.lightBlue[100],
             onTap: () {
-              MusicController.instance.playRemote(controller.musicList[index].fileName);
-              // setState(() {
-              //   buyItem(musicPrice, index, context);
-              // });
+              setState(() {
+                buyItem(musicPrice, index, context);
+              });
             },
             child: Container(
               width: MediaQuery.of(context).size.width,
               child: Column(
                 children: <Widget>[
-                  Padding(padding: EdgeInsets.all(18.0)),
+                  IconButton(
+                    icon: const Icon(Icons.volume_up),
+                    iconSize: 30,
+                    tooltip: 'Press to hear preview',
+                    onPressed: () => MusicController.instance.playRemote(controller.musicList[index].fileName),
+                  ),
                   Text(
                     controller.musicList[index].title,
                     style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 20
+                      fontWeight: FontWeight.bold,
+                      fontSize: 20,
                     ),
                   ),
                   const SizedBox(height: 15),
@@ -223,8 +227,8 @@ class _RewardStoreViewState extends State<RewardStoreView> {
                       Text(
                         musicPrice.toString(),
                         style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 16
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16
                         ),
                       )
                     ],
