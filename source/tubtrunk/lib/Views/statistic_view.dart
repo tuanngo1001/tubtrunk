@@ -150,11 +150,35 @@ class _StatisticViewState extends State<StatisticView> {
     );
   }
 
-  double displayPieChartValue(int times) {
-    if (times == 0) {
+  double displayPieChartValueSuccess(int succeedTimes, int failedTimes) {
+    if (succeedTimes == 0 && failedTimes == 0) {
       return 1.0;
     } else {
-      return times.toDouble();
+      return succeedTimes.toDouble();
+    }
+  }
+
+  double displayPieChartValueFail(int succeedTimes, int failedTimes) {
+    if (succeedTimes == 0 && failedTimes == 0) {
+      return 1.0;
+    } else {
+      return failedTimes.toDouble();
+    }
+  }
+
+  String displayPieChartTitleSuccess(int times, percentage) {
+    if (times != 0) {
+      return Text('$percentage% ($times)', key: Key("stvSucceedProportion")).data;
+    } else {
+      return "";
+    }
+  }
+
+  String displayPieChartTitleFail(int times, percentage) {
+    if (times != 0) {
+      return Text('$percentage% ($times)', key: Key("stvFailedProportion")).data;
+    } else {
+      return "";
     }
   }
 
@@ -171,8 +195,8 @@ class _StatisticViewState extends State<StatisticView> {
         case 0:
           return PieChartSectionData(
             color: const Color(0xff0293ee),
-            value: displayPieChartValue(succeedTimes),
-            title: Text('$succeedPercentage% ($succeedTimes)', key: Key("stvSucceedProportion")).data,
+            value: displayPieChartValueSuccess(succeedTimes, failedTimes),
+            title: displayPieChartTitleSuccess(succeedTimes, succeedPercentage),
             radius: radius,
             titleStyle: TextStyle(
                 fontSize: fontSize,
@@ -182,8 +206,8 @@ class _StatisticViewState extends State<StatisticView> {
         case 1:
           return PieChartSectionData(
             color: const Color(0xfff8b250),
-            value: displayPieChartValue(failedTimes),
-            title: Text('$failedPercentage% ($failedTimes)', key: Key("stvFailedProportion")).data,
+            value: displayPieChartValueFail(succeedTimes, failedTimes),
+            title: displayPieChartTitleFail(failedTimes, failedPercentage),
             radius: radius,
             titleStyle: TextStyle(
                 fontSize: fontSize,
