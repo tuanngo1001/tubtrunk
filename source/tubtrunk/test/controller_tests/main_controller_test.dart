@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
-import 'package:tubtrunk/Controllers/mainController.dart';
+import 'package:tubtrunk/Controllers/main_controller.dart';
 import 'package:mockito/mockito.dart';
 import 'package:tubtrunk/Utils/globalSettings.dart';
 import 'package:http/http.dart' as http;

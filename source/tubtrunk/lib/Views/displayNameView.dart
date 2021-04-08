@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:tubtrunk/Controllers/authenticationController.dart';
+import 'package:tubtrunk/Controllers/authentication_controller.dart';
 import 'mainView.dart';
 import 'notificationView.dart';
 

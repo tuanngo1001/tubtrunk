@@ -1,8 +1,8 @@
 import 'dart:async';
 
 import 'package:circular_countdown_timer/circular_countdown_timer.dart';
-import 'package:tubtrunk/Controllers/mainController.dart';
-import 'package:tubtrunk/Controllers/notificationsController.dart';
+import 'package:tubtrunk/Controllers/main_controller.dart';
+import 'package:tubtrunk/Controllers/notifications_controller.dart';
 import 'package:tubtrunk/Utils/globalSettings.dart';
 import 'package:http/http.dart' as http;
 

@@ -3,7 +3,7 @@ import 'package:tubtrunk/Utils/globalSettings.dart';
 import 'displayNameView.dart';
 import 'leaderboardView.dart';
 import 'notificationView.dart';
-import 'package:tubtrunk/Controllers/authenticationController.dart';
+import 'package:tubtrunk/Controllers/authentication_controller.dart';
 
 class AccountView extends StatefulWidget {
   @override

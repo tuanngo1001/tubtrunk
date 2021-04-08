@@ -5,7 +5,7 @@ import 'accountView.dart';
 import 'timerView.dart';
 import 'statisticView.dart';
 import 'rewardStoreView.dart';
-import '../Controllers/mainController.dart';
+import '../Controllers/main_controller.dart';
 
 class MainView extends StatefulWidget {
   MainView({Key key}) : super(key: key);

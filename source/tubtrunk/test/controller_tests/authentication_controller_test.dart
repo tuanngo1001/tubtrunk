@@ -3,7 +3,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_test/flutter_test.dart';
-import 'package:tubtrunk/Controllers/authenticationController.dart';
+import 'package:tubtrunk/Controllers/authentication_controller.dart';
 import 'package:tubtrunk/Models/userModel.dart';
 import 'package:tubtrunk/Utils/globalSettings.dart';
 import 'package:crypt/crypt.dart';

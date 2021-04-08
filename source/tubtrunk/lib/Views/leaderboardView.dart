@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:tubtrunk/Controllers/leaderboardController.dart';
+import 'package:tubtrunk/Controllers/leaderboard_controller.dart';
 import 'package:tubtrunk/Models/leaderboardModel.dart';
 import 'package:tubtrunk/Views/Icons/rankingIcon.dart';
 

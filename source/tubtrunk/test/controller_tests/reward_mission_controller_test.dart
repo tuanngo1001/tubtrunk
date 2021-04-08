@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
-import 'package:tubtrunk/Controllers/rewardMissionController.dart';
+import 'package:tubtrunk/Controllers/reward_mission_controller.dart';
 import 'package:tubtrunk/Models/rewardMissionModel.dart';
 import 'package:http/http.dart' as http;
 import 'package:mockito/mockito.dart';

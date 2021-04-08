@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:tubtrunk/Controllers/storeController.dart';
+import 'package:tubtrunk/Controllers/store_controller.dart';
 import 'package:tubtrunk/Models/couponModel.dart';
 
 void main() {

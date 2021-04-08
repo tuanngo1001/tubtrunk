@@ -1,6 +1,6 @@
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:tubtrunk/Controllers/memoryController.dart';
+import 'package:tubtrunk/Controllers/memory_controller.dart';
 
 void main() {
   SharedPreferences.setMockInitialValues({});

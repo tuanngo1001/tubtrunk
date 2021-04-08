@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'loginView.dart';
-import '../Controllers/authenticationController.dart';
+import '../Controllers/authentication_controller.dart';
 import 'notificationView.dart';
 
 class SignUpView extends StatefulWidget {

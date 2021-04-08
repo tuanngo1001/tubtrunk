@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:tubtrunk/Controllers/timerController.dart';
+import 'package:tubtrunk/Controllers/timer_controller.dart';
 import 'package:circular_countdown_timer/circular_countdown_timer.dart';
 import 'package:flutter_duration_picker/flutter_duration_picker.dart';
 import 'package:is_lock_screen/is_lock_screen.dart';
 
-import '../Controllers/notificationsController.dart';
+import '../Controllers/notifications_controller.dart';
 import './notificationView.dart';
 
 class TimerView extends StatefulWidget {

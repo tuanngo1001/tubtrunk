@@ -1,5 +1,5 @@
 import 'package:flutter/cupertino.dart';
-import 'package:tubtrunk/Controllers/mainController.dart';
+import 'package:tubtrunk/Controllers/main_controller.dart';
 import 'package:tubtrunk/Models/rewardMissionModel.dart';
 import 'package:http/http.dart' as http;
 import 'package:tubtrunk/Utils/globalSettings.dart';
