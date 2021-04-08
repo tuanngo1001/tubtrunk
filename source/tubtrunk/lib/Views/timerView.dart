@@ -4,6 +4,7 @@ import 'package:tubtrunk/Controllers/timerController.dart';
 import 'package:circular_countdown_timer/circular_countdown_timer.dart';
 import 'package:flutter_duration_picker/flutter_duration_picker.dart';
 import 'package:is_lock_screen/is_lock_screen.dart';
+import 'package:tubtrunk/Views/owned_musics_view.dart';
 
 import '../Controllers/notificationsController.dart';
 import './notificationView.dart';
@@ -127,7 +128,12 @@ class _TimerViewState extends State<TimerView> with WidgetsBindingObserver, Auto
                 backgroundColor: Color(0xfff97c7c),
                 mini: true,
                 child: const Icon(Icons.audiotrack_rounded),
-                onPressed: () => MusicController.playLooping("[MapleStory BGM] Title.mp3"),
+                onPressed: () => Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => OwnedMusicsView(),
+                  ),
+                ),
               ),
               SizedBox(width: 5),
             ],

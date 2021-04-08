@@ -1,5 +1,9 @@
 import 'dart:async';
+import 'dart:convert';
 import 'package:audioplayers/audioplayers.dart';
+import 'package:tubtrunk/Models/music_model.dart';
+import 'package:tubtrunk/Utils/globalSettings.dart';
+import 'package:http/http.dart' as http;
 
 class MusicController {
   static String _baseRemoteUrl = "https://tubtrunk.tk/musics/";
@@ -33,5 +37,21 @@ class MusicController {
 
   static void resume() {
     _advancedPlayer.resume();
+  }
+
+  static Future<List<MusicModel>> loadOwnedMusics() async {
+    List<MusicModel> ownedMusics = [];
+    var map = new Map<String, String>();
+    map["UserID"] = GlobalSettings.user.uID.toString();
+
+    var response = await http.post(GlobalSettings.serverAddress + "getOwnedMusics.php", body: map);
+    if (response.statusCode == 200) {
+      var data = jsonDecode(response.body);
+      for (var key in data) {
+        ownedMusics.add(MusicModel.fromJson(key));
+      }
+    }
+
+    return ownedMusics;
   }
 }

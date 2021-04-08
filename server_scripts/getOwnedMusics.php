@@ -10,6 +10,9 @@ if ($row = mysqli_fetch_assoc($result))
 {
     if ($row['uOwnedMusics'] != "")
     {
+        $debug = "INSERT INTO Debug (dDesc) VALUES ('Do have')";
+        mysqli_query($con, $debug);
+
         $musicIDs = json_decode($row['uOwnedMusics']);
     }
 }
@@ -34,7 +37,7 @@ while ($row = mysqli_fetch_assoc($result))
         }
     }
 
-    if (!$found)
+    if ($found)
     {
         $rowData->Title = $row['msTitle'];
         $rowData->FileName = $row['msFileName'];
