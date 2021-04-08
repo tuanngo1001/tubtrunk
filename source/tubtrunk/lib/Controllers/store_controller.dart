@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:tubtrunk/Controllers/mainController.dart';
+import 'package:tubtrunk/Controllers/main_controller.dart';
 import 'dart:convert';
-import 'package:tubtrunk/Models/couponModel.dart';
 import 'package:tubtrunk/Models/music_model.dart';
-import 'package:tubtrunk/Utils/globalSettings.dart';
-import 'package:tubtrunk/Views/notificationView.dart';
+import 'package:tubtrunk/Views/notification_view.dart';
+import 'package:tubtrunk/Utils/global_settings.dart';
+import 'package:tubtrunk/Models/coupon_model.dart';
 
 class StoreController {
   //Singleton instance

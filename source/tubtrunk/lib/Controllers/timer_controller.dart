@@ -1,9 +1,9 @@
 import 'dart:async';
 
 import 'package:circular_countdown_timer/circular_countdown_timer.dart';
-import 'package:tubtrunk/Controllers/mainController.dart';
-import 'package:tubtrunk/Controllers/notificationsController.dart';
-import 'package:tubtrunk/Utils/globalSettings.dart';
+import 'package:tubtrunk/Controllers/main_controller.dart';
+import 'package:tubtrunk/Controllers/notifications_controller.dart';
+import 'package:tubtrunk/Utils/global_settings.dart';
 import 'package:http/http.dart' as http;
 
 class TimerController {
@@ -51,7 +51,10 @@ class TimerController {
     _startDateTime = DateTime.now();
   }
 
-  Future<void> saveTimerRecord({int duration: 0, bool completed: false, http.Client clientParameter}) async {
+  Future<void> saveTimerRecord(
+      {int duration: 0,
+      bool completed: false,
+      http.Client clientParameter}) async {
     var map = new Map<String, String>();
     map["UserID"] = GlobalSettings.user.uID.toString();
     map["Date"] = GlobalSettings.dateFormatted.format(_startDateTime);
@@ -66,7 +69,8 @@ class TimerController {
       client = clientParameter;
     }
 
-    var response = await client.post(GlobalSettings.serverAddress + "addTimerRecord.php", body: map);
+    var response = await client
+        .post(GlobalSettings.serverAddress + "addTimerRecord.php", body: map);
 
     if (response.statusCode == 200) {
       print("Successfully saved new timer record");
@@ -104,7 +108,7 @@ class TimerController {
     _resumable = false;
     _finished = true;
     _stopStartButtonText = "Start";
-    
+
     saveTimerRecord(duration: minutes, completed: finished);
   }
 
@@ -114,7 +118,6 @@ class TimerController {
       _resumable == true
           ? countDownController.resume()
           : countDownController.start();
-
     } else {
       _stopStartButtonText = "Start";
       countDownController.pause();
@@ -123,7 +126,8 @@ class TimerController {
   }
 
   void reset() {
-    if (_resumable) { // Reset is pressed when timer is still resumable. This should count as a fail and save to db as such
+    if (_resumable) {
+      // Reset is pressed when timer is still resumable. This should count as a fail and save to db as such
       saveTimerRecord();
     }
     countDownController.restart(duration: _duration);
@@ -137,10 +141,8 @@ class TimerController {
   void startLockscreenTimer() {
     Duration remainingDuration = _parseDuration(_countDownController.getTime());
     _lockScreenTimer = Timer(remainingDuration, () {
-      notificationsController.setNotification(
-          "Time's Up!!!",
-          "Your focus time period is over, click to receive your rewards!"
-      );
+      notificationsController.setNotification("Time's Up!!!",
+          "Your focus time period is over, click to receive your rewards!");
       notificationsController.showNotification();
     });
   }

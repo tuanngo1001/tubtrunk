@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:tubtrunk/Controllers/mainController.dart';
 import 'package:tubtrunk/Controllers/music_controller.dart';
-import 'package:tubtrunk/Controllers/storeController.dart';
-import 'package:tubtrunk/Views/Icons/myCouponIcon.dart';
+import 'package:tubtrunk/Views/Icons/my_coupon_icon.dart';
+import 'package:tubtrunk/Controllers/store_controller.dart';
+import 'package:tubtrunk/Utils/global_settings.dart';
+import 'package:tubtrunk/Views/notification_view.dart';
 
 class RewardStoreView extends StatefulWidget {
   @override

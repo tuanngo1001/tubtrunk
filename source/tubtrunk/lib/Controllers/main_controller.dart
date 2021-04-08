@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:tubtrunk/Utils/globalSettings.dart';
+import 'package:tubtrunk/Utils/global_settings.dart';
 import 'package:http/http.dart' as http;
 
 class MainController {

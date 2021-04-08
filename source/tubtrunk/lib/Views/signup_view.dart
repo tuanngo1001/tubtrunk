@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'loginView.dart';
-import '../Controllers/authenticationController.dart';
-import 'notificationView.dart';
+import 'package:tubtrunk/Views/login_view.dart';
+import 'package:tubtrunk/Controllers/authentication_controller.dart';
+import 'package:tubtrunk/Views/notification_view.dart';
 
 class SignUpView extends StatefulWidget {
   @override

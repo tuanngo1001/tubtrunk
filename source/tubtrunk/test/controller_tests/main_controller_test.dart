@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
-import 'package:tubtrunk/Controllers/mainController.dart';
+import 'package:tubtrunk/Controllers/main_controller.dart';
 import 'package:mockito/mockito.dart';
-import 'package:tubtrunk/Utils/globalSettings.dart';
+import 'package:tubtrunk/Utils/global_settings.dart';
 import 'package:http/http.dart' as http;
-import 'package:tubtrunk/Models/userModel.dart';
+import 'package:tubtrunk/Models/user_model.dart';
 
 import 'main_controller_test.mocks.dart';
 

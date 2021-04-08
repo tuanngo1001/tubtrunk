@@ -1,4 +1,4 @@
-import 'package:tubtrunk/Models/leaderboardModel.dart';
+import 'package:tubtrunk/Models/leaderboard_model.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
