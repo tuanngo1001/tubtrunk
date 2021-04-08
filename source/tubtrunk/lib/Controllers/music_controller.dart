@@ -39,12 +39,12 @@ class MusicController {
     _advancedPlayer.resume();
   }
 
-  static Future<List<MusicModel>> loadOwnedMusics() async {
+  static Future<List<MusicModel>> loadOwnedMusic() async {
     List<MusicModel> ownedMusics = [];
     var map = new Map<String, String>();
     map["UserID"] = GlobalSettings.user.uID.toString();
 
-    var response = await http.post(GlobalSettings.serverAddress + "getOwnedMusics.php", body: map);
+    var response = await http.post(GlobalSettings.serverAddress + "getOwnedMusic.php", body: map);
     if (response.statusCode == 200) {
       var data = jsonDecode(response.body);
       for (var key in data) {

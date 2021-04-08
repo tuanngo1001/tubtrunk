@@ -18,7 +18,7 @@ class _MusicLibraryViewState extends State<MusicLibraryView> {
       ),
       body: SafeArea(
         child: FutureBuilder<ListView>(
-          future: _getOwnedMusics(),
+          future: _getOwnedMusic(),
           builder: (BuildContext context, AsyncSnapshot<ListView> snapshot) {
             if (snapshot.hasData) {
               return snapshot.data;
@@ -31,8 +31,8 @@ class _MusicLibraryViewState extends State<MusicLibraryView> {
     );
   }
 
-  Future<ListView> _getOwnedMusics() async {
-    List<MusicModel> ownedMusics = await MusicController.loadOwnedMusics();
+  Future<ListView> _getOwnedMusic() async {
+    List<MusicModel> ownedMusics = await MusicController.loadOwnedMusic();
     return ListView.builder(
       itemCount: ownedMusics.length,
       itemBuilder: (BuildContext context, int index) {

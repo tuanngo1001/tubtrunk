@@ -48,7 +48,7 @@ class StoreController {
     var map = new Map<String, String>();
     map["UserID"] = GlobalSettings.user.uID.toString();
 
-    var response = await http.post(GlobalSettings.serverAddress + "getMusics.php", body: map);
+    var response = await http.post(GlobalSettings.serverAddress + "getMusic.php", body: map);
     if (response.statusCode == 200) {
       var data = jsonDecode(response.body);
 
