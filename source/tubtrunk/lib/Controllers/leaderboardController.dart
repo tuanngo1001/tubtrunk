@@ -1,4 +1,4 @@
-import 'package:tubtrunk/Utils/globalSettings.dart';
+import 'package:tubtrunk/Utils/global_settings.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:tubtrunk/Models/leaderboardModel.dart';

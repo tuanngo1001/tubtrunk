@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:tubtrunk/Utils/globalSettings.dart';
+import 'package:tubtrunk/Utils/global_settings.dart';
 import 'displayNameView.dart';
 import 'leaderboardView.dart';
 import 'notificationView.dart';

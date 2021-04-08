@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:circular_countdown_timer/circular_countdown_timer.dart';
 import 'package:tubtrunk/Controllers/mainController.dart';
 import 'package:tubtrunk/Controllers/notificationsController.dart';
-import 'package:tubtrunk/Utils/globalSettings.dart';
+import 'package:tubtrunk/Utils/global_settings.dart';
 import 'package:http/http.dart' as http;
 
 class TimerController {
