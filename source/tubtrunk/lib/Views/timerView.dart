@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:tubtrunk/Controllers/music_controller.dart';
 import 'package:tubtrunk/Controllers/timerController.dart';
 import 'package:circular_countdown_timer/circular_countdown_timer.dart';
 import 'package:flutter_duration_picker/flutter_duration_picker.dart';
 import 'package:is_lock_screen/is_lock_screen.dart';
-import 'package:tubtrunk/Views/owned_musics_view.dart';
+import 'package:tubtrunk/Views/music_library_view.dart';
 
 import '../Controllers/notificationsController.dart';
 import './notificationView.dart';
@@ -18,7 +17,8 @@ class TimerView extends StatefulWidget {
   _TimerViewState createState() => _TimerViewState();
 }
 
-class _TimerViewState extends State<TimerView> with WidgetsBindingObserver, AutomaticKeepAliveClientMixin {
+class _TimerViewState extends State<TimerView>
+    with WidgetsBindingObserver, AutomaticKeepAliveClientMixin {
   final TimerController _timerController = TimerController();
 
   @override
@@ -27,7 +27,8 @@ class _TimerViewState extends State<TimerView> with WidgetsBindingObserver, Auto
 
     WidgetsBinding.instance.addObserver(this);
 
-    notificationsController.setListenerForLowerVersions(onNotificationInLowerVersions);
+    notificationsController
+        .setListenerForLowerVersions(onNotificationInLowerVersions);
     notificationsController.setOnNotificationClick(onNotificationClick);
   }
 
@@ -44,23 +45,21 @@ class _TimerViewState extends State<TimerView> with WidgetsBindingObserver, Auto
   void didChangeAppLifecycleState(AppLifecycleState state) async {
     super.didChangeAppLifecycleState(state);
 
-    if (_timerController.stopped)
-      return;
+    if (_timerController.stopped) return;
 
     if (state == AppLifecycleState.inactive) {
       if (await isLockScreen()) {
         _timerController.startLockscreenTimer();
-      }
-      else {
-        notificationsController.setNotification("Warning! You've left Tubtrunk!",
+      } else {
+        notificationsController.setNotification(
+            "Warning! You've left Tubtrunk!",
             "You have been assessed a failed session.");
         notificationsController.showNotification();
         setState(() {
           _timerController.reset();
         });
       }
-    }
-    else if (state == AppLifecycleState.resumed) {
+    } else if (state == AppLifecycleState.resumed) {
       _timerController.stopLockscreenTimer();
     }
   }
@@ -131,7 +130,7 @@ class _TimerViewState extends State<TimerView> with WidgetsBindingObserver, Auto
                 onPressed: () => Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => OwnedMusicsView(),
+                    builder: (context) => MusicLibraryView(),
                   ),
                 ),
               ),
