@@ -1,10 +1,10 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
-import 'package:tubtrunk/Controllers/leaderboardController.dart';
-import 'package:tubtrunk/Models/leaderboardModel.dart';
+import 'package:tubtrunk/Controllers/leaderboard_controller.dart';
+import 'package:tubtrunk/Models/leaderboard_model.dart';
 import 'package:http/http.dart' as http;
 import 'package:mockito/mockito.dart';
-import 'package:tubtrunk/Utils/globalSettings.dart';
+import 'package:tubtrunk/Utils/global_settings.dart';
 import 'leaderboard_controller_test.mocks.dart';
 
 @GenerateMocks([http.Client])

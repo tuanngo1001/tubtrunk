@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:tubtrunk/Models/couponModel.dart';
+import 'package:tubtrunk/Models/coupon_model.dart';
 
 void main(){
   group('Initialization Test', () {

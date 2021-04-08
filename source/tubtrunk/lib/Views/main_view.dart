@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:tubtrunk/Utils/globalSettings.dart';
-import 'missionView.dart';
-import 'accountView.dart';
-import 'timerView.dart';
-import 'statisticView.dart';
-import 'rewardStoreView.dart';
-import '../Controllers/mainController.dart';
+import 'package:tubtrunk/Utils/global_settings.dart';
+import 'package:tubtrunk/Views/mission_view.dart';
+import 'package:tubtrunk/Views/account_view.dart';
+import 'package:tubtrunk/Views/timer_view.dart';
+import 'package:tubtrunk/Views/statistic_view.dart';
+import 'package:tubtrunk/Views/reward_store_view.dart';
+import 'package:tubtrunk/Controllers/main_controller.dart';
 
 class MainView extends StatefulWidget {
   MainView({Key key}) : super(key: key);

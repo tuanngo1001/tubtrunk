@@ -3,9 +3,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_test/flutter_test.dart';
-import 'package:tubtrunk/Controllers/authenticationController.dart';
-import 'package:tubtrunk/Models/userModel.dart';
-import 'package:tubtrunk/Utils/globalSettings.dart';
+import 'package:tubtrunk/Controllers/authentication_controller.dart';
+import 'package:tubtrunk/Utils/global_settings.dart';
+import 'package:tubtrunk/Models/user_model.dart';
 import 'package:crypt/crypt.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
@@ -25,11 +25,7 @@ void main() {
       final http.Client client = MockClient();
 
       String validEmail = "123@gmail.com";
-      // String invalidEmail1 = ""; //Empty email
-      // String invalidEmail2 = "notEmail"; //Wrong email format
       String validPassword = "1234";
-      // String invalidPassword1 = ""; //Empty password
-      // String invalidPassword2 = "4321";
 
       var map = new Map<String, String>();
       map['UserEmail'] = validEmail;

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'loginView.dart';
-import 'package:tubtrunk/Controllers/authenticationController.dart';
-import 'mainView.dart';
+import 'package:tubtrunk/Views/login_view.dart';
+import 'package:tubtrunk/Controllers/authentication_controller.dart';
+import 'package:tubtrunk/Views/main_view.dart';
 
 class LandingView extends StatelessWidget {
   @override

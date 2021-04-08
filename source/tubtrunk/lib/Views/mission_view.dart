@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:screenshot/screenshot.dart';
 import 'package:share/share.dart';
-import 'package:tubtrunk/Controllers/rewardMissionController.dart';
-import 'package:tubtrunk/Models/rewardMissionModel.dart';
+import 'package:tubtrunk/Controllers/reward_mission_controller.dart';
+import 'package:tubtrunk/Models/reward_mission_model.dart';
 import 'package:step_progress_indicator/step_progress_indicator.dart';
 import 'package:tubtrunk/Views/Icons/challengeIcon.dart';
 

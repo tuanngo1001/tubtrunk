@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
-import 'package:tubtrunk/Controllers/mainController.dart';
-import 'package:tubtrunk/Models/rewardMissionModel.dart';
+import 'package:tubtrunk/Controllers/main_controller.dart';
+import 'package:tubtrunk/Models/reward_mission_model.dart';
 import 'package:http/http.dart' as http;
-import 'package:tubtrunk/Utils/globalSettings.dart';
+import 'package:tubtrunk/Utils/global_settings.dart';
 import 'dart:convert';
 
 class RewardMissionController {

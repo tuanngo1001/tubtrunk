@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:tubtrunk/Models/timerRecordModel.dart';
+import 'package:tubtrunk/Models/timer_record_model.dart';
 
 void main() {
   group('timerRecordModel initialization test', () {

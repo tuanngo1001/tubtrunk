@@ -1,11 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:giffy_dialog/giffy_dialog.dart';
-import 'package:tubtrunk/Controllers/mainController.dart';
-import 'package:tubtrunk/Views/mainView.dart';
-import './displayNameView.dart';
-import './loginView.dart';
-import './signUpView.dart';
+import 'package:tubtrunk/Controllers/main_controller.dart';
+import 'package:tubtrunk/Views/main_view.dart';
+import 'package:tubtrunk/Views/display_name_view.dart';
+import 'package:tubtrunk/Views/login_view.dart';
+import 'package:tubtrunk/Views/signup_view.dart';
 
 class NotificationView extends StatefulWidget {
   final Function rewardStoreViewSetState;

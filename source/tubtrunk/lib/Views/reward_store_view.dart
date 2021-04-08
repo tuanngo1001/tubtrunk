@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:tubtrunk/Controllers/mainController.dart';
-import 'package:tubtrunk/Controllers/storeController.dart';
-import 'package:tubtrunk/Utils/globalSettings.dart';
+import 'package:tubtrunk/Controllers/main_controller.dart';
+import 'package:tubtrunk/Controllers/store_controller.dart';
+import 'package:tubtrunk/Utils/global_settings.dart';
 import 'package:tubtrunk/Views/Icons/myCouponIcon.dart';
-import 'notificationView.dart';
+import 'package:tubtrunk/Views/notification_view.dart';
 
 class RewardStoreView extends StatefulWidget {
   RewardStoreView(this.onBuyItemChange);
@@ -31,18 +31,22 @@ class _RewardStoreViewState extends State<RewardStoreView> {
     });
   }
 
-  void buyItem(int itemPrice, int itemIndex, BuildContext context){
-    if(itemPrice > GlobalSettings.user.money){
-      showDialog(context: context,
-          builder: (_) => new NotificationView(removeCouponSetState).notEnoughMoney(context));
-    }else{
-      showDialog(context: context,
+  void buyItem(int itemPrice, int itemIndex, BuildContext context) {
+    if (itemPrice > GlobalSettings.user.money) {
+      showDialog(
+          context: context,
           builder: (_) => new NotificationView(removeCouponSetState)
-              .purchasePopUp(context, controller.removeCouponAtIndex, itemIndex, itemPrice, setMoney));
+              .notEnoughMoney(context));
+    } else {
+      showDialog(
+          context: context,
+          builder: (_) => new NotificationView(removeCouponSetState)
+              .purchasePopUp(context, controller.removeCouponAtIndex, itemIndex,
+                  itemPrice, setMoney));
     }
   }
 
-  void setMoney(int itemPrice){
+  void setMoney(int itemPrice) {
     widget.onBuyItemChange((GlobalSettings.user.money));
     setState(() {
       _mainController.addMoney(-itemPrice);
@@ -97,7 +101,11 @@ class _RewardStoreViewState extends State<RewardStoreView> {
                               hoverColor: Colors.lightBlue[100],
                               onTap: () {
                                 setState(() {
-                                  buyItem(int.parse(controller.couponList[index].price), index, context);
+                                  buyItem(
+                                      int.parse(
+                                          controller.couponList[index].price),
+                                      index,
+                                      context);
                                   // showDialog(context: context,
                                   //     builder: (_) => new NotificationView(removeCouponSetState)
                                   //         .purchasePopUp(context, controller.removeCouponAtIndex, index));
