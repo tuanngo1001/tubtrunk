@@ -30,21 +30,16 @@ class _MainViewState extends State<MainView>
   initState() {
     super.initState();
     _mainController = MainController();
+    _mainController.setStateCallback = setState;
     _mainController.tabController = TabController(length: 5, vsync: this);
 
     missionView = MissionView();
 
     timerView = TimerView(updateProgressCallback: missionView.updateProgressCallback);
-    rewardStoreView = RewardStoreView(updateMoney);
+    rewardStoreView = RewardStoreView();
 
     statisticView = StatisticView();
     accountView = AccountView(resetTabItem);
-  }
-
-  void updateMoney(int newMoney){
-    setState(() {
-      GlobalSettings.user.money = newMoney;
-    });
   }
 
   void resetTabItem(int index){

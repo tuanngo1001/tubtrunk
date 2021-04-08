@@ -7,6 +7,7 @@ class MainController {
   int get selectedIndex => _selectedIndex;
 
   TabController tabController;
+  Function(VoidCallback) setStateCallback;
 
   // Private constructor
   MainController._internal() {
@@ -45,5 +46,8 @@ class MainController {
         GlobalSettings.serverAddress + "updateUserMoney.php",
         body: map
     );
+
+    if (setStateCallback != null)
+      setStateCallback((){});
   }
 }

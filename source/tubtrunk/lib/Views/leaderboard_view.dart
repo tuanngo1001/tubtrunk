@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:tubtrunk/Controllers/leaderboard_controller.dart';
 import 'package:tubtrunk/Models/leaderboard_model.dart';
-import 'package:tubtrunk/Views/Icons/rankingIcon.dart';
+import 'package:tubtrunk/Views/Icons/ranking_icon.dart';
 
 class LeaderboardView extends StatefulWidget {
   final LeaderboardController _leaderboardController = LeaderboardController();

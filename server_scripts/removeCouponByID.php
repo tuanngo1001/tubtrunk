@@ -3,7 +3,7 @@ include('connectDB.php');
 
 $couponID = $_POST['couponID'];
 
-$deleteQuery = "DELETE FROM Coupon WHERE id='$couponID'";
+$updateQuery = "UPDATE Coupon SET cIsBought = 1 WHERE id='$couponID'";
 
-mysqli_query($con, $deleteQuery) or die(mysqli_error($con));
+mysqli_query($con, $updateQuery) or die(mysqli_error($con));
 ?>

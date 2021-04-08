@@ -1,7 +1,7 @@
 <?php
 include('connectDB.php');
 
-$getQuery = "SELECT * FROM Coupon";
+$getQuery = "SELECT * FROM Coupon WHERE cIsBought = 0";
 
 $result = mysqli_query($con, $getQuery);
 
@@ -21,11 +21,6 @@ while ($row = mysqli_fetch_assoc($result)) {
 
 $jsonData = json_encode($data);
 die($jsonData);
-
-
-
-
-die("Not found");
 ?>
 
 
