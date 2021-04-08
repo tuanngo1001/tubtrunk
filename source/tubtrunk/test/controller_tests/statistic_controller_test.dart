@@ -1,13 +1,12 @@
 import 'dart:convert';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
-import 'package:tubtrunk/Controllers/statisticController.dart';
-import 'package:tubtrunk/Models/rewardMissionModel.dart';
+import 'package:tubtrunk/Controllers/statistic_controller.dart';
 import 'package:http/http.dart' as http;
 import 'package:mockito/mockito.dart';
-import 'package:tubtrunk/Models/timerRecordModel.dart';
-import 'package:tubtrunk/Models/userModel.dart';
-import 'package:tubtrunk/Utils/globalSettings.dart';
+import 'package:tubtrunk/Utils/global_settings.dart';
+import 'package:tubtrunk/Models/timer_record_model.dart';
+import 'package:tubtrunk/Models/user_model.dart';
 import 'controller_test.mocks.dart';
 
 @GenerateMocks([http.Client])

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
-import 'package:tubtrunk/Controllers/mainController.dart';
+import 'package:tubtrunk/Controllers/main_controller.dart';
 import 'package:mockito/mockito.dart';
-import 'package:tubtrunk/Utils/globalSettings.dart';
+import 'package:tubtrunk/Utils/global_settings.dart';
 import 'package:http/http.dart' as http;
-import 'package:tubtrunk/Models/userModel.dart';
+import 'package:tubtrunk/Models/user_model.dart';
 
 import 'main_controller_test.mocks.dart';
 
@@ -30,7 +30,7 @@ void main() {
       GlobalSettings.user = new UserModel.forNow(uID: 1, money: 100);
       var map = new Map<String, String>();
       map["UserID"] = GlobalSettings.user.uID.toString();
-      map["UserMoney"] = GlobalSettings.user.money.toString();
+      map["UserMoney"] = (GlobalSettings.user.money + amountToAdd).toString();
       when(mockClient.post(GlobalSettings.serverAddress + "updateUserMoney.php", body: map)).thenAnswer((_) async => http.Response('', 200));
 
       mainController.addMoney(amountToAdd, clientParameter: mockClient);

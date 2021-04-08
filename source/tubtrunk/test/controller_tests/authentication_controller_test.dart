@@ -3,9 +3,10 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_test/flutter_test.dart';
-import 'package:tubtrunk/Controllers/authenticationController.dart';
-import 'package:tubtrunk/Models/userModel.dart';
-import 'package:tubtrunk/Utils/globalSettings.dart';
+import 'package:tubtrunk/Controllers/authentication_controller.dart';
+import 'package:tubtrunk/Utils/global_settings.dart';
+import 'package:tubtrunk/Models/user_model.dart';
+import 'package:crypt/crypt.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'controller_test.mocks.dart';
@@ -24,15 +25,12 @@ void main() {
       final http.Client client = MockClient();
 
       String validEmail = "123@gmail.com";
-      // String invalidEmail1 = ""; //Empty email
-      // String invalidEmail2 = "notEmail"; //Wrong email format
       String validPassword = "1234";
-      // String invalidPassword1 = ""; //Empty password
-      // String invalidPassword2 = "4321";
 
       var map = new Map<String, String>();
       map['UserEmail'] = validEmail;
-      map['UserPassword'] = validPassword;
+      map['UserPassword'] =
+          Crypt.sha256(validPassword, salt: "tubtrunk").toString();
 
       var jsonSuccessResponse =
           '{"uID":"1","uEmail":"123@gmail.com","uUserName":"Tester","uPassword":"1234","uToken":"6059ef266bbea","uMoney":"100"}';
@@ -109,7 +107,8 @@ void main() {
 
       var map = new Map<String, String>();
       map['UserEmail'] = validEmail;
-      map["UserPassword"] = validPassword;
+      map["UserPassword"] =
+          Crypt.sha256(validPassword, salt: "tubtrunk").toString();
       map["UserName"] = "New User";
 
       var successResponse = "Success";
@@ -130,7 +129,8 @@ void main() {
 
       var map = new Map<String, String>();
       map['UserEmail'] = validEmail;
-      map["UserPassword"] = validPassword;
+      map["UserPassword"] =
+          Crypt.sha256(validPassword, salt: "tubtrunk").toString();
 
       var jsonSuccessResponse =
           '{"uID":"1","uEmail":"123@gmail.com","uUserName":"Tester","uPassword":"1234","uToken":"6059ef266bbea","uMoney":"100"}';
@@ -154,7 +154,7 @@ void main() {
       });
 
       var map = new Map<String, String>();
-      map['userToken'] = validToken;
+      map['UserToken'] = validToken;
 
       var successResponse = "Success";
 

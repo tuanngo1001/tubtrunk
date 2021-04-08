@@ -2,10 +2,9 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:http/http.dart' as http;
-
-import 'package:tubtrunk/Controllers/timerController.dart';
-import 'package:tubtrunk/Models/userModel.dart';
-import 'package:tubtrunk/Utils/globalSettings.dart';
+import 'package:tubtrunk/Controllers/timer_controller.dart';
+import 'package:tubtrunk/Utils/global_settings.dart';
+import 'package:tubtrunk/Models/user_model.dart';
 import 'controller_test.mocks.dart';
 
 @GenerateMocks([http.Client])
@@ -13,7 +12,7 @@ void main() {
   group('TimerController tests', () {
     test('Testing initialization of timer controller', () {
       final timerController = TimerController();
-      expect(timerController.duration, 5); // default duration set in controller class
+      expect(timerController.duration, 60); // default duration set in controller class
       expect(timerController.stopped, true);
       expect(timerController.resumable, false);
       expect(timerController.finished, false);
