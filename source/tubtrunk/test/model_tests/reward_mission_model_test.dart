@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:tubtrunk/Models/rewardMissionModel.dart';
+import 'package:tubtrunk/Models/reward_mission_model.dart';
 
 void main() {
   test("Properties of created mission should match with given inputs", () {

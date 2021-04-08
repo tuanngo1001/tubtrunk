@@ -5,7 +5,7 @@ import 'package:tubtrunk/Controllers/main_controller.dart';
 import 'package:mockito/mockito.dart';
 import 'package:tubtrunk/Utils/global_settings.dart';
 import 'package:http/http.dart' as http;
-import 'package:tubtrunk/Models/userModel.dart';
+import 'package:tubtrunk/Models/user_model.dart';
 
 import 'main_controller_test.mocks.dart';
 

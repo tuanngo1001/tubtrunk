@@ -1,5 +1,5 @@
-import 'package:tubtrunk/Models/timerRecordModel.dart';
 import 'package:tubtrunk/Utils/global_settings.dart';
+import 'package:tubtrunk/Models/timer_record_model.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
