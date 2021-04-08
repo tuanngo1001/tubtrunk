@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tubtrunk/Controllers/music_controller.dart';
 import 'package:tubtrunk/Controllers/timerController.dart';
 import 'package:circular_countdown_timer/circular_countdown_timer.dart';
 import 'package:flutter_duration_picker/flutter_duration_picker.dart';
@@ -117,83 +118,99 @@ class _TimerViewState extends State<TimerView> with WidgetsBindingObserver, Auto
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: GestureDetector(
-          onTap: () async {
-            Duration resultingDuration = await showDurationPicker(
-              context: context,
-              initialTime: new Duration(seconds: _timerController.duration),
-            );
-            if (_timerController.resumable) {
-              print("Asking for confirmation");
-              // Timer running, ask for confirmation to set duration
-              // Confirmation dialog
-              await showDialog(
-                context: context,
-                builder: (BuildContext context) {
-                  return _confirmationDialog(
-                    text: Text(
-                        "Changing the duration now would result in a failure for this session, are you sure?"),
-                    cancelOnPressed: () {
-                      Navigator.of(context).pop();
-                    },
-                    okOnPressed: () {
-                      Navigator.of(context).pop();
-                      _timerController.chooseDuration(resultingDuration);
+      body: Stack(
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              FloatingActionButton(
+                backgroundColor: Color(0xfff97c7c),
+                mini: true,
+                child: const Icon(Icons.audiotrack_rounded),
+                onPressed: () => MusicController.playLooping("[MapleStory BGM] Title.mp3"),
+              ),
+              SizedBox(width: 5),
+            ],
+          ),
+          Center(
+            child: GestureDetector(
+              onTap: () async {
+                Duration resultingDuration = await showDurationPicker(
+                  context: context,
+                  initialTime: new Duration(seconds: _timerController.duration),
+                );
+                if (_timerController.resumable) {
+                  print("Asking for confirmation");
+                  // Timer running, ask for confirmation to set duration
+                  // Confirmation dialog
+                  await showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return _confirmationDialog(
+                        text: Text(
+                            "Changing the duration now would result in a failure for this session, are you sure?"),
+                        cancelOnPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                        okOnPressed: () {
+                          Navigator.of(context).pop();
+                          _timerController.chooseDuration(resultingDuration);
+                        },
+                      );
                     },
                   );
+                } else {
+                  // Timer not started, set duration as per normal
+                  setState(() {
+                    _timerController.chooseDuration(resultingDuration);
+                  });
+                }
+              },
+              child: CircularCountDownTimer(
+                duration: _timerController.duration,
+                initialDuration: 0,
+                controller: _timerController.countDownController,
+                width: MediaQuery.of(context).size.width / 1.5,
+                height: MediaQuery.of(context).size.height / 1.5,
+                ringColor: Colors.grey[300],
+                ringGradient: null,
+                fillColor: Colors.yellow.shade200,
+                fillGradient: null,
+                backgroundColor: Color(0xfff97c7c),
+                backgroundGradient: null,
+                strokeWidth: 20.0,
+                strokeCap: StrokeCap.round,
+                textStyle: TextStyle(
+                  fontSize: 33.0,
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                ),
+                textFormat: CountdownTextFormat.HH_MM_SS,
+                isReverse: true,
+                isReverseAnimation: true,
+                isTimerTextShown: true,
+                autoStart: false,
+                onStart: () {
+                  setState(() {
+                    _timerController.onStart();
+                  });
                 },
-              );
-            } else {
-              // Timer not started, set duration as per normal
-              setState(() {
-                _timerController.chooseDuration(resultingDuration);
-              });
-            }
-          },
-          child: CircularCountDownTimer(
-            duration: _timerController.duration,
-            initialDuration: 0,
-            controller: _timerController.countDownController,
-            width: MediaQuery.of(context).size.width / 1.5,
-            height: MediaQuery.of(context).size.height / 1.5,
-            ringColor: Colors.grey[300],
-            ringGradient: null,
-            fillColor: Colors.yellow.shade200,
-            fillGradient: null,
-            backgroundColor: Color(0xfff97c7c),
-            backgroundGradient: null,
-            strokeWidth: 20.0,
-            strokeCap: StrokeCap.round,
-            textStyle: TextStyle(
-              fontSize: 33.0,
-              color: Colors.white,
-              fontWeight: FontWeight.bold,
+                onComplete: () {
+                  setState(() {
+                    _timerController.onComplete(widget.updateProgressCallback);
+                  });
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) =>
+                            NotificationView().moneyReceivePopup(context)),
+                  );
+                },
+                key: Key('tvCircularCountdownTimer'),
+              ),
             ),
-            textFormat: CountdownTextFormat.HH_MM_SS,
-            isReverse: true,
-            isReverseAnimation: true,
-            isTimerTextShown: true,
-            autoStart: false,
-            onStart: () {
-              setState(() {
-                _timerController.onStart();
-              });
-            },
-            onComplete: () {
-              setState(() {
-                _timerController.onComplete(widget.updateProgressCallback);
-              });
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) =>
-                        NotificationView().moneyReceivePopup(context)),
-              );
-            },
-            key: Key('tvCircularCountdownTimer'),
           ),
-        ),
+        ],
       ),
       floatingActionButton: Row(
         mainAxisAlignment: MainAxisAlignment.center,

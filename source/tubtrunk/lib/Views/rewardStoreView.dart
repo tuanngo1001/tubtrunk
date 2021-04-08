@@ -2,16 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:tubtrunk/Controllers/mainController.dart';
 import 'package:tubtrunk/Controllers/music_controller.dart';
 import 'package:tubtrunk/Controllers/storeController.dart';
-import 'package:tubtrunk/Utils/globalSettings.dart';
 import 'package:tubtrunk/Views/Icons/myCouponIcon.dart';
-import 'notificationView.dart';
 
 class RewardStoreView extends StatefulWidget {
-  RewardStoreView(this.onBuyItemChange);
   @override
   _RewardStoreViewState createState() => _RewardStoreViewState();
-
-  final Function(int) onBuyItemChange;
 }
 
 class _RewardStoreViewState extends State<RewardStoreView> {
@@ -28,34 +23,9 @@ class _RewardStoreViewState extends State<RewardStoreView> {
   void removeCouponSetState(int index) {
     setState(() {
       //For now only remove coupon at given index, add more functions if needed.
-      controller.removeCouponAtIndex(index);
+      // controller.removeCouponAtIndex(index);
+      controller.couponList.removeAt(index);
     });
-  }
-
-  void buyItem(int itemPrice, int itemIndex, BuildContext context){
-    if (itemPrice > GlobalSettings.user.money) {
-      showDialog(
-        context: context,
-        builder: (_) => new NotificationView(removeCouponSetState).notEnoughMoney(context)
-      );
-    }
-    else {
-      showDialog(
-        context: context,
-        builder: (_) => new NotificationView(removeCouponSetState).purchasePopUp(
-          context,
-          controller.removeCouponAtIndex,
-          itemIndex,
-          itemPrice,
-          setMoney
-        )
-      );
-    }
-  }
-
-  void setMoney(int itemPrice){
-    widget.onBuyItemChange((GlobalSettings.user.money));
-    setState(() => _mainController.addMoney(-itemPrice));
   }
 
   @override
@@ -104,7 +74,6 @@ class _RewardStoreViewState extends State<RewardStoreView> {
                 );
               }),
         ),
-        //backgroundColor: Color.fromARGB(255, 202, 240, 246),
       ),
     );
   }
@@ -123,11 +92,7 @@ class _RewardStoreViewState extends State<RewardStoreView> {
           child: InkWell(
             splashColor: Colors.cyanAccent,
             hoverColor: Colors.lightBlue[100],
-            onTap: () {
-              setState(() {
-                buyItem(int.parse(controller.couponList[index].price), index, context);
-              });
-            },
+            onTap: () => controller.buyCoupon(int.parse(controller.couponList[index].price), index, context),
             child: Container(
               width: MediaQuery.of(context).size.width,
               child: Column(
@@ -191,11 +156,7 @@ class _RewardStoreViewState extends State<RewardStoreView> {
           child: InkWell(
             splashColor: Colors.cyanAccent,
             hoverColor: Colors.lightBlue[100],
-            onTap: () {
-              setState(() {
-                buyItem(musicPrice, index, context);
-              });
-            },
+            onTap: () => controller.buyCoupon(musicPrice, index, context),
             child: Container(
               width: MediaQuery.of(context).size.width,
               child: Column(
@@ -204,7 +165,7 @@ class _RewardStoreViewState extends State<RewardStoreView> {
                     icon: const Icon(Icons.volume_up),
                     iconSize: 30,
                     tooltip: 'Press to hear preview',
-                    onPressed: () => MusicController.instance.playRemote(controller.musicList[index].fileName),
+                    onPressed: () => MusicController.playDemo(controller.musicList[index].fileName),
                   ),
                   Text(
                     controller.musicList[index].title,

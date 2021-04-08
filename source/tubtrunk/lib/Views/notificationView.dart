@@ -8,10 +8,7 @@ import './loginView.dart';
 import './signUpView.dart';
 
 class NotificationView extends StatefulWidget {
-  final Function rewardStoreViewSetState;
   final MainController _mainController = MainController();
-
-  NotificationView([this.rewardStoreViewSetState]);
 
   NetworkGiffyDialog giftRecievePopUp(context) {
     return NetworkGiffyDialog(
@@ -33,7 +30,7 @@ class NotificationView extends StatefulWidget {
     );
   }
 
-  NetworkGiffyDialog purchasePopUp(context, void Function(int) removeStoreItem, int index, int itemPrice, void Function(int) setMoney) {
+  NetworkGiffyDialog purchasePopUp(context, void Function() processBoughtItem) {
     return NetworkGiffyDialog(
       image: Image.asset('assets/gifs/purchaseprompt.gif'),
       title: Text('',
@@ -45,15 +42,12 @@ class NotificationView extends StatefulWidget {
       ),
       entryAnimation: EntryAnimation.TOP,
       onOkButtonPressed: () async {
-        setMoney(itemPrice);
-        removeStoreItem(index);
-        this.rewardStoreViewSetState(index);
+        processBoughtItem();
         Navigator.of(context).pop();
         showDialog(
             context: context,
-            builder: (_) => new NotificationView(rewardStoreViewSetState)
-                .giftRecievePopUp(context));
-        // Perform some action
+            builder: (_) => new NotificationView().giftRecievePopUp(context)
+        );
       },
       buttonOkText: Text("Hell Yeah"),
       buttonOkColor: Colors.lightGreen,
