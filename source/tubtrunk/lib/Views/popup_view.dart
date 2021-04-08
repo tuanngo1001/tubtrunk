@@ -7,10 +7,10 @@ import 'package:tubtrunk/Views/display_name_view.dart';
 import 'package:tubtrunk/Views/login_view.dart';
 import 'package:tubtrunk/Views/signup_view.dart';
 
-class NotificationView extends StatefulWidget {
+class PopupView {
   final MainController _mainController = MainController();
 
-  NetworkGiffyDialog giftRecievePopUp(context) {
+  NetworkGiffyDialog giftReceivePopUp(context) {
     return NetworkGiffyDialog(
       image: Image.asset('assets/gifs/giftrecieve.gif'),
       title: Text('CONGRATULATION!',
@@ -46,7 +46,7 @@ class NotificationView extends StatefulWidget {
         Navigator.of(context).pop();
         showDialog(
             context: context,
-            builder: (_) => new NotificationView().giftRecievePopUp(context)
+            builder: (_) => new PopupView().giftReceivePopUp(context)
         );
       },
       buttonOkText: Text("Hell Yeah"),
@@ -251,10 +251,5 @@ class NotificationView extends StatefulWidget {
         Navigator.pop(context);
       },
     ));
-  }
-
-  @override
-  State<StatefulWidget> createState() {
-    throw UnimplementedError();
   }
 }

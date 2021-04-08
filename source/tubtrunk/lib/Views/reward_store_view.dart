@@ -3,7 +3,7 @@ import 'package:tubtrunk/Controllers/music_controller.dart';
 import 'package:tubtrunk/Views/Icons/my_coupon_icon.dart';
 import 'package:tubtrunk/Controllers/store_controller.dart';
 import 'package:tubtrunk/Utils/global_settings.dart';
-import 'package:tubtrunk/Views/notification_view.dart';
+import 'package:tubtrunk/Views/popup_view.dart';
 
 class RewardStoreView extends StatefulWidget {
   @override

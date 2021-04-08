@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tubtrunk/Views/login_view.dart';
 import 'package:tubtrunk/Controllers/authentication_controller.dart';
-import 'package:tubtrunk/Views/notification_view.dart';
+import 'package:tubtrunk/Views/popup_view.dart';
 
 class SignUpView extends StatefulWidget {
   @override
@@ -120,18 +120,18 @@ class _SignUpViewState extends State<SignUpView> {
                       if (returnMessage == "Invalid input") {
                         showDialog(
                             context: context,
-                            builder: (_) => new NotificationView()
+                            builder: (_) => new PopupView()
                                 .emailPasswordWarning(context));
                       } else if (returnMessage == "Invalid user") {
                         showDialog(
                             context: context,
-                            builder: (_) => new NotificationView()
+                            builder: (_) => new PopupView()
                                 .userAlreadyExistWarning(context));
                       } else if (returnMessage == "Error") {
                         showDialog(
                             context: context,
                             builder: (_) =>
-                                new NotificationView().errorWarning(context));
+                                new PopupView().errorWarning(context));
                       } else if (returnMessage == "Success") {
                         String returnMessage2 = await widget
                             .authenticationController
@@ -141,17 +141,17 @@ class _SignUpViewState extends State<SignUpView> {
                         if (returnMessage2 == "User not found") {
                           showDialog(
                               context: context,
-                              builder: (_) => new NotificationView()
+                              builder: (_) => new PopupView()
                                   .emailPasswordWarning(context));
                         } else if (returnMessage2 == "Error") {
                           showDialog(
                               context: context,
                               builder: (_) =>
-                                  new NotificationView().errorWarning(context));
+                                  new PopupView().errorWarning(context));
                         } else if (returnMessage2 == "Success") {
                           showDialog(
                               context: context,
-                              builder: (_) => new NotificationView()
+                              builder: (_) => new PopupView()
                                   .successSignUpPopUp(context));
                         }
                       }

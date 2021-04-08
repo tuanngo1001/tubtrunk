@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tubtrunk/Views/signup_view.dart';
 import 'package:tubtrunk/Controllers/authentication_controller.dart';
-import 'package:tubtrunk/Views/notification_view.dart';
+import 'package:tubtrunk/Views/popup_view.dart';
 
 class LoginView extends StatefulWidget {
   @override
@@ -124,22 +124,22 @@ class _LoginViewState extends State<LoginView> {
                       if (returnMessage == "Invalid input") {
                         showDialog(
                             context: context,
-                            builder: (_) => new NotificationView()
+                            builder: (_) => new PopupView()
                                 .emailPasswordWarning(context));
                       } else if (returnMessage == "User not found") {
                         showDialog(
                             context: context,
-                            builder: (_) => new NotificationView()
+                            builder: (_) => new PopupView()
                                 .emailPasswordWarning(context));
                       } else if (returnMessage == "Error") {
                         showDialog(
                             context: context,
                             builder: (_) =>
-                                new NotificationView().errorWarning(context));
+                                new PopupView().errorWarning(context));
                       } else if (returnMessage == "Success") {
                         showDialog(
                             context: context,
-                            builder: (_) => new NotificationView()
+                            builder: (_) => new PopupView()
                                 .successLoginPopUp(context));
                       }
                       widget.clearTextInput();
