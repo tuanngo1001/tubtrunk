@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tubtrunk/Controllers/authentication_controller.dart';
-import 'mainView.dart';
-import 'notificationView.dart';
+import 'package:tubtrunk/Views/main_view.dart';
+import 'package:tubtrunk/Views/notification_view.dart';
 
 class DisplayNameView extends StatefulWidget {
   @override

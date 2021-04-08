@@ -4,8 +4,8 @@ import 'package:circular_countdown_timer/circular_countdown_timer.dart';
 import 'package:flutter_duration_picker/flutter_duration_picker.dart';
 import 'package:is_lock_screen/is_lock_screen.dart';
 
-import '../Controllers/notifications_controller.dart';
-import './notificationView.dart';
+import 'package:tubtrunk/Controllers/notifications_controller.dart';
+import 'package:tubtrunk/Views/notification_view.dart';
 
 class TimerView extends StatefulWidget {
   final Function(int) updateProgressCallback;

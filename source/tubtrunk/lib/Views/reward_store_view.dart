@@ -3,7 +3,7 @@ import 'package:tubtrunk/Controllers/main_controller.dart';
 import 'package:tubtrunk/Controllers/store_controller.dart';
 import 'package:tubtrunk/Utils/global_settings.dart';
 import 'package:tubtrunk/Views/Icons/myCouponIcon.dart';
-import 'notificationView.dart';
+import 'package:tubtrunk/Views/notification_view.dart';
 
 class RewardStoreView extends StatefulWidget {
   RewardStoreView(this.onBuyItemChange);

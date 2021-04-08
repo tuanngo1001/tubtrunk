@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'loginView.dart';
-import '../Controllers/authentication_controller.dart';
-import 'notificationView.dart';
+import 'package:tubtrunk/Views/signup_view.dart';
+import 'package:tubtrunk/Controllers/authentication_controller.dart';
+import 'package:tubtrunk/Views/notification_view.dart';
 
-class SignUpView extends StatefulWidget {
+class LoginView extends StatefulWidget {
   @override
-  _SignUpViewState createState() => _SignUpViewState();
+  _LoginViewState createState() => _LoginViewState();
   final authenticationController = new AuthenticationController();
   final email = TextEditingController();
   final password = TextEditingController();
@@ -16,7 +16,7 @@ class SignUpView extends StatefulWidget {
   }
 }
 
-class _SignUpViewState extends State<SignUpView> {
+class _LoginViewState extends State<LoginView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,7 +25,7 @@ class _SignUpViewState extends State<SignUpView> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               buildTitle(),
-              buildSignUpBody(context),
+              buildLoginBody(context),
               SizedBox(height: 30.0),
               buildFooter(context)
             ]));
@@ -37,27 +37,17 @@ class _SignUpViewState extends State<SignUpView> {
       children: <Widget>[
         Container(
             padding: EdgeInsets.fromLTRB(15.0, 110.0, 0.0, 0.0),
-            child: Text('SIGN UP for',
-                style: TextStyle(
-                    fontSize: 40.0,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.grey))),
-        Container(
-            padding: EdgeInsets.fromLTRB(15.0, 140.0, 0.0, 0.0),
             child: Text('tub',
-                style: TextStyle(
-                    fontSize: 70.0,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black))),
+                style: TextStyle(fontSize: 80.0, fontWeight: FontWeight.bold))),
         Container(
-            padding: EdgeInsets.fromLTRB(120.0, 140.0, 0.0, 0.0),
+            padding: EdgeInsets.fromLTRB(15.0, 175.0, 0.0, 0.0),
             child: Text('trunk',
                 style: TextStyle(
-                    fontSize: 70.0,
+                    fontSize: 80.0,
                     fontWeight: FontWeight.bold,
                     color: Color(0xfff97c7c)))),
         Container(
-            padding: EdgeInsets.fromLTRB(290.0, 169.0, 0.0, 0.0),
+            padding: EdgeInsets.fromLTRB(210.0, 212.0, 0.0, 0.0),
             child: Icon(
               Icons.alarm,
               size: 40.0,
@@ -66,29 +56,28 @@ class _SignUpViewState extends State<SignUpView> {
     ));
   }
 
-  Widget buildSignUpBody(BuildContext context) {
+  Widget buildLoginBody(BuildContext context) {
     return Container(
         padding: EdgeInsets.only(top: 35.0, left: 20.0, right: 20.0),
         child: Column(
           children: <Widget>[
             TextField(
-              controller: widget.email,
+              key: Key("lvEmailTextField"),
               decoration: InputDecoration(
                   labelText: "EMAIL",
-                  hintText: "Ex: example@gmail.com",
                   labelStyle: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontFamily: 'Montserrat',
                       color: Colors.grey),
                   focusedBorder: UnderlineInputBorder(
                       borderSide: BorderSide(color: Color(0xfff97c7c)))),
+              controller: widget.email,
             ),
-            SizedBox(height: 10.0),
+            SizedBox(height: 20.0),
             TextField(
-              controller: widget.password,
+              key: Key("lvPwdTextField"),
               decoration: InputDecoration(
                   labelText: "PASSWORD",
-                  hintText: "At least 4 characters",
                   labelStyle: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontFamily: 'Montserrat',
@@ -96,11 +85,26 @@ class _SignUpViewState extends State<SignUpView> {
                   focusedBorder: UnderlineInputBorder(
                       borderSide: BorderSide(color: Color(0xfff97c7c)))),
               obscureText: true,
+              controller: widget.password,
             ),
+            SizedBox(height: 5.0),
+            Container(
+                alignment: Alignment(1.0, 0.0),
+                padding: EdgeInsets.only(top: 15.0, left: 20.0),
+                child: InkWell(
+                  child: Text(
+                    'Forgot Password',
+                    style: TextStyle(
+                        color: Color(0xfff97c7c),
+                        fontWeight: FontWeight.bold,
+                        decoration: TextDecoration.underline),
+                  ),
+                )),
             SizedBox(height: 40.0),
             Container(
                 height: 40.0,
                 child: ElevatedButton(
+                    key: Key("lvLoginBtn"),
                     style: ButtonStyle(
                       shape: MaterialStateProperty.all(
                         RoundedRectangleBorder(
@@ -115,56 +119,39 @@ class _SignUpViewState extends State<SignUpView> {
                     ),
                     onPressed: () async {
                       String returnMessage =
-                          await widget.authenticationController.signup(
+                          await widget.authenticationController.login(
                               context, widget.email.text, widget.password.text);
                       if (returnMessage == "Invalid input") {
                         showDialog(
                             context: context,
                             builder: (_) => new NotificationView()
                                 .emailPasswordWarning(context));
-                      } else if (returnMessage == "Invalid user") {
+                      } else if (returnMessage == "User not found") {
                         showDialog(
                             context: context,
                             builder: (_) => new NotificationView()
-                                .userAlreadyExistWarning(context));
+                                .emailPasswordWarning(context));
                       } else if (returnMessage == "Error") {
                         showDialog(
                             context: context,
                             builder: (_) =>
                                 new NotificationView().errorWarning(context));
                       } else if (returnMessage == "Success") {
-                        String returnMessage2 = await widget
-                            .authenticationController
-                            .loginAfterSignup(context, widget.email.text,
-                                widget.password.text);
-
-                        if (returnMessage2 == "User not found") {
-                          showDialog(
-                              context: context,
-                              builder: (_) => new NotificationView()
-                                  .emailPasswordWarning(context));
-                        } else if (returnMessage2 == "Error") {
-                          showDialog(
-                              context: context,
-                              builder: (_) =>
-                                  new NotificationView().errorWarning(context));
-                        } else if (returnMessage2 == "Success") {
-                          showDialog(
-                              context: context,
-                              builder: (_) => new NotificationView()
-                                  .successSignUpPopUp(context));
-                        }
+                        showDialog(
+                            context: context,
+                            builder: (_) => new NotificationView()
+                                .successLoginPopUp(context));
                       }
-
                       widget.clearTextInput();
                     },
                     child: Center(
-                      child: Text('SIGN UP',
+                      child: Text('LOGIN',
                           style: TextStyle(
                               color: Colors.white,
                               fontWeight: FontWeight.bold,
                               fontFamily: 'Montserrat')),
                     ))),
+            SizedBox(height: 20.0)
           ],
         ));
   }
@@ -173,19 +160,20 @@ class _SignUpViewState extends State<SignUpView> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
-        Text('Already have an account?',
+        Text('New to Tubtrunk?',
             style: TextStyle(color: Colors.grey, fontFamily: 'Montserrat')),
         SizedBox(width: 5.0),
         InkWell(
+            key: Key("gotoSignUpView"),
             onTap: () {
               Navigator.pop(context);
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => LoginView()),
+                MaterialPageRoute(builder: (context) => SignUpView()),
               );
             },
             child: Text(
-              'Log in',
+              'Register',
               style: TextStyle(
                   color: Color(0xfff97c7c),
                   fontFamily: 'Montserrat',

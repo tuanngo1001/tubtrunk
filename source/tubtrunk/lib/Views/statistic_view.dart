@@ -2,7 +2,7 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:screenshot/screenshot.dart';
 import 'package:tubtrunk/Controllers/statistic_controller.dart';
-import 'indicator.dart';
+import 'package:tubtrunk/Views/indicator.dart';
 import 'package:flutter/rendering.dart';
 import 'package:tubtrunk/Models/timer_record_model.dart';
 import 'package:share/share.dart';

@@ -25,11 +25,7 @@ void main() {
       final http.Client client = MockClient();
 
       String validEmail = "123@gmail.com";
-      // String invalidEmail1 = ""; //Empty email
-      // String invalidEmail2 = "notEmail"; //Wrong email format
       String validPassword = "1234";
-      // String invalidPassword1 = ""; //Empty password
-      // String invalidPassword2 = "4321";
 
       var map = new Map<String, String>();
       map['UserEmail'] = validEmail;
