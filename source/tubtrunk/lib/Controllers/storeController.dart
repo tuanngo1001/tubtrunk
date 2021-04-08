@@ -12,6 +12,8 @@ class StoreController {
   static final StoreController theOnlyStoreController = StoreController._instantiate();
 
   //#region Properties
+  Function(VoidCallback) setStateCallback;
+
   List<CouponModel> _couponList = [];
   List<CouponModel> get couponList => _couponList;
 
@@ -22,17 +24,25 @@ class StoreController {
 
   //#region Constructor
 
-  factory StoreController(){
+  factory StoreController() {
     return theOnlyStoreController;
   }
 
   StoreController._instantiate() {
-    _loadMusics();
+    _initStoreItems();
   }
   //#endregion
 
   //#region Methods
-  Future<void> _loadMusics() async {
+  Future _initStoreItems() async {
+    await loadCouponList();
+    await _loadMusics();
+
+    if (setStateCallback != null)
+      setStateCallback((){});
+  }
+
+  Future _loadMusics() async {
     _musicList = [];
 
     var url = GlobalSettings.serverAddress + "getMusics.php";
@@ -43,11 +53,7 @@ class StoreController {
       for (var key in data) {
         _musicList.add(MusicModel.fromJson(key));
       }
-
-      await Future.delayed(Duration(seconds: 1));
     }
-
-    return _musicList;
   }
 
   Future<List<CouponModel>> loadCouponList() async {
@@ -61,14 +67,12 @@ class StoreController {
       for (var key in data) {
         _couponList.add(CouponModel.fromJson(key));
       }
-
-      await Future.delayed(Duration(seconds: 1));
     }
 
     return _couponList;
   }
 
-  Future<void> removeCouponAtIndex(int index) async {
+  Future removeCouponAtIndex(int index) async {
     var map = new Map<String, String>();
     map["couponID"] = couponList[index].id.toString();
 
@@ -76,7 +80,7 @@ class StoreController {
 
     if (response.statusCode == 200) {
       print("Successfully delete coupon item");
-      loadCouponList();
+      await loadCouponList();
     }
     print("Coupon deleted");
   }
@@ -86,9 +90,7 @@ class StoreController {
       return;
 
     _showVerification(
-      itemPrice,
-      itemIndex,
-      () => _processBoughtCoupon(itemPrice),
+      () => _processBoughtCoupon(itemPrice, itemIndex),
       context,
     );
   }
@@ -98,8 +100,6 @@ class StoreController {
       return;
 
     _showVerification(
-      itemPrice,
-      itemIndex,
       () => _processBoughtMusic(itemPrice),
       context,
     );
@@ -118,7 +118,7 @@ class StoreController {
     return true;
   }
 
-  void _showVerification(int itemPrice, int itemIndex, Function processBoughtItem, BuildContext context) {
+  void _showVerification(Function processBoughtItem, BuildContext context) {
     showDialog(
       context: context,
       builder: (_) => new NotificationView().purchasePopUp(
@@ -128,13 +128,20 @@ class StoreController {
     );
   }
 
-  void _processBoughtCoupon(int itemPrice) {
+  Future _processBoughtCoupon(int itemPrice, int itemIndex) async {
     MainController().addMoney(-itemPrice);
+    await removeCouponAtIndex(itemIndex);
+
+    if (setStateCallback != null)
+      setStateCallback((){});
   }
 
-  void _processBoughtMusic(int itemPrice) {
+  Future _processBoughtMusic(int itemPrice) async {
     MainController().addMoney(-itemPrice);
+    await _loadMusics();
 
+    if (setStateCallback != null)
+      setStateCallback((){});
   }
 //#endregion
 

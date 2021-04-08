@@ -1,7 +1,7 @@
 <?php
 include('connectDB.php');
 
-$getQuery = "SELECT * FROM Coupon";
+$getQuery = "SELECT * FROM Coupon WHERE cIsBought = 0";
 
 $result = mysqli_query($con, $getQuery);
 

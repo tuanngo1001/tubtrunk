@@ -27,8 +27,7 @@ void main() {
         //Arrange
         StoreController testStoreController = new StoreController();
         //Act
-        Future<List<CouponModel>> testCouponList =
-            testStoreController.loadCouponList();
+        Future<List<CouponModel>> testCouponList = testStoreController.loadCouponList();
         //Assert
         testCouponList.then((value) {
           expect((testCouponList is List<CouponModel>), true);
@@ -39,8 +38,7 @@ void main() {
         //Arrange
         StoreController testStoreController = new StoreController();
         CouponModel testCoupon = new CouponModel();
-        Future<List<CouponModel>> testCouponList =
-            testStoreController.loadCouponList();
+        Future<List<CouponModel>> testCouponList = testStoreController.loadCouponList();
         //Act
         testCouponList.then((value) {
           int currentSize = (testCouponList as List<CouponModel>).length;
@@ -56,8 +54,7 @@ void main() {
         //Arrange
         StoreController testStoreController = new StoreController();
         CouponModel testCoupon = new CouponModel();
-        Future<List<CouponModel>> testCouponList =
-            testStoreController.loadCouponList();
+        Future<List<CouponModel>> testCouponList = testStoreController.loadCouponList();
         //Act
         testCouponList.then((value) {
           int currentSize = (testCouponList as List<CouponModel>).length;

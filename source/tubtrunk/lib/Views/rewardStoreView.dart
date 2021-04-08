@@ -11,21 +11,12 @@ class RewardStoreView extends StatefulWidget {
 
 class _RewardStoreViewState extends State<RewardStoreView> {
   StoreController controller;
-  MainController _mainController;
 
   @override
   void initState() {
     controller = new StoreController();
-    _mainController = new MainController();
+    controller.setStateCallback = setState;
     super.initState();
-  }
-
-  void removeCouponSetState(int index) {
-    setState(() {
-      //For now only remove coupon at given index, add more functions if needed.
-      // controller.removeCouponAtIndex(index);
-      controller.couponList.removeAt(index);
-    });
   }
 
   @override
@@ -55,24 +46,12 @@ class _RewardStoreViewState extends State<RewardStoreView> {
           ),
         ),
         body: SafeArea(
-          child: FutureBuilder(
-              future: controller.loadCouponList(),
-              builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-                if (snapshot.hasError) {
-                  return Center(
-                      child: Text('ERROR: ${snapshot.error.toString()}'));
-                } else if (!snapshot.hasData) {
-                  return Center(
-                    child: CircularProgressIndicator(),
-                  );
-                }
-                return TabBarView(
-                  children: [
-                    _buildCouponList(),
-                    _buildMusicList()
-                  ],
-                );
-              }),
+          child: TabBarView(
+            children: [
+              _buildCouponList(),
+              _buildMusicList(),
+            ],
+          ),
         ),
       ),
     );
