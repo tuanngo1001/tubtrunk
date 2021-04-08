@@ -135,7 +135,7 @@ class _RewardStoreViewState extends State<RewardStoreView> {
           child: InkWell(
             splashColor: Colors.cyanAccent,
             hoverColor: Colors.lightBlue[100],
-            onTap: () => controller.buyCoupon(musicPrice, index, context),
+            onTap: () => controller.buyMusic(musicPrice, index, context),
             child: Container(
               width: MediaQuery.of(context).size.width,
               child: Column(

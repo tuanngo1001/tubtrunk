@@ -100,7 +100,7 @@ class StoreController {
       return;
 
     _showVerification(
-      () => _processBoughtMusic(itemPrice),
+      () => _processBoughtMusic(itemPrice, _musicList[itemIndex].id),
       context,
     );
   }
@@ -128,20 +128,31 @@ class StoreController {
     );
   }
 
-  Future _processBoughtCoupon(int itemPrice, int itemIndex) async {
-    MainController().addMoney(-itemPrice);
+  Future _processBoughtCoupon(int couponPrice, int itemIndex) async {
+    MainController().addMoney(-couponPrice);
     await removeCouponAtIndex(itemIndex);
 
     if (setStateCallback != null)
       setStateCallback((){});
   }
 
-  Future _processBoughtMusic(int itemPrice) async {
-    MainController().addMoney(-itemPrice);
-    await _loadMusics();
+  Future _processBoughtMusic(int musicPrice, int musicID) async {
+    MainController().addMoney(-musicPrice);
+    await _saveBoughtMusic(musicID);
 
     if (setStateCallback != null)
       setStateCallback((){});
+  }
+
+  Future _saveBoughtMusic(int musicID) async {
+    var map = new Map<String, String>();
+    map["UserID"] = GlobalSettings.user.uID.toString();
+    map["MusicID"] = musicID.toString();
+
+    var response = await http.post(GlobalSettings.serverAddress + "buyMusic.php", body: map);
+    if (response.statusCode == 200) {
+      await _loadMusics();
+    }
   }
 //#endregion
 
