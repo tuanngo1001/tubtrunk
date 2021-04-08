@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:email_validator/email_validator.dart';
-import 'package:tubtrunk/Utils/globalSettings.dart';
+import 'package:tubtrunk/Utils/global_settings.dart';
 import 'package:tubtrunk/Models/userModel.dart';
 import 'memory_controller.dart';
 import 'package:crypt/crypt.dart';

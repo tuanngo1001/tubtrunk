@@ -5,7 +5,7 @@ import 'package:http/http.dart' as http;
 import 'package:flutter_test/flutter_test.dart';
 import 'package:tubtrunk/Controllers/authentication_controller.dart';
 import 'package:tubtrunk/Models/userModel.dart';
-import 'package:tubtrunk/Utils/globalSettings.dart';
+import 'package:tubtrunk/Utils/global_settings.dart';
 import 'package:crypt/crypt.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
