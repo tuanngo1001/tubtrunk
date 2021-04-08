@@ -6,7 +6,7 @@ import 'package:is_lock_screen/is_lock_screen.dart';
 import 'package:tubtrunk/Views/music_library_view.dart';
 
 import 'package:tubtrunk/Controllers/notifications_controller.dart';
-import 'package:tubtrunk/Views/notification_view.dart';
+import 'package:tubtrunk/Views/popup_view.dart';
 
 class TimerView extends StatefulWidget {
   final Function(int) updateProgressCallback;
@@ -74,7 +74,7 @@ class _TimerViewState extends State<TimerView>
         context,
         MaterialPageRoute(
             builder: (context) =>
-                NotificationView().moneyReceivePopup(context)),
+                PopupView().moneyReceivePopup(context)),
       );
   }
 
@@ -208,7 +208,7 @@ class _TimerViewState extends State<TimerView>
                     context,
                     MaterialPageRoute(
                         builder: (context) =>
-                            NotificationView().moneyReceivePopup(context)),
+                            PopupView().moneyReceivePopup(context)),
                   );
                 },
                 key: Key('tvCircularCountdownTimer'),

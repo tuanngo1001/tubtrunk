@@ -3,7 +3,7 @@ import 'package:http/http.dart' as http;
 import 'package:tubtrunk/Controllers/main_controller.dart';
 import 'dart:convert';
 import 'package:tubtrunk/Models/music_model.dart';
-import 'package:tubtrunk/Views/notification_view.dart';
+import 'package:tubtrunk/Views/popup_view.dart';
 import 'package:tubtrunk/Utils/global_settings.dart';
 import 'package:tubtrunk/Models/coupon_model.dart';
 
@@ -111,7 +111,7 @@ class StoreController {
     if (itemPrice > GlobalSettings.user.money) {
       showDialog(
           context: context,
-          builder: (_) => new NotificationView().notEnoughMoney(context)
+          builder: (_) => new PopupView().notEnoughMoney(context)
       );
 
       return false;
@@ -123,7 +123,7 @@ class StoreController {
   void _showVerification(Function processBoughtItem, BuildContext context) {
     showDialog(
       context: context,
-      builder: (_) => new NotificationView().purchasePopUp(
+      builder: (_) => new PopupView().purchasePopUp(
         context,
         processBoughtItem,
       ),

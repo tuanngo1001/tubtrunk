@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tubtrunk/Controllers/authentication_controller.dart';
 import 'package:tubtrunk/Views/main_view.dart';
-import 'package:tubtrunk/Views/notification_view.dart';
+import 'package:tubtrunk/Views/popup_view.dart';
 
 class DisplayNameView extends StatefulWidget {
   @override
@@ -97,19 +97,19 @@ class _DisplayNameViewState extends State<DisplayNameView> {
                       showDialog(
                           context: context,
                           builder: (_) =>
-                              new NotificationView().missingName(context));
+                              new PopupView().missingName(context));
                     } else if (returnMessage == "Username existed") {
                       showDialog(
                           context: context,
                           builder: (_) =>
-                              new NotificationView().missingName(context));
+                              new PopupView().missingName(context));
                     } else if (returnMessage == "Error") {
                       showDialog(
                           context: context,
                           builder: (_) =>
-                              new NotificationView().errorWarning(context));
+                              new PopupView().errorWarning(context));
                     } else if (returnMessage == "Success") {
-                      NotificationView().changeNameSuccess(context);
+                      PopupView().changeNameSuccess(context);
                     }
                     widget.clearTextInput();
                   },

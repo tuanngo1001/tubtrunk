@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:tubtrunk/Utils/global_settings.dart';
 import 'package:tubtrunk/Views/display_name_view.dart';
 import 'package:tubtrunk/Views/leaderboard_view.dart';
-import 'package:tubtrunk/Views/notification_view.dart';
+import 'package:tubtrunk/Views/popup_view.dart';
 import 'package:tubtrunk/Controllers/authentication_controller.dart';
 
 class AccountView extends StatefulWidget {
@@ -177,11 +177,11 @@ class _AccountViewState extends State<AccountView> {
             if (returnMessage == "Error") {
               showDialog(
                   context: context,
-                  builder: (_) => new NotificationView()
+                  builder: (_) => new PopupView()
                       .logoutFail(context));
             } else if (returnMessage == "Success") {
               widget.resetTabItem(0);
-              NotificationView().logoutSuccess(context);
+              PopupView().logoutSuccess(context);
             }
           },
           child: Text('Log out',
