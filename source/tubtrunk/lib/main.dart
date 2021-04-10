@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import './Views/landing_view.dart';
+import 'package:tubtrunk/Views/landing_view.dart';
 
 void main() {
   runApp(MyApp());
