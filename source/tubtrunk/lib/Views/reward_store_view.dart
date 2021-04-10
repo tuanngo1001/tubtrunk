@@ -78,39 +78,48 @@ class _RewardStoreViewState extends State<RewardStoreView> {
               child: Column(
                 children: <Widget>[
                   Padding(padding: EdgeInsets.all(18.0)),
-                  Text(
-                    controller.couponList[index].store + " Coupon",
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 20
+                  Expanded(
+                    flex: 1,
+                    child: Text(
+                      controller.couponList[index].store + " Coupon",
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 20
+                      ),
                     ),
                   ),
-                  Text(
-                    controller.couponList[index].description,
-                    style: TextStyle(
-                      fontWeight: FontWeight.w400,
-                      fontSize: 18
+                  Expanded(
+                    flex: 2,
+                    child: Text(
+                      controller.couponList[index].description,
+                      style: TextStyle(
+                        fontWeight: FontWeight.w400,
+                        fontSize: 18
+                      ),
                     ),
                   ),
                   const SizedBox(height: 15),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: <Widget>[
-                      Image.asset(
-                        'assets/TrunkCoinIcon.png',
-                        width: 28.0,
-                        height: 28.0,
-                      ),
-                      Padding(padding: EdgeInsets.all(2.5)),
-                      Text(
-                        controller.couponList[index].price,
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16
+                  Expanded(
+                    flex: 1,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: <Widget>[
+                        Image.asset(
+                          'assets/TrunkCoinIcon.png',
+                          width: 28.0,
+                          height: 28.0,
                         ),
-                      )
-                    ],
+                        Padding(padding: EdgeInsets.all(2.5)),
+                        Text(
+                          controller.couponList[index].price,
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16
+                          ),
+                        )
+                      ],
+                    ),
                   ),
                 ],
               )
@@ -141,38 +150,47 @@ class _RewardStoreViewState extends State<RewardStoreView> {
               width: MediaQuery.of(context).size.width,
               child: Column(
                 children: <Widget>[
-                  IconButton(
-                    icon: const Icon(Icons.volume_up),
-                    iconSize: 30,
-                    tooltip: 'Press to hear preview',
-                    onPressed: () => MusicController.playDemo(controller.musicList[index].fileName),
+                  Expanded(
+                    flex: 1,
+                    child: IconButton(
+                      icon: const Icon(Icons.volume_up),
+                      iconSize: 30,
+                      tooltip: 'Press to hear preview',
+                      onPressed: () => MusicController.playDemo(controller.musicList[index].fileName),
+                    ),
                   ),
-                  Text(
-                    controller.musicList[index].title,
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 20,
+                  Expanded(
+                    flex: 1,
+                    child: Text(
+                      controller.musicList[index].title,
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 20,
+                      ),
                     ),
                   ),
                   const SizedBox(height: 15),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: <Widget>[
-                      Image.asset(
-                        'assets/TrunkCoinIcon.png',
-                        width: 28.0,
-                        height: 28.0,
-                      ),
-                      Padding(padding: EdgeInsets.all(2.5)),
-                      Text(
-                        musicPrice.toString(),
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16
+                  Expanded(
+                    flex: 1,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: <Widget>[
+                        Image.asset(
+                          'assets/TrunkCoinIcon.png',
+                          width: 28.0,
+                          height: 28.0,
                         ),
-                      )
-                    ],
+                        Padding(padding: EdgeInsets.all(2.5)),
+                        Text(
+                          musicPrice.toString(),
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16
+                          ),
+                        )
+                      ],
+                    ),
                   ),
                 ],
               ),
