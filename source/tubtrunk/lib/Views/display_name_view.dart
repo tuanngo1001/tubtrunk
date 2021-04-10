@@ -17,12 +17,21 @@ class DisplayNameView extends StatefulWidget {
 class _DisplayNameViewState extends State<DisplayNameView> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        resizeToAvoidBottomInset: false,
-        body: Center(
-            child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[buildTitle(), buildBody(context)])));
+    return WillPopScope(
+        onWillPop: () async {
+          Navigator.popUntil(context, (route) => false);
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => MainView()),
+          );
+          return true;
+        },
+        child: Scaffold(
+            resizeToAvoidBottomInset: false,
+            body: Center(
+                child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[buildTitle(), buildBody(context)]))));
   }
 
   Widget buildTitle() {
@@ -96,13 +105,11 @@ class _DisplayNameViewState extends State<DisplayNameView> {
                     if (returnMessage == "Invalid input") {
                       showDialog(
                           context: context,
-                          builder: (_) =>
-                              new PopupView().missingName(context));
+                          builder: (_) => new PopupView().missingName(context));
                     } else if (returnMessage == "Username existed") {
                       showDialog(
                           context: context,
-                          builder: (_) =>
-                              new PopupView().missingName(context));
+                          builder: (_) => new PopupView().missingName(context));
                     } else if (returnMessage == "Error") {
                       showDialog(
                           context: context,

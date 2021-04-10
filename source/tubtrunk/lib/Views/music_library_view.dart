@@ -43,7 +43,7 @@ class _MusicLibraryViewState extends State<MusicLibraryView> {
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
-                Icon(IconData(0xe897, fontFamily: 'MaterialIcons')),
+                Icon(const IconData(0xe897, fontFamily: 'MaterialIcons')),
                 Text(
                   ownedMusics[index].title,
                   style: TextStyle(
@@ -54,13 +54,13 @@ class _MusicLibraryViewState extends State<MusicLibraryView> {
                 ),
                 Spacer(),
                 IconButton(
-                    icon: Icon(IconData(0xe936, fontFamily: 'MaterialIcons')),
+                    icon: Icon(const IconData(0xe936, fontFamily: 'MaterialIcons')),
                     onPressed: () {
                       MusicController.playLooping(ownedMusics[index].fileName);
                     }),
                 IconButton(
                     alignment: Alignment.centerRight,
-                    icon: Icon(IconData(0xe465, fontFamily: 'MaterialIcons')),
+                    icon: Icon(const IconData(0xe465, fontFamily: 'MaterialIcons')),
                     onPressed: () => {MusicController.stop()}),
               ],
             ),
