@@ -100,7 +100,7 @@ class _RewardStoreViewState extends State<RewardStoreView> {
                   ),
                   const SizedBox(height: 15),
                   Expanded(
-                    flex: 1,
+                    flex: 2,
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
