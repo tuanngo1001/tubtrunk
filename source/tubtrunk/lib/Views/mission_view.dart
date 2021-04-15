@@ -123,7 +123,7 @@ class _MissionViewState extends State<MissionView> {
 
   Widget _buildMissions(List<Widget> missionComponents) {
     return GridView.count(
-      childAspectRatio: 1 / 1.9,
+      childAspectRatio: 1 / 2,
       crossAxisCount: 2,
       children: missionComponents,
     );
