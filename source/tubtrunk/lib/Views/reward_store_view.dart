@@ -77,9 +77,8 @@ class _RewardStoreViewState extends State<RewardStoreView> {
               width: MediaQuery.of(context).size.width,
               child: Column(
                 children: <Widget>[
-                  Padding(padding: EdgeInsets.all(18.0)),
+                  Padding(padding: EdgeInsets.all(1)),
                   Expanded(
-                    flex: 1,
                     child: Text(
                       controller.couponList[index].store + " Coupon",
                       style: TextStyle(
@@ -89,18 +88,16 @@ class _RewardStoreViewState extends State<RewardStoreView> {
                     ),
                   ),
                   Expanded(
-                    flex: 2,
                     child: Text(
                       controller.couponList[index].description,
                       style: TextStyle(
                         fontWeight: FontWeight.w400,
-                        fontSize: 18
+                        fontSize: 17
                       ),
                     ),
                   ),
                   const SizedBox(height: 15),
                   Expanded(
-                    flex: 2,
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
@@ -151,7 +148,6 @@ class _RewardStoreViewState extends State<RewardStoreView> {
               child: Column(
                 children: <Widget>[
                   Expanded(
-                    flex: 1,
                     child: IconButton(
                       icon: const Icon(Icons.volume_up),
                       iconSize: 30,
@@ -160,7 +156,6 @@ class _RewardStoreViewState extends State<RewardStoreView> {
                     ),
                   ),
                   Expanded(
-                    flex: 1,
                     child: Text(
                       controller.musicList[index].title,
                       style: TextStyle(
@@ -171,7 +166,6 @@ class _RewardStoreViewState extends State<RewardStoreView> {
                   ),
                   const SizedBox(height: 15),
                   Expanded(
-                    flex: 1,
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
