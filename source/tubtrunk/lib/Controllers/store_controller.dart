@@ -94,6 +94,7 @@ class StoreController {
     _showVerification(
       () => _processBoughtCoupon(itemPrice, itemIndex),
       context,
+      couponList[itemIndex]
     );
   }
 
@@ -104,6 +105,7 @@ class StoreController {
     _showVerification(
       () => _processBoughtMusic(itemPrice, _musicList[itemIndex].id),
       context,
+      null
     );
   }
 
@@ -113,19 +115,18 @@ class StoreController {
           context: context,
           builder: (_) => new PopupView().notEnoughMoney(context)
       );
-
       return false;
     }
-
     return true;
   }
 
-  void _showVerification(Function processBoughtItem, BuildContext context) {
+  void _showVerification(processBoughtItem, BuildContext context, CouponModel coupon) {
     showDialog(
       context: context,
       builder: (_) => new PopupView().purchasePopUp(
         context,
         processBoughtItem,
+        coupon
       ),
     );
   }

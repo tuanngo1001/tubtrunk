@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:giffy_dialog/giffy_dialog.dart';
 import 'package:tubtrunk/Controllers/main_controller.dart';
+import 'package:tubtrunk/Models/coupon_model.dart';
 import 'package:tubtrunk/Views/main_view.dart';
 import 'package:tubtrunk/Views/display_name_view.dart';
 import 'package:tubtrunk/Views/login_view.dart';
@@ -30,7 +31,29 @@ class PopupView {
     );
   }
 
-  NetworkGiffyDialog purchasePopUp(context, void Function() processBoughtItem) {
+  NetworkGiffyDialog CouponReceivePopUp(CouponModel coupon, context, void Function() processBoughtItem) {
+    return NetworkGiffyDialog(
+      image: Image.asset('assets/gifs/giftrecieve.gif'),
+      title: Text('Store: ' + coupon.store,
+          textAlign: TextAlign.center,
+          style: TextStyle(fontSize: 22.0, fontWeight: FontWeight.w600)),
+      description: Text(
+        'Coupon Code: ' + coupon.code,
+        textAlign: TextAlign.center,
+        style: TextStyle(fontSize: 30),
+      ),
+      entryAnimation: EntryAnimation.TOP,
+      onOkButtonPressed: () {
+        processBoughtItem();
+        Navigator.of(context).pop();
+      },
+      onlyOkButton: true,
+      buttonOkText: Text("OK!"),
+      buttonOkColor: Colors.lightGreen,
+    );
+  }
+
+  NetworkGiffyDialog purchasePopUp(context, void Function() processBoughtItem, CouponModel coupon) {
     return NetworkGiffyDialog(
       image: Image.asset('assets/gifs/purchaseprompt.gif'),
       title: Text('',
@@ -42,12 +65,20 @@ class PopupView {
       ),
       entryAnimation: EntryAnimation.TOP,
       onOkButtonPressed: () async {
-        processBoughtItem();
         Navigator.of(context).pop();
-        showDialog(
-            context: context,
-            builder: (_) => new PopupView().giftReceivePopUp(context)
-        );
+        if(coupon == null){
+          processBoughtItem();
+          showDialog(
+              context: context,
+              builder: (_) => new PopupView().giftReceivePopUp(context)
+          );
+        }else{
+          showDialog(
+              context: context,
+              builder: (_) => new PopupView().CouponReceivePopUp(coupon, context, processBoughtItem)
+          );
+        }
+
       },
       buttonOkText: Text("Hell Yeah"),
       buttonOkColor: Colors.lightGreen,

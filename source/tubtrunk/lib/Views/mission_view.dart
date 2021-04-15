@@ -111,7 +111,6 @@ class _MissionViewState extends State<MissionView> {
       return _buildMission(missionComponents);
     });
     return _buildMissions(missionWidgets);
-    //return Screenshot(controller: _screenshotController,child: _buildMissions(missionWidgets));
   }
 
   Widget _buildAcceptedMissions(List<RewardMissionModel> missionList, String status) {
@@ -120,7 +119,6 @@ class _MissionViewState extends State<MissionView> {
       return _buildMission(missionComponents);
     });
     return _buildMissions(missionWidgets);
-    //return Container(child: Screenshot(controller:_screenshotController,child: _buildMissions(missionWidgets)));
   }
 
   Widget _buildMissions(List<Widget> missionComponents) {
@@ -235,7 +233,6 @@ class _MissionViewState extends State<MissionView> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
-          //_buildShareButton(),
           _buildMissionPrize(prize),
           const SizedBox(width: 5),
           Text(
