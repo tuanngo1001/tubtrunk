@@ -18,7 +18,7 @@ Tubtrunk aims to help and motivate users to concentrate on their tasks for a set
 
 | Name         | GitHub Username |
 | ------------ | --------------- |
-| Tuan Ngo     | tuanngo1001     |
+| **Tuan Ngo** (team leader)     | tuanngo1001     |
 | Thai Nguyen  | thain-gd        |
 | Trung Nguyen | tg106           |
 | Quoc Nguyen  | quocvinguyen    |
